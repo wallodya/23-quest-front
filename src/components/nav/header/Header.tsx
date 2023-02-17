@@ -9,7 +9,7 @@ const Header = () => {
                     <Link href="/home">Home</Link>
                 </li>
                 <li className="text-bold text-sky-900">
-                    <Link href="/sign_in">Sign in</Link>
+                    <Link href="/sign-in">Sign in</Link>
                 </li>
             </ul>
         </header>

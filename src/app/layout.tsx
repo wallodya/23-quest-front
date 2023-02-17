@@ -1,8 +1,14 @@
 import React, { ReactNode } from "react";
 import GlobalLayout from "../components/layouts/global.layout";
 
-const Layout = ({ children }: { children: ReactNode }) => {
-    return <GlobalLayout>{children}</GlobalLayout>;
+const RootLayout = ({ children }: { children: ReactNode }) => {
+    return (
+        <html>
+            <body>
+                <GlobalLayout>{children}</GlobalLayout>;
+            </body>
+        </html>
+    )
 };
 
-export default Layout;
+export default RootLayout;
