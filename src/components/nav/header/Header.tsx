@@ -1,10 +1,12 @@
+"use-client";
+
 import Link from "next/link";
 import React from "react";
 
 const Header = () => {
     return (
-        <header>
-            <ul>
+        <header className="grid grid-cols-main bg-red-300">
+            <ul className="col-start-2 bg-red-400">
                 <li className="text-bold text-sky-900">
                     <Link href="/home">Home</Link>
                 </li>
