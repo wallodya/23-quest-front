@@ -1,9 +1,3 @@
-import React from 'react'
-
-const NewTask = () => {
-  return (
-    <div>NewTask</div>
-  )
-}
+import NewTask from "./NewTask";
 
 export default NewTask

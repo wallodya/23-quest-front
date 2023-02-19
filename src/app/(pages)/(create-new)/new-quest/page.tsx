@@ -1,9 +1,3 @@
-import React from 'react'
-
-const NewQuest = () => {
-  return (
-    <div>NewQuest</div>
-  )
-}
+import NewQuest from "./NewQuest";
 
 export default NewQuest
