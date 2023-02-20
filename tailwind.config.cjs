@@ -13,7 +13,11 @@ module.exports = {
             gridTemplateColumns: {
                 "main": "1fr min(1440px, 95VW) 1fr",
             },
+            fontFamily: {
+                sans: ["var(--font-inter)"]
+            }
         },
     },
+    darkMode: "class",
     plugins: [],
 };

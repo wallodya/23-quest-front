@@ -13,8 +13,8 @@ const GlobalLayout = ({ children }: { children: ReactNode }) => {
                 <HeaderMobile />
             </div>
             <div className="grid h-full grid-cols-main">
-                <div className="col-start-2 flex flex-col justify-between gap-4 bg-slate-300">
-                    <main className="bg-green-400">
+                <div className="col-start-2 flex flex-col justify-between gap-4">
+                    <main className="">
                         {children}
                     </main>
                 </div>

@@ -1,9 +1,3 @@
-import React from 'react'
+import Quests from "./Quests";
 
-const Page = () => {
-  return (
-    <div>Page</div>
-  )
-}
-
-export default Page
+export default Quests
