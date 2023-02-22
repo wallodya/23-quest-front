@@ -1,9 +1,3 @@
-import React from 'react'
+import SignIn from './SignIn'
 
-const Page = () => {
-  return (
-    <div>Sign in</div>
-  )
-}
-
-export default Page
+export default SignIn

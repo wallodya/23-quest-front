@@ -1,6 +1,5 @@
-import { Action, AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import authReducer from "./auth/auth.slice"
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./auth/auth.slice";
 
 export const store = configureStore({
     reducer: {
