@@ -14,7 +14,7 @@ type AuthState = {
     isSignedIn: boolean,
     error?: any,
     user?: User,
-    userToken?: string,
+    userToken?: string | null,
 }
 
 const initialState: AuthState = {
@@ -32,6 +32,10 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(signIn.pending, (state, action) => {
+                if (state.isLoading) {
+                    return
+                }
+
                 state.isLoading = true
                 state.isSuccess = false
                 state.isError = false
@@ -39,7 +43,11 @@ const authSlice = createSlice({
                 state.isSignedIn = false
             })
             .addCase(signIn.fulfilled, (state, action) => {
-                if (action.payload.error) {
+                if (!state.isLoading) {
+                    return
+                }
+
+                if (action.payload.user.error) {
                     state.isLoading = false
 
                     state.isSuccess = false
@@ -49,16 +57,20 @@ const authSlice = createSlice({
 
                 } else {
                     state.isLoading = false
-
+                    
                     state.isSuccess = true
                     state.isError = false
                     state.isSettled = true
                     state.isSignedIn = true
-                    state.user = action.payload
+                    state.user = action.payload.user
+                    state.userToken = action.payload.token
                 }
             })
             .addCase(signIn.rejected, (state, action) => {
-                console.log("Error payload: ", action.payload)
+                if (!state.isLoading) {
+                    return
+                }
+
                 state.isLoading = false
                 state.isError = true
                 state.error = action.payload

@@ -1,6 +1,7 @@
 import { createAsyncThunk, SerializedError } from "@reduxjs/toolkit";
 import { signInReq } from "../../common/utils/server/api";
 import { SignInBody } from "../../common/utils/server/api.types";
+import { RootState } from "../store";
 
 export const signIn = createAsyncThunk(
     "auth/signIn",
@@ -12,4 +13,12 @@ export const signIn = createAsyncThunk(
             return rejectWithValue(err?.message);
         }
     },
+    {
+        condition: (signInBody, { getState, extra}) => {
+            const { auth: { isLoading } } = getState() as RootState
+            if (isLoading) {
+                return false
+            }
+        }
+    }
 );
