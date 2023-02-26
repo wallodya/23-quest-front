@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signIn } from "./auth.thunk";
 
 type User = {
     login: string,

@@ -17,14 +17,9 @@ const SignInSchema = z.object({
 })
 
 const SignIn = () => {
-    // const dispatch = useAppDispatch();
-    // const { isSuccess: isAuthSuccess, isLoading: isAuthLoading, user } = useAppSelector(
-    //     (state) => state.auth,
-    // );
-
     const [ signIn, { isLoading, isSuccess } ] = useSignInMutation()
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<SignInBody>({
+    const { handleSubmit, control, formState: { errors } } = useForm<SignInBody>({
         resolver: zodResolver(SignInSchema)
     });
 
@@ -38,18 +33,11 @@ const SignIn = () => {
                     alert("Fail")
                 }
             })
-        // dispatch(signIn(data))
-        //     .then(() => {
-        //         if(isAuthSuccess) {
-        //             alert("Logged in")
-        //         }
-        //     })
-
     };
 
     return (
         <div className="flex justify-center">
-            <form className="flex flex-col gap-5 ">
+            <form className="flex flex-col gap-4 ">
                 <Typography
                     variant="h4"
                     component={"h1"}
@@ -63,6 +51,10 @@ const SignIn = () => {
                     render={({ field: { onChange, value } }) => (
                         <TextField
                             label={"Login"}
+                            autoFocus={true}
+                            inputProps={{
+                                "aria-autocomplete": "none"
+                            }}
                             variant={"outlined"}
                             onChange={onChange}
                             value={value ?? ""}
@@ -77,6 +69,9 @@ const SignIn = () => {
                     render={({ field: { onChange, value } }) => (
                         <TextField
                             label={"Password"}
+                            inputProps={{
+                                "aria-autocomplete": "none"
+                            }}
                             variant={"outlined"}
                             onChange={onChange}
                             type={"password"}
