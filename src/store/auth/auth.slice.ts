@@ -29,60 +29,6 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(signIn.pending, (state, action) => {
-                if (state.isLoading) {
-                    return
-                }
-
-                state.isLoading = true
-                state.isSuccess = false
-                state.isError = false
-                state.isSettled = false
-                state.isSignedIn = false
-            })
-            .addCase(signIn.fulfilled, (state, action) => {
-                console.log("Fullfilled")
-                if (!state.isLoading) {
-                    return
-                }
-
-                if (action.payload.user.error) {
-                    console.log("Not logged in")
-                    state.isLoading = false
-                    
-                    state.isSuccess = false
-                    state.isError = false
-                    state.isSettled = true
-                    state.isSignedIn = false
-                    
-                } else {
-                    console.log("Logged in")
-                    state.isLoading = false
-                    
-                    state.isSuccess = true
-                    state.isError = false
-                    state.isSettled = true
-                    state.isSignedIn = true
-                    state.user = action.payload.user
-                    state.userToken = action.payload.token
-                }
-            })
-            .addCase(signIn.rejected, (state, action) => {
-                console.log("Loading")
-                if (!state.isLoading) {
-                    return
-                }
-
-                state.isLoading = false
-                state.isError = true
-                state.error = action.payload
-                state.isSignedIn = false
-                state.isSuccess = false
-                state.isSettled = true
-            })
-    }
 });
 
 export default authSlice.reducer;

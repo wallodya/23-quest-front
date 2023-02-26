@@ -1,52 +1,109 @@
 "use client";
 
-import { FormControlUnstyled, InputUnstyled } from "@mui/base";
-import { FormControl, Input, TextField } from "@mui/material";
-import React, {
-    ChangeEvent,
-    FormEvent,
-    FormEventHandler,
-    useEffect,
-    useState,
-} from "react";
-import { getFormData } from "../../../../common/utils/forms.utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingButton } from "@mui/lab";
+import { Button, TextField, Typography } from "@mui/material";
+import Link from "next/link";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 import { SignInBody } from "../../../../common/utils/server/api.types";
-import { signIn } from "../../../../store/auth/auth.thunk";
+import { apiSlice, useSignInMutation } from "../../../../store/api/api.slice";
+// import { signIn } from "../../../../store/auth/auth.thunk";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 
+const SignInSchema = z.object({
+    login: z.string().min(4, {message: "Should be at lest 4"}).max(20),
+    password: z.string().min(4, {message: "Should be at lest 4"}).max(20)
+})
+
 const SignIn = () => {
-    const dispatch = useAppDispatch();
-    const { isSuccess: isAuthSuccess, user } = useAppSelector(
-        (state) => state.auth,
-    );
+    // const dispatch = useAppDispatch();
+    // const { isSuccess: isAuthSuccess, isLoading: isAuthLoading, user } = useAppSelector(
+    //     (state) => state.auth,
+    // );
 
-    const [loginValue, setLoginValue] = useState<string>("");
-    const [passwordValue, setPasswordValue] = useState<string>("");
+    const [ signIn, { isLoading, isSuccess } ] = useSignInMutation()
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const { register, handleSubmit, control, formState: { errors } } = useForm<SignInBody>({
+        resolver: zodResolver(SignInSchema)
+    });
 
-        const data = getFormData<SignInBody>(event);
+    const onSubmit: SubmitHandler<SignInBody> = (data) => {
+        signIn(data)
+            .unwrap()
+            .then((payload) => {
+                if (isSuccess) {
+                    alert("Success")
+                } else {
+                    alert("Fail")
+                }
+            })
+        // dispatch(signIn(data))
+        //     .then(() => {
+        //         if(isAuthSuccess) {
+        //             alert("Logged in")
+        //         }
+        //     })
 
-        dispatch(
-            signIn(data)
-        )
     };
 
     return (
         <div className="flex justify-center">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5 ">
-                <TextField
+            <form className="flex flex-col gap-5 ">
+                <Typography
+                    variant="h4"
+                    component={"h1"}
+                    className={"mb-4 font-bold"}
+                >
+                    Sign in
+                </Typography>
+                <Controller
                     name="login"
-                    label={"Login"}
-                    variant={"outlined"}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <TextField
+                            label={"Login"}
+                            variant={"outlined"}
+                            onChange={onChange}
+                            value={value ?? ""}
+                            error={!!errors.login}
+                            helperText={errors.login?.message}
+                        />
+                    )}
                 />
-                <TextField
+                <Controller
                     name="password"
-                    label={"Password"}
-                    variant={"outlined"}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <TextField
+                            label={"Password"}
+                            variant={"outlined"}
+                            onChange={onChange}
+                            type={"password"}
+                            value={value ?? ""}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
+                        />
+                    )}
                 />
-                <input type={"submit"} value={"Sign in"} />
+
+                <LoadingButton
+                    loading={isLoading}
+                    variant="contained"
+                    color="primary"
+                    className="bg-sky-500 py-2"
+                    onClick={handleSubmit(onSubmit)}
+                >
+                    Sign in
+                </LoadingButton>
+                <Button
+                    variant="text"
+                    color="primary"
+                    size={"small"}
+                    className="py-2"
+                >
+                    <Link href={"/sign-up"}>Create an account</Link>
+                </Button>
             </form>
         </div>
     );
