@@ -8,27 +8,27 @@ const MenuDesktop = () => {
     const { theme, setTheme } = useTheme();
     const [themeLabel, setThemeLabel] = useState<"Light" | "Dark">("Light")
 
-    const toggleTheme = () => {
-        if (theme === "undefined" || typeof window === "undefined") {
-            console.log("theme is undefined")
-            return
-        }
-        setTheme(
-            theme === "dark"
-                ? "light"
-                : "dark"
-        )
-    }
+    // const toggleTheme = () => {
+    //     if (theme === "undefined" || typeof window === "undefined") {
+    //         console.log("theme is undefined")
+    //         return
+    //     }
+    //     setTheme(
+    //         theme === "dark"
+    //             ? "light"
+    //             : "dark"
+    //     )
+    // }
 
-    useEffect(() => {
-        setThemeLabel(theme === "dark" ? "Light" : "Dark")
-    }, [theme])
+    // useEffect(() => {
+    //     setThemeLabel(theme === "dark" ? "Light" : "Dark")
+    // }, [theme])
 
     return (
         <nav className="col-start-2 grid grid-cols-2 py-4 items-stretch">
             <div className="px-4 flex gap-4">
                 <span>Logo</span>
-                <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span>
+                {/* <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span> */}
             </div>
             <ul className="flex justify-around text-sm font-semibold">
                 <li className="pr-4 text-bold flex items-center hover:text-sky-500 dark:hover:text-sky-400 transition-colors">

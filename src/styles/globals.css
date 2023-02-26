@@ -1,9 +1,9 @@
 @tailwind base;
-@layer base {
+/* @layer base {
     body {
         @apply w-screen h-screen;
     }
-}
+} */
 
 @tailwind components;
 @tailwind utilities;

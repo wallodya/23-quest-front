@@ -14,7 +14,7 @@ const GlobalLayout = ({ children }: { children: ReactNode }) => {
             </div>
             <div className="grid h-full grid-cols-main">
                 <div className="col-start-2 flex flex-col justify-between gap-4">
-                    <main className="">
+                    <main className="h-full flex flex-col justify-center">
                         {children}
                     </main>
                 </div>

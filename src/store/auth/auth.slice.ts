@@ -43,19 +43,22 @@ const authSlice = createSlice({
                 state.isSignedIn = false
             })
             .addCase(signIn.fulfilled, (state, action) => {
+                console.log("Fullfilled")
                 if (!state.isLoading) {
                     return
                 }
 
                 if (action.payload.user.error) {
+                    console.log("Not logged in")
                     state.isLoading = false
-
+                    
                     state.isSuccess = false
                     state.isError = false
                     state.isSettled = true
                     state.isSignedIn = false
-
+                    
                 } else {
+                    console.log("Logged in")
                     state.isLoading = false
                     
                     state.isSuccess = true
@@ -67,6 +70,7 @@ const authSlice = createSlice({
                 }
             })
             .addCase(signIn.rejected, (state, action) => {
+                console.log("Loading")
                 if (!state.isLoading) {
                     return
                 }

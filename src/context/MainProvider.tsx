@@ -1,9 +1,11 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { Dispatch, ReactNode } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { ThemeProvider } from "next-themes";
+import { MUIThemeProvider } from "./mui/mui.context";
+import { CssBaseline } from "@mui/material";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
     return (
@@ -14,7 +16,10 @@ const MainProvider = ({ children }: { children: ReactNode }) => {
                 defaultTheme={"dark"}
                 attribute="class"
             >
-                {children}
+                <MUIThemeProvider>
+                    {/* <CssBaseline /> */}
+                    {children}
+                </MUIThemeProvider>
             </ThemeProvider>
         </Provider>
     );
