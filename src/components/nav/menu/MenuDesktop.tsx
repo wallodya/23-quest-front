@@ -3,10 +3,11 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { Toolbar } from "@mui/material";
 
 const MenuDesktop = () => {
     const { theme, setTheme } = useTheme();
-    const [themeLabel, setThemeLabel] = useState<"Light" | "Dark">("Light")
+    const [themeLabel, setThemeLabel] = useState<"Light" | "Dark">("Light");
 
     // const toggleTheme = () => {
     //     if (theme === "undefined" || typeof window === "undefined") {
@@ -25,26 +26,26 @@ const MenuDesktop = () => {
     // }, [theme])
 
     return (
-        <nav className="col-start-2 grid grid-cols-2 py-4 items-stretch">
-            <div className="px-4 flex gap-4">
+        <Toolbar className="col-start-2 grid grid-cols-2 items-stretch py-4">
+            <div className="flex gap-4 px-4">
                 <span>Logo</span>
                 {/* <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span> */}
             </div>
             <ul className="flex justify-around text-sm font-semibold">
-                <li className="pr-4 text-bold flex items-center hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+                <li className="text-bold flex items-center pr-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                     <Link href="/home">Home</Link>
                 </li>
-                <li className="px-4 text-bold flex items-center hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+                <li className="text-bold flex items-center px-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                     <Link href="/quests">Quests</Link>
                 </li>
-                <li className="px-4 text-bold flex items-center hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+                <li className="text-bold flex items-center px-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                     <Link href="/new">New</Link>
                 </li>
-                <li className="pl-4 text-bold flex items-center hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+                <li className="text-bold flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                     <Link href="/settings">Settings</Link>
                 </li>
             </ul>
-        </nav>
+        </Toolbar>
     );
 };
 

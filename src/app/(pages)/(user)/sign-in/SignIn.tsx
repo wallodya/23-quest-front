@@ -4,35 +4,64 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Button, TextField, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SignInBody } from "../../../../common/utils/server/api.types";
-import { apiSlice, useSignInMutation } from "../../../../store/api/api.slice";
-// import { signIn } from "../../../../store/auth/auth.thunk";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { useSignInMutation } from "../../../../store/api/api.slice";
 
 const SignInSchema = z.object({
-    login: z.string().min(4, {message: "Should be at lest 4"}).max(20),
-    password: z.string().min(4, {message: "Should be at lest 4"}).max(20)
+    login: z.string().min(4, {message: "Login should be at lest 4 letters"}).max(20),
+    password: z.string().min(4, {message: "Password should be at lest 4 letters"}).max(20)
 })
 
 const SignIn = () => {
-    const [ signIn, { isLoading, isSuccess } ] = useSignInMutation()
+    const [
+        signIn,
+        {
+            isLoading: isMutationLoading,
+            isSuccess: isAuthSuccess,
+            isError: isMutationError,
+            error: mutationError,
+        },
+    ] = useSignInMutation();
 
-    const { handleSubmit, control, formState: { errors } } = useForm<SignInBody>({
-        resolver: zodResolver(SignInSchema)
+    const {
+        handleSubmit,
+        control,
+        formState: {
+            errors: { login: loginFieldError, password: passwordFieldError },
+        },
+    } = useForm<SignInBody>({
+        resolver: zodResolver(SignInSchema),
     });
+
+    const router = useRouter();
+
+    const [errorLabel, setErrorLabel] = useState<string>("")
+
+    useEffect(() => {
+        if (!mutationError) {
+            setErrorLabel("")
+            return
+        }
+
+        if (mutationError.statusCode === 503) {
+            setErrorLabel("Internnal error")
+        } else {
+            setErrorLabel("Wrong login or pasword")
+        }
+    }, [isMutationError])
+
+    useEffect(() => {
+        if (isAuthSuccess) {
+            router.push("/home")
+        }
+    }, [isAuthSuccess])
 
     const onSubmit: SubmitHandler<SignInBody> = (data) => {
         signIn(data)
-            .unwrap()
-            .then((payload) => {
-                if (isSuccess) {
-                    alert("Success")
-                } else {
-                    alert("Fail")
-                }
-            })
     };
 
     return (
@@ -53,13 +82,13 @@ const SignIn = () => {
                             label={"Login"}
                             autoFocus={true}
                             inputProps={{
-                                "aria-autocomplete": "none"
+                                "aria-autocomplete": "none",
                             }}
                             variant={"outlined"}
                             onChange={onChange}
                             value={value ?? ""}
-                            error={!!errors.login}
-                            helperText={errors.login?.message}
+                            error={!!loginFieldError}
+                            helperText={loginFieldError?.message}
                         />
                     )}
                 />
@@ -70,20 +99,20 @@ const SignIn = () => {
                         <TextField
                             label={"Password"}
                             inputProps={{
-                                "aria-autocomplete": "none"
+                                "aria-autocomplete": "none",
                             }}
                             variant={"outlined"}
                             onChange={onChange}
                             type={"password"}
                             value={value ?? ""}
-                            error={!!errors.password}
-                            helperText={errors.password?.message}
+                            error={!!passwordFieldError}
+                            helperText={passwordFieldError?.message}
                         />
                     )}
                 />
 
                 <LoadingButton
-                    loading={isLoading}
+                    loading={isMutationLoading}
                     variant="contained"
                     color="primary"
                     className="bg-sky-500 py-2"
@@ -91,6 +120,13 @@ const SignIn = () => {
                 >
                     Sign in
                 </LoadingButton>
+                {
+                    mutationError
+                    &&
+                    <Typography variant="caption" component="span" color="error">
+                        {errorLabel}
+                    </Typography>
+                }
                 <Button
                     variant="text"
                     color="primary"

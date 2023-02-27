@@ -12,6 +12,7 @@ export const apiSlice = createApi({
                 method: "POST",
                 body: signInBody,
             }),
+            transformErrorResponse: (res) => res.data
         }),
         signUp: builder.mutation({
             query: ({ login, password, email }: CreateAccountT) => ({
@@ -23,6 +24,7 @@ export const apiSlice = createApi({
                     password,
                 },
             }),
+            transformErrorResponse: (res) => res.data as { error: string, message: string, statusCode: number }
         }),
     }),
 });

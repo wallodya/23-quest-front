@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    body {
+    html, body {
         min-height: 100vh;
         width: 100vw;
     }

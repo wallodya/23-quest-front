@@ -18,7 +18,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     return (
         <html
             lang="en"
-            className={`${inter.variable}`}
+            className={`${inter.variable} dark`}
             // style={{ colorScheme: themeNameName }}
         >
             <body className="bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100">

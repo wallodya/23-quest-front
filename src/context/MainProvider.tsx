@@ -10,17 +10,17 @@ import { CssBaseline } from "@mui/material";
 const MainProvider = ({ children }: { children: ReactNode }) => {
     return (
         <Provider store={store}>
-            <ThemeProvider
+            {/* <ThemeProvider
                 themes={["dark", "light"]}
                 enableSystem={false}
                 defaultTheme={"dark"}
                 attribute="class"
-            >
+            > */}
                 <MUIThemeProvider>
                     {/* <CssBaseline /> */}
                     {children}
                 </MUIThemeProvider>
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
         </Provider>
     );
 };

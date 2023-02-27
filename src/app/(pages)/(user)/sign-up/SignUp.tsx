@@ -3,8 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Checkbox, FormControlLabel, TextField, Typography } from "@mui/material"
+import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { z } from "zod"
+import { string, z } from "zod"
 import { useSignUpMutation } from "../../../../store/api/api.slice";
 
 const CreateAccountSchema = z.object({
@@ -29,15 +30,27 @@ const CreateAccountSchema = z.object({
 export type CreateAccountT = z.infer<typeof CreateAccountSchema>
 
 const SignUp = () => {
-    const { handleSubmit, control, formState: { errors, dirtyFields } } = useForm<CreateAccountT>({
+    const { handleSubmit, control, formState: { errors } } = useForm<CreateAccountT>({
         resolver: zodResolver(CreateAccountSchema)
     })
 
-    const [signIn, { isLoading, isSuccess }] = useSignUpMutation()
+    const [signIn, { isLoading, isSuccess, error, isError }] = useSignUpMutation()
+
+    const [errorField, setErrorField] = useState<string>("")
 
     const onSubmit: SubmitHandler<CreateAccountT> = (data) => {
         signIn(data)
     }
+
+    useEffect(() => {
+        if (errors.terms && errors.terms.message) {
+            setErrorField(errors.terms.message)
+        } else if (isError && error) {
+            console.log("Error: ");
+            console.log(error);
+            setErrorField(error.message);            
+        }
+    }, [isError, errors.terms]);
 
     return (
         <div className="flex justify-center">
@@ -141,13 +154,13 @@ const SignUp = () => {
                 >
                     Create
                 </LoadingButton>
-                {errors.terms && (
+                {(errors.terms || isError) && (
                     <Typography
                         component={"span"}
                         variant={"caption"}
                         color={"error"}
                     >
-                        {errors.terms?.message}
+                        {errorField}
                     </Typography>
                 )}
             </form>
