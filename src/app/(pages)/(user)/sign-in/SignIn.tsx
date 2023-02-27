@@ -10,6 +10,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SignInBody } from "../../../../common/utils/server/api.types";
 import { useSignInMutation } from "../../../../store/api/api.slice";
+import { isServerErrorData } from "../../../../types/error.types";
 
 const SignInSchema = z.object({
     login: z.string().min(4, {message: "Login should be at lest 4 letters"}).max(20),
@@ -47,10 +48,10 @@ const SignIn = () => {
             return
         }
 
-        if (mutationError.statusCode === 503) {
-            setErrorLabel("Internnal error")
+        if (isServerErrorData(mutationError)) {
+            setErrorLabel(mutationError.message)
         } else {
-            setErrorLabel("Wrong login or pasword")
+            setErrorLabel("Internal error")
         }
     }, [isMutationError])
 

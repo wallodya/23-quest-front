@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CreateAccountT } from "../../app/(pages)/(user)/sign-up/SignUp";
 import { SignInBody } from "../../common/utils/server/api.types";
+import { isStandartServerError } from "../../types/error.types";
+import { User } from "../../types/user.types";
 
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_SERVER_URL }),
     endpoints: (builder) => ({
-        signIn: builder.mutation({
+        signIn: builder.mutation<User, SignInBody>({
             query: (signInBody) => ({
                 url: "/auth/login",
                 method: "POST",
@@ -24,7 +26,7 @@ export const apiSlice = createApi({
                     password,
                 },
             }),
-            transformErrorResponse: (res) => res.data as { error: string, message: string, statusCode: number }
+            transformErrorResponse: (res) => isStandartServerError(res) ? res.data : res
         }),
     }),
 });

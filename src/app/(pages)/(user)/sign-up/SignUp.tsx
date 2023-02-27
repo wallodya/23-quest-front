@@ -1,56 +1,91 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
-import { Checkbox, FormControlLabel, TextField, Typography } from "@mui/material"
+import {
+    Checkbox,
+    FormControlLabel,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { string, z } from "zod"
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 import { useSignUpMutation } from "../../../../store/api/api.slice";
+import { isServerErrorData } from "../../../../types/error.types";
 
-const CreateAccountSchema = z.object({
-    login: z
-        .string()
-        .min(4, { message: "Login is too short" })
-        .max(20, { message: "Login can't be longer than 20 letters" }),
-    email: z.string().email({ message: "E-mail is not valid" }),
-    password: z
-        .string()
-        .min(4, { message: "Password is too short" })
-        .max(20, { message: "Password can't be longer than 20 letters" }),
-    confirmPassword: z.string().min(4).max(20),
-    terms: z.literal(true, {
-        errorMap: () => ({message: "You must accept terms and conditions"})
+const CreateAccountSchema = z
+    .object({
+        login: z
+            .string()
+            .min(4, { message: "Login is too short" })
+            .max(20, { message: "Login can't be longer than 20 letters" }),
+        email: z.string().email({ message: "E-mail is not valid" }),
+        password: z
+            .string()
+            .min(4, { message: "Password is too short" })
+            .max(20, { message: "Password can't be longer than 20 letters" }),
+        confirmPassword: z.string().min(4).max(20),
+        terms: z.literal(true, {
+            errorMap: () => ({
+                message: "You must accept terms and conditions",
+            }),
+        }),
     })
-}).refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords don't match"
-});
+    .refine((data) => data.password === data.confirmPassword, {
+        path: ["confirmPassword"],
+        message: "Passwords don't match",
+    });
 
-export type CreateAccountT = z.infer<typeof CreateAccountSchema>
+export type CreateAccountT = z.infer<typeof CreateAccountSchema>;
 
 const SignUp = () => {
-    const { handleSubmit, control, formState: { errors } } = useForm<CreateAccountT>({
-        resolver: zodResolver(CreateAccountSchema)
-    })
+    const {
+        handleSubmit,
+        control,
+        formState: {
+            errors: {
+                terms: termsFieldError,
+                login: loginFieldError,
+                password: passwordFieldError,
+                confirmPassword: confirmPasswordFieldError,
+                email: emailFieldError,
+            },
+        },
+    } = useForm<CreateAccountT>({
+        resolver: zodResolver(CreateAccountSchema),
+    });
 
-    const [signIn, { isLoading, isSuccess, error, isError }] = useSignUpMutation()
+    const [
+        signIn,
+        {
+            isLoading,
+            isSuccess,
+            error: mutationError,
+            isError: isMutationError,
+        },
+    ] = useSignUpMutation();
 
-    const [errorField, setErrorField] = useState<string>("")
+    const [errorField, setErrorField] = useState<string>("");
 
     const onSubmit: SubmitHandler<CreateAccountT> = (data) => {
-        signIn(data)
-    }
+        signIn(data);
+    };
 
     useEffect(() => {
-        if (errors.terms && errors.terms.message) {
-            setErrorField(errors.terms.message)
-        } else if (isError && error) {
-            console.log("Error: ");
-            console.log(error);
-            setErrorField(error.message);            
+        if (!isMutationError && !termsFieldError) {
+            setErrorField("");
+            return;
         }
-    }, [isError, errors.terms]);
+
+        if (termsFieldError?.message) {
+            setErrorField(termsFieldError.message);
+        } else if (isMutationError && mutationError) {
+            isServerErrorData(mutationError)
+                ? setErrorField(mutationError.message)
+                : setErrorField("Internal error");
+        }
+    }, [isMutationError, termsFieldError]);
 
     return (
         <div className="flex justify-center">
@@ -76,8 +111,8 @@ const SignUp = () => {
                             }}
                             value={value ?? ""}
                             onChange={onChange}
-                            error={!!errors.login}
-                            helperText={errors.login?.message}
+                            error={!!loginFieldError}
+                            helperText={loginFieldError?.message}
                         />
                     )}
                 />
@@ -93,8 +128,8 @@ const SignUp = () => {
                             }}
                             value={value ?? ""}
                             onChange={onChange}
-                            error={!!errors.email}
-                            helperText={errors.email?.message}
+                            error={!!emailFieldError}
+                            helperText={emailFieldError?.message}
                         />
                     )}
                 />
@@ -110,8 +145,8 @@ const SignUp = () => {
                             }}
                             value={value ?? ""}
                             onChange={onChange}
-                            error={!!errors.password}
-                            helperText={errors.password?.message}
+                            error={!!passwordFieldError}
+                            helperText={passwordFieldError?.message}
                         />
                     )}
                 />
@@ -127,8 +162,8 @@ const SignUp = () => {
                             }}
                             value={value ?? ""}
                             onChange={onChange}
-                            error={!!errors.confirmPassword}
-                            helperText={errors.confirmPassword?.message}
+                            error={!!confirmPasswordFieldError}
+                            helperText={confirmPasswordFieldError?.message}
                         />
                     )}
                 />
@@ -154,7 +189,7 @@ const SignUp = () => {
                 >
                     Create
                 </LoadingButton>
-                {(errors.terms || isError) && (
+                {(termsFieldError || isMutationError) && (
                     <Typography
                         component={"span"}
                         variant={"caption"}
@@ -166,6 +201,6 @@ const SignUp = () => {
             </form>
         </div>
     );
-}
+};
 
-export default SignUp
+export default SignUp;
