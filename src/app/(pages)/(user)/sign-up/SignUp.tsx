@@ -14,6 +14,13 @@ import { z } from "zod";
 import { useSignUpMutation } from "../../../../store/api/api.slice";
 import { isServerErrorData } from "../../../../types/error.types";
 
+const specialSymbols = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
+
+const hasLowerCaseRegex = new RegExp("^.*[a-z].*$")
+const hasUpperCaseRegex = new RegExp("^.*[A-Z].*$")
+const hasNumberRegex = new RegExp("^.*[0-9].*$")
+const hasSpecialSymbols = new RegExp(`^.*[${specialSymbols}].*$`)
+
 const CreateAccountSchema = z
     .object({
         login: z
@@ -24,7 +31,11 @@ const CreateAccountSchema = z
         password: z
             .string()
             .min(4, { message: "Password is too short" })
-            .max(20, { message: "Password can't be longer than 20 letters" }),
+            .max(20, { message: "Password can't be longer than 20 letters" })
+            .regex(hasLowerCaseRegex, { message: "Password must include at least 1 lower case letter (a-z)" })
+            .regex(hasUpperCaseRegex, { message: "Password must include at least 1 upper case letter (A-Z)'" })
+            .regex(hasNumberRegex, { message: "Password must include at least 1 number (0-9)" }),
+            // .regex(hasSpecialSymbols, { message: "Password must include at least 1 special symbols like '$', '%', etc." })
         confirmPassword: z.string().min(4).max(20),
         terms: z.literal(true, {
             errorMap: () => ({
@@ -89,7 +100,7 @@ const SignUp = () => {
 
     return (
         <div className="flex justify-center">
-            <form className="flex flex-col gap-4 ">
+            <form className="w-64 flex flex-col gap-4 transition-all">
                 <Typography
                     variant="h4"
                     component="h1"
@@ -147,6 +158,7 @@ const SignUp = () => {
                             onChange={onChange}
                             error={!!passwordFieldError}
                             helperText={passwordFieldError?.message}
+                            fullWidth
                         />
                     )}
                 />
