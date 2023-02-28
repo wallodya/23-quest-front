@@ -55,11 +55,11 @@ const SignIn = () => {
         }
     }, [isMutationError])
 
-    useEffect(() => {
-        if (isAuthSuccess) {
-            router.push("/home")
-        }
-    }, [isAuthSuccess])
+    // useEffect(() => {
+    //     if (isAuthSuccess) {
+    //         router.push("/home")
+    //     }
+    // }, [isAuthSuccess]
 
     const onSubmit: SubmitHandler<SignInBody> = (data) => {
         signIn(data)

@@ -24,9 +24,9 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         setIsMounted(true);
         console.log('isMounted effect', isMounted)
-        // return () => {
-        //     setIsMounted(false);
-        // };
+        return () => {
+            setIsMounted(false);
+        };
     }, []);
 
     useEffect(() => {

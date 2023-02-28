@@ -6,8 +6,28 @@ export type User = {
     login: string;
     email: string;
     isEmailConfirmed: boolean;
-    dateOfBirth: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    dateOfBirth: string;
+    updatedAt: string;
+    createdAt: string;
 }
 
+export type UserState = Partial<User> & {
+    token?: string;
+    refreshedAt: string;
+    isSignedIn: boolean;
+};
+
+
+export const isUserType = (user: unknown): user is User => {
+    return (
+        typeof user === "object" &&
+        user !== null &&
+        "uuid" in user &&
+        "login" in user &&
+        "email" in user &&
+        "isEmailConfirmed" in user &&
+        "dateOfBirth" in user &&
+        "createdAt" in user &&
+        "updatedAt" in user
+    );
+}
