@@ -6,6 +6,7 @@ import { store } from "../store/store";
 import { ThemeProvider } from "next-themes";
 import { MUIThemeProvider } from "./mui/mui.context";
 import { CssBaseline } from "@mui/material";
+import InitUser from "../components/misc/InitUser";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
     return (
@@ -21,6 +22,7 @@ const MainProvider = ({ children }: { children: ReactNode }) => {
                     {children}
                 </MUIThemeProvider>
             {/* </ThemeProvider> */}
+            <InitUser/>
         </Provider>
     );
 };

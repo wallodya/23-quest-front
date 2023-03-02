@@ -31,3 +31,7 @@ export const isUserType = (user: unknown): user is User => {
         "updatedAt" in user
     );
 }
+
+export const isUserStateType = (state: unknown): state is UserState => {
+    return typeof state === "object" && state !== null && "refreshedAt" in state && "isSignedIn" in state
+}

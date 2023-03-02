@@ -14,7 +14,7 @@ type AuthState = {
     error?: any,
     user?: User,
     userToken?: string | null,
-}
+}   
 
 const initialState: AuthState = {
     isLoading: false,

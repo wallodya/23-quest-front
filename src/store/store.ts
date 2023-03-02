@@ -8,7 +8,7 @@ import {
 import { apiSlice } from "./api/api.slice";
 import authReducer from "./auth/auth.slice";
 import userReducer from "../app/(pages)/(user)/user.slice";
-import { saveUserMiddleware } from "../app/(pages)/(user)/user.utils";
+import { refreshUserMiddleware, removeUserMiddleware, saveUserMiddleware } from "../app/(pages)/(user)/user.utils";
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -20,7 +20,12 @@ export const store = configureStore({
     reducer: rootReducer,
     devTools: true,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(apiSlice.middleware, saveUserMiddleware),
+        getDefaultMiddleware().concat(
+            apiSlice.middleware,
+            saveUserMiddleware,
+            removeUserMiddleware,
+            refreshUserMiddleware,
+        ),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

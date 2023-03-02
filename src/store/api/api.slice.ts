@@ -13,9 +13,10 @@ export const apiSlice = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).user.token
             if (token) {
-                headers.set("Authorization", `Bearer ${token}`)
+                headers.set("Authorization", `${token}`)
             }
         },
+        credentials: "include",
     }),
     tagTypes: ["user"],
     endpoints: (builder) => ({
@@ -44,6 +45,18 @@ export const apiSlice = createApi({
                 };
             },
         }),
+        signOut: builder.mutation<UserState, void>({
+            query: () => ({
+                url: "/auth/logout",
+                method: "POST",
+            }),
+            transformResponse: () => {
+                return {
+                    isSignedIn: false,
+                    refreshedAt: (new Date()).toDateString()
+                }
+            }
+        }),
         signUp: builder.mutation<UserState | null, CreateAccountT>({
             query: ({ login, password, email }) => ({
                 url: "auth/signup",
@@ -57,7 +70,7 @@ export const apiSlice = createApi({
             transformErrorResponse: (res) =>
                 isStandartServerError(res) ? res.data : res,
             transformResponse: (res: User, meta) => {
-                console.log("res: ", res);
+
                 if (!meta?.response) {
                     return null;
                 }
@@ -71,11 +84,32 @@ export const apiSlice = createApi({
                     ...res,
                     token,
                     isSignedIn: true,
-                    refreshedAt: new Date().toDateString(),
+                    refreshedAt: (new Date()).toDateString(),
                 };
             },
         }),
+        refresh: builder.mutation<UserState, void>({
+            query: () => ({
+                url: "auth/refresh",
+                method: "GET"
+            }),
+            transformResponse: ({ res, meta }) => {
+
+                const token = meta.response.headers.get("Authorization");
+                if (!token) {
+                    return null
+                }
+
+                return {
+                    ...res,
+                    token,
+                    isSignedIn: true,
+                    refreshedAt: (new Date()).toDateString()
+                }
+            }
+        })
     }),
 });
 
-export const { useSignInMutation, useSignUpMutation } = apiSlice;
+export const { useSignInMutation, useSignUpMutation, useSignOutMutation } =
+    apiSlice;
