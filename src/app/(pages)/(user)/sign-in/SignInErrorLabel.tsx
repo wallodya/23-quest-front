@@ -12,7 +12,7 @@ const useErrorMessage = ({
 }: {
     error: FetchBaseQueryError | SerializedError | undefined;
     isError: boolean;
-}) => {
+}): string => {
     const [errorLabel, setErrorLabel] = useState<string>("");
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const useErrorMessage = ({
     return errorLabel
 };
 
-const ErrorLabel: FC<{
+const SignInErrorLabel: FC<{
     error: FetchBaseQueryError | SerializedError | undefined;
     isError: boolean;
 }> = ({ error, isError }) => {
@@ -49,4 +49,4 @@ const ErrorLabel: FC<{
     }
 };
 
-export default ErrorLabel
+export default SignInErrorLabel

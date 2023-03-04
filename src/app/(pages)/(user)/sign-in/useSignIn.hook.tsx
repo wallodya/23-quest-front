@@ -9,7 +9,7 @@ import { SubmitHandler } from "react-hook-form";
 import { SignInBody } from "../../../../common/utils/server/api.types";
 import { useSignInMutation } from "../../../../store/api/api.slice";
 import { isServerErrorData } from "../../../../types/error.types";
-import ErrorLabel from "./useErrorLabel.hook";
+import SignInErrorLabel from "./useSignInErrorLabel.hook";
 
 
 type UseSignInArgsType = {
@@ -55,7 +55,7 @@ export const useSignIn: UseSignInType = ({
 
     return {
         onSubmit,
-        BottomErrorLabel: () => <ErrorLabel error={error} isError={isError}/>,
+        BottomErrorLabel: () => <SignInErrorLabel error={error} isError={isError}/>,
         mutation: {
             isLoading,
             isError,

@@ -10,45 +10,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import { useSignUpMutation } from "../../../../store/api/api.slice";
 import { isServerErrorData } from "../../../../types/error.types";
-
-const specialSymbols = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
-
-const hasLowerCaseRegex = new RegExp("^.*[a-z].*$")
-const hasUpperCaseRegex = new RegExp("^.*[A-Z].*$")
-const hasNumberRegex = new RegExp("^.*[0-9].*$")
-const hasSpecialSymbols = new RegExp(`^.*[${specialSymbols}].*$`)
-
-const CreateAccountSchema = z
-    .object({
-        login: z
-            .string()
-            .min(4, { message: "Login is too short" })
-            .max(20, { message: "Login can't be longer than 20 letters" }),
-        email: z.string().email({ message: "E-mail is not valid" }),
-        password: z
-            .string()
-            .min(4, { message: "Password is too short" })
-            .max(20, { message: "Password can't be longer than 20 letters" })
-            .regex(hasLowerCaseRegex, { message: "Password must include at least 1 lower case letter (a-z)" })
-            .regex(hasUpperCaseRegex, { message: "Password must include at least 1 upper case letter (A-Z)'" })
-            .regex(hasNumberRegex, { message: "Password must include at least 1 number (0-9)" }),
-            // .regex(hasSpecialSymbols, { message: "Password must include at least 1 special symbols like '$', '%', etc." })
-        confirmPassword: z.string().min(4).max(20),
-        terms: z.literal(true, {
-            errorMap: () => ({
-                message: "You must accept terms and conditions",
-            }),
-        }),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        path: ["confirmPassword"],
-        message: "Passwords don't match",
-    });
-
-export type CreateAccountT = z.infer<typeof CreateAccountSchema>;
+import { CreateAccountT, SignUpSchema } from "./signUp.schema";
+import { useSignUp } from "./useSignUp.hook";
 
 const SignUp = () => {
     const {
@@ -64,39 +29,16 @@ const SignUp = () => {
             },
         },
     } = useForm<CreateAccountT>({
-        resolver: zodResolver(CreateAccountSchema),
+        resolver: zodResolver(SignUpSchema),
     });
 
-    const [
-        signIn,
-        {
-            isLoading,
-            isSuccess,
-            error: mutationError,
-            isError: isMutationError,
-        },
-    ] = useSignUpMutation();
-
-    const [errorField, setErrorField] = useState<string>("");
-
-    const onSubmit: SubmitHandler<CreateAccountT> = (data) => {
-        signIn(data);
-    };
-
-    useEffect(() => {
-        if (!isMutationError && !termsFieldError) {
-            setErrorField("");
-            return;
-        }
-
-        if (termsFieldError?.message) {
-            setErrorField(termsFieldError.message);
-        } else if (isMutationError && mutationError) {
-            isServerErrorData(mutationError)
-                ? setErrorField(mutationError.message)
-                : setErrorField("Internal error");
-        }
-    }, [isMutationError, termsFieldError]);
+    const {
+        onSubmit,
+        BottomErrorLabel,
+        mutation: { isLoading: isMutationLoading, isError: isMutationError },
+    } = useSignUp({
+        termsFieldError,
+    });
 
     return (
         <div className="flex justify-center">
@@ -193,7 +135,7 @@ const SignUp = () => {
                     }
                 />
                 <LoadingButton
-                    loading={isLoading}
+                    loading={isMutationLoading}
                     variant={"contained"}
                     color={"primary"}
                     className={"bg-sky-500 py-2"}
@@ -201,15 +143,7 @@ const SignUp = () => {
                 >
                     Create
                 </LoadingButton>
-                {(termsFieldError || isMutationError) && (
-                    <Typography
-                        component={"span"}
-                        variant={"caption"}
-                        color={"error"}
-                    >
-                        {errorField}
-                    </Typography>
-                )}
+                <BottomErrorLabel/>
             </form>
         </div>
     );
