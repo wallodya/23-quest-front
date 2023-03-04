@@ -4,13 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Button, TextField, Typography } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SignInBody } from "../../../../common/utils/server/api.types";
-import { useSignInMutation } from "../../../../store/api/api.slice";
-import { isServerErrorData } from "../../../../types/error.types";
+import { useSignIn } from "./useSignIn.hook";
 
 const SignInSchema = z.object({
     login: z.string().min(4, {message: "Login should be at lest 4 letters"}).max(20),
@@ -18,15 +15,6 @@ const SignInSchema = z.object({
 })
 
 const SignIn = () => {
-    const [
-        signIn,
-        {
-            isLoading: isMutationLoading,
-            isSuccess: isAuthSuccess,
-            isError: isMutationError,
-            error: mutationError,
-        },
-    ] = useSignInMutation();
 
     const {
         handleSubmit,
@@ -38,32 +26,11 @@ const SignIn = () => {
         resolver: zodResolver(SignInSchema),
     });
 
-    const router = useRouter();
-
-    const [errorLabel, setErrorLabel] = useState<string>("")
-
-    useEffect(() => {
-        if (!mutationError) {
-            setErrorLabel("")
-            return
-        }
-
-        if (isServerErrorData(mutationError)) {
-            setErrorLabel(mutationError.message)
-        } else {
-            setErrorLabel("Internal error")
-        }
-    }, [isMutationError])
-
-    // useEffect(() => {
-    //     if (isAuthSuccess) {
-    //         router.push("/home")
-    //     }
-    // }, [isAuthSuccess]
-
-    const onSubmit: SubmitHandler<SignInBody> = (data) => {
-        signIn(data)
-    };
+    const {
+        onSubmit,
+        BottomErrorLabel,
+        mutation: { isLoading: isMutationLoading, error: mutationError },
+    } = useSignIn({});
 
     return (
         <div className="flex justify-center">
@@ -121,13 +88,7 @@ const SignIn = () => {
                 >
                     Sign in
                 </LoadingButton>
-                {
-                    mutationError
-                    &&
-                    <Typography variant="caption" component="span" color="error">
-                        {errorLabel}
-                    </Typography>
-                }
+                <BottomErrorLabel/>
                 <Button
                     variant="text"
                     color="primary"
