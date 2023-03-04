@@ -34,7 +34,7 @@ const SignIn = () => {
 
     return (
         <div className="flex justify-center">
-            <form className="flex flex-col gap-4 ">
+            <form className="w-64 flex flex-col gap-4 ">
                 <Typography
                     variant="h4"
                     component={"h1"}
