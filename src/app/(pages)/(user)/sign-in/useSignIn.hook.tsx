@@ -9,7 +9,7 @@ import { SubmitHandler } from "react-hook-form";
 import { SignInBody } from "../../../../common/utils/server/api.types";
 import { useSignInMutation } from "../../../../store/api/api.slice";
 import { isServerErrorData } from "../../../../types/error.types";
-import SignInErrorLabel from "./useSignInErrorLabel.hook";
+import SignInErrorLabel from "./SignInErrorLabel";
 
 
 type UseSignInArgsType = {
