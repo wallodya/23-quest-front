@@ -1,15 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import { Toolbar } from "@mui/material";
 import { useTheme } from "next-themes";
-import { Button, Divider, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { dark } from "@mui/material/styles/createPalette";
-import { LogoutRounded, MenuRounded, Person, PersonRounded } from "@mui/icons-material";
-import NavBarDesktop from "./NavBarDesktop";
-import NavBarDesktopGuest from "./NavBarDesktopGuest";
+import { useState } from "react";
 import { useAppSelector } from "../../../store/hooks";
+import NavBarDesktop from "../etc/NavBarDesktop";
+import NavBarDesktopGuest from "../etc/NavBarDesktopGuest";
 
 const MenuDesktop = () => {
     const { isSignedIn } = useAppSelector((state) => state.user);
