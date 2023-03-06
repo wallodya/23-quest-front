@@ -4,7 +4,7 @@ import React, { ReactNode, useState } from "react";
 import GlobalLayout from "../components/layouts/global.layout";
 import MainProvider from "../context/MainProvider";
 import "../styles/globals.css";
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 
 const inter = Inter({
     variable: "--font-inter",
