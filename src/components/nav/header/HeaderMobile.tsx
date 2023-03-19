@@ -1,33 +1,10 @@
 "use client";
 
-import {
-    LoginRounded,
-    LogoutRounded,
-    MenuRounded,
-    PersonRounded,
-    SettingsRounded,
-} from "@mui/icons-material";
-import {
-    AppBar,
-    Button,
-    Divider,
-    Drawer,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    MenuItem,
-    Typography,
-} from "@mui/material";
-import { MaybePromise } from "@reduxjs/toolkit/dist/query/tsHelpers";
+import MenuRounded from "@mui/icons-material/MenuRounded";
+import Button from "@mui/material/Button";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useSignOut } from "../../../common/hooks/useSignOut.hook";
-import {
-    useSignInMutation,
-    useSignOutMutation,
-} from "../../../store/api/api.slice";
 import { useAppSelector } from "../../../store/hooks";
 import DrawerSideMobie, { useMobileDrawer } from "../menu/DrawerSideMobie";
 

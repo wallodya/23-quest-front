@@ -1,6 +1,6 @@
 "use client";
 
-import { Toolbar } from "@mui/material";
+import Toolbar from "@mui/material/Toolbar";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useAppSelector } from "../../../store/hooks";

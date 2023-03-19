@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { LogoutRounded, MenuRounded, PersonRounded } from "@mui/icons-material";
+import LogoutRounded from "@mui/icons-material/LogoutRounded";
+import MenuRounded from "@mui/icons-material/MenuRounded";
+import PersonRounded from "@mui/icons-material/PersonRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { Button, Divider, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import { useSignOutMutation } from "../../../store/api/api.slice";
@@ -22,12 +29,12 @@ const NavBarDesktop = () => {
         setIsOpen(false);
     };
 
-    const [signOut, {}] = useSignOutMutation()
+    const [signOut, {}] = useSignOutMutation();
     const handleSignOut = () => {
         signOut()
             .unwrap()
-            .catch(err => console.log(err))
-    }
+            .catch((err) => console.log(err));
+    };
 
     return (
         <ul className="col-start-3 flex justify-around text-sm font-semibold">

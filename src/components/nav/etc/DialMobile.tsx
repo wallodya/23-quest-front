@@ -1,5 +1,8 @@
-import { ListAltRounded, TaskRounded } from "@mui/icons-material";
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import ListAltRounded from "@mui/icons-material/ListAltRounded";
+import TaskRounded from "@mui/icons-material/TaskRounded";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import React, { useState } from "react";
 
 const actions = [

@@ -1,12 +1,13 @@
-import { LogoutRounded, PersonRounded } from "@mui/icons-material";
 import SettingsRounded from "@mui/icons-material/SettingsRounded";
-import Divider from "@mui/material/Divider/Divider";
-import Drawer from "@mui/material/Drawer/Drawer";
-import List from "@mui/material/List/List";
-import ListItem from "@mui/material/ListItem/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText/ListItemText";
-import Typography from "@mui/material/Typography/Typography";
+import LogoutRounded from "@mui/icons-material/LogoutRounded";
+import PersonRounded from "@mui/icons-material/PersonRounded";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import React, { FC, useState } from "react";

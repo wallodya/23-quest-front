@@ -1,25 +1,23 @@
 "use client";
 
-import { ThemeProvider } from "@mui/system";
-import { createTheme, Theme, ThemeOptions } from "@mui/material";
-import { useTheme } from "next-themes";
-import { Dispatch, ReactNode, useEffect, useMemo, useState } from "react";
-import { red } from "@mui/material/colors";
+import type { Theme, ThemeOptions } from "@mui/material";
+import { ThemeProvider, unstable_createMuiStrictModeTheme } from "@mui/material/styles";
+import { ReactNode, useState } from "react";
 
 const baseTheme: ThemeOptions = {};
 const darkTheme: ThemeOptions = {
     palette: {
         mode: "dark",
         primary: {
-            light: '#0ea5e9',
-            main: '#38bdf8',
-            dark: '#38bdf8',
-            contrastText: '#f1f5f9',
+            light: "#0ea5e9",
+            main: "#38bdf8",
+            dark: "#38bdf8",
+            contrastText: "#f1f5f9",
         },
         background: {
-            paper: "#38bdf8", 
-            default: "#38bdf8" 
-        }
+            paper: "#38bdf8",
+            default: "#38bdf8",
+        },
         // secondary: {
         //     light: '#0ea5e9',
         //     main: '#3f50b5',
@@ -37,7 +35,7 @@ const lightTheme: ThemeOptions = {
 export const MUIThemeProvider = ({ children }: { children: ReactNode }) => {
     // const { theme } = useTheme();
     const [muiTheme, setMuiTheme] = useState<Theme>(
-        createTheme({ ...darkTheme, ...baseTheme }),
+        unstable_createMuiStrictModeTheme({ ...darkTheme, ...baseTheme }),
     );
 
     // useEffect(() => {

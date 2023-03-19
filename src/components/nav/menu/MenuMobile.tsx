@@ -4,7 +4,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import GradingRoundedIcon from '@mui/icons-material/GradingRounded';
-import { AppBar } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from 'next/navigation';

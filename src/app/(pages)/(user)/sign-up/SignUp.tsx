@@ -1,13 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import {
-    Checkbox,
-    FormControlLabel,
-    TextField,
-    Typography,
-} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useSignUpMutation } from "../../../../store/api/api.slice";

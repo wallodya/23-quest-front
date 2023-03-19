@@ -1,8 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import { Button, TextField, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,7 +17,7 @@ const SignInSchema = z.object({
 })
 
 const SignIn = () => {
-
+    console.log("test2")
     const {
         handleSubmit,
         control,

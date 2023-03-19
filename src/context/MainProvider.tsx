@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { ThemeProvider } from "next-themes";
 import { MUIThemeProvider } from "./mui/mui.context";
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import InitUser from "../components/misc/InitUser";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {

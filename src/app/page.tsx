@@ -1,4 +1,4 @@
-import { Metadata } from "next"
+import type { Metadata } from "next"
 import Landing from "./(landing)/landing"
 
 export const metadata: Metadata = {

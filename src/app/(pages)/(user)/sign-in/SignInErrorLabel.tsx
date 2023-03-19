@@ -1,6 +1,6 @@
 "use client"
 
-import Typography from "@mui/material/Typography/Typography";
+import Typography from "@mui/material/Typography";
 import { SerializedError } from "@reduxjs/toolkit/dist/createAsyncThunk";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/fetchBaseQuery";
 import { FC, useEffect, useState } from "react";

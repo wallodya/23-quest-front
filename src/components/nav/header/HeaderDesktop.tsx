@@ -1,6 +1,6 @@
 "use-client";
 
-import { AppBar } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
 import Link from "next/link";
 import React from "react";
 import MenuDesktop from "../menu/MenuDesktop";

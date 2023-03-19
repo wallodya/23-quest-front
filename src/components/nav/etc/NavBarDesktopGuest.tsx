@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button/Button";
-import Typography from "@mui/material/Typography/Typography";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import React from "react";
 import { useSignInMutation } from "../../../store/api/api.slice";
