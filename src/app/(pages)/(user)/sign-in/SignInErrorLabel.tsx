@@ -1,6 +1,5 @@
 "use client"
 
-import Typography from "@mui/material/Typography";
 import { SerializedError } from "@reduxjs/toolkit/dist/createAsyncThunk";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/fetchBaseQuery";
 import { FC, useEffect, useState } from "react";
@@ -40,9 +39,9 @@ const SignInErrorLabel: FC<{
 
     if (isError) {
         return (
-            <Typography variant="caption" component="span" color="error">
+            <span>
                 {errorLabel}
-            </Typography>
+            </span>
         );
     } else {
         return <></>;
