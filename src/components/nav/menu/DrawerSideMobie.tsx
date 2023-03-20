@@ -1,13 +1,3 @@
-import SettingsRounded from "@mui/icons-material/SettingsRounded";
-import LogoutRounded from "@mui/icons-material/LogoutRounded";
-import PersonRounded from "@mui/icons-material/PersonRounded";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import React, { FC, useState } from "react";
@@ -38,52 +28,53 @@ const DrawerSideMobie: FC<DrawerSideMobieProps> = ({ toggleDrawer, isDrawerOpen 
     })
 
     return (
-        <Drawer
-            anchor="left"
-            open={isDrawerOpen}
-            onClose={toggleDrawer}
-            PaperProps={{
-                className:
-                    "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 pr-7 py-5",
-            }}
-        >
-            <List>
-                <Link href="profile">
-                    <ListItem className="flex gap-3">
-                        <ListItemIcon style={{ minWidth: "auto" }}>
-                            <PersonRounded />
-                        </ListItemIcon>
-                        <ListItemText>
-                            <Typography>Profile</Typography>
-                        </ListItemText>
-                    </ListItem>
-                </Link>
+        // <Drawer
+        //     anchor="left"
+        //     open={isDrawerOpen}
+        //     onClose={toggleDrawer}
+        //     PaperProps={{
+        //         className:
+        //             "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 pr-7 py-5",
+        //     }}
+        // >
+        //     <List>
+        //         <Link href="profile">
+        //             <ListItem className="flex gap-3">
+        //                 <ListItemIcon style={{ minWidth: "auto" }}>
+        //                     <PersonRounded />
+        //                 </ListItemIcon>
+        //                 <ListItemText>
+        //                     <Typography>Profile</Typography>
+        //                 </ListItemText>
+        //             </ListItem>
+        //         </Link>
 
-                <Link href="settings">
-                    <ListItem className="flex gap-3">
-                        <ListItemIcon style={{ minWidth: "auto" }}>
-                            <SettingsRounded />
-                        </ListItemIcon>
-                        <ListItemText>
-                            <Typography>Settings</Typography>
-                        </ListItemText>
-                    </ListItem>
-                </Link>
-            </List>
+        //         <Link href="settings">
+        //             <ListItem className="flex gap-3">
+        //                 <ListItemIcon style={{ minWidth: "auto" }}>
+        //                     <SettingsRounded />
+        //                 </ListItemIcon>
+        //                 <ListItemText>
+        //                     <Typography>Settings</Typography>
+        //                 </ListItemText>
+        //             </ListItem>
+        //         </Link>
+        //     </List>
 
-            <Divider />
+        //     <Divider />
 
-            <List>
-                <ListItem onClick={handleSignOut} className="flex gap-3">
-                    <ListItemIcon style={{ minWidth: "auto" }}>
-                        <LogoutRounded />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography>Log out</Typography>
-                    </ListItemText>
-                </ListItem>
-            </List>
-        </Drawer>
+        //     <List>
+        //         <ListItem onClick={handleSignOut} className="flex gap-3">
+        //             <ListItemIcon style={{ minWidth: "auto" }}>
+        //                 <LogoutRounded />
+        //             </ListItemIcon>
+        //             <ListItemText>
+        //                 <Typography>Log out</Typography>
+        //             </ListItemText>
+        //         </ListItem>
+        //     </List>
+        // </Drawer>
+        <></>
     );
 };
 
