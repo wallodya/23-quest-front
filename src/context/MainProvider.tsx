@@ -4,8 +4,6 @@ import React, { Dispatch, ReactNode } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { ThemeProvider } from "next-themes";
-import { MUIThemeProvider } from "./mui/mui.context";
-import CssBaseline from "@mui/material/CssBaseline";
 import InitUser from "../components/misc/InitUser";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
@@ -17,10 +15,7 @@ const MainProvider = ({ children }: { children: ReactNode }) => {
                 defaultTheme={"dark"}
                 attribute="class"
             > */}
-                <MUIThemeProvider>
-                    {/* <CssBaseline /> */}
                     {children}
-                </MUIThemeProvider>
             {/* </ThemeProvider> */}
             <InitUser/>
         </Provider>
