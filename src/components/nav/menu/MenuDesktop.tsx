@@ -1,6 +1,5 @@
 "use client";
 
-import Toolbar from "@mui/material/Toolbar";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useAppSelector } from "../../../store/hooks";
@@ -30,7 +29,7 @@ const MenuDesktop = () => {
     // }, [theme])
 
     return (
-        <Toolbar className="col-start-2 grid grid-cols-3 items-stretch">
+        <div className="col-start-2 grid grid-cols-3 items-stretch">
             <div className="flex gap-4">
                 <div className="flex flex-col justify-center">
                     <span>Logo</span>
@@ -38,7 +37,7 @@ const MenuDesktop = () => {
                 {/* <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span> */}
             </div>
             {isSignedIn ? <NavBarDesktop /> : <NavBarDesktopGuest />}
-        </Toolbar>
+        </div>
     );
 };
 

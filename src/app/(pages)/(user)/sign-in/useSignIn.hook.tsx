@@ -45,6 +45,7 @@ export const useSignIn: UseSignInType = ({ onSuccess, onError, onLoading }) => {
     }, [isSuccess, isError, isLoading]);
 
     const onSubmit: SubmitHandler<SignInBody> = (data) => {
+        console.log('data', data)
         signIn(data);
     };
 

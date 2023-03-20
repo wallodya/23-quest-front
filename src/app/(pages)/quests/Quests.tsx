@@ -1,15 +1,5 @@
 "use client";
 
-import AlarmOnRounded from "@mui/icons-material/AlarmOnRounded";
-import CheckCircleOutlineRounded from "@mui/icons-material/CheckCircleOutlineRounded";
-import EventRounded from "@mui/icons-material/EventRounded";
-import Replay10Rounded from "@mui/icons-material/Replay10Rounded";
-import Card from "@mui/material/Card"
-import CardActionArea from "@mui/material/CardActionArea"
-import CardContent from "@mui/material/CardContent"
-import Chip from "@mui/material/Chip"
-import Divider from "@mui/material/Divider"
-import Typography from "@mui/material/Typography"
 import {
     FC,
     JSXElementConstructor,
@@ -88,7 +78,7 @@ const typeChipMap = new Map<
             label: "Basic",
             textColor: "text-neutral-400",
             outlineColor: "border-neutral-400",
-            icon: <CheckCircleOutlineRounded className={"text-neutral-400"} />,
+            icon: <></>,
         },
     ],
     [
@@ -97,7 +87,7 @@ const typeChipMap = new Map<
             label: "Periodic",
             textColor: "text-sky-600",
             outlineColor: "border-sky-600",
-            icon: <EventRounded className="text-sky-600" />,
+            icon: <></>,
         },
     ],
     [
@@ -106,7 +96,7 @@ const typeChipMap = new Map<
             label: "Repeat",
             textColor: "text-violet-400",
             outlineColor: "border-violet-400",
-            icon: <Replay10Rounded className="text-violet-400" />,
+            icon: <></>,
         },
     ],
     [
@@ -115,11 +105,11 @@ const typeChipMap = new Map<
             label: "Timer",
             textColor: "text-fuchsia-600",
             outlineColor: "border-fuchsia-600",
-            icon: <AlarmOnRounded className="text-fuchsia-600" />,
+            icon: <></>,
         },
     ],
 ]);
-
+ 
 const TaskCard: FC<TaskType> = ({
     title,
     text,
@@ -134,56 +124,57 @@ const TaskCard: FC<TaskType> = ({
     const difficultyText = difficultyTextMap.get(difficulty);
     const difficultyTextColor = difficultyColorMap.get(difficulty);
     return (
-        <Card
-            variant="outlined"
-            className={`relative border bg-neutral-900 ${priorityOutlineColor}`}
-        >
-            <Typography
-                variant="caption"
-                className={`${priorityTextColor} absolute right-3 top-1 left-auto`}
-            >
-                {header}
-            </Typography>
-            <CardActionArea>
-                <CardContent className="pt-6">
-                    <Typography variant="body1" component="div">
-                        {title}
-                    </Typography>
-                </CardContent>
-                <Divider />
-                <CardContent>
-                    <Typography
-                        variant="caption"
-                        component="div"
-                        className={`font-bold ${difficultyTextColor}`}
-                    >
-                        {difficultyText}
-                    </Typography>
-                    {types.map((type) => {
-                        const chip = typeChipMap.get(type);
-                        if (!chip) {
-                            return <></>;
-                        }
-                        const { label, textColor, outlineColor, icon } = chip;
-                        return (
-                            <Chip
-                                key={label}
-                                label={label}
-                                icon={icon}
-                                variant="outlined"
-                                className={`${textColor} ${outlineColor}`}
-                                size="small"
-                            />
-                        );
-                    })}
-                </CardContent>
-                <Divider />
-                {/* <CardActions> */}
-                {/* <Button>Complete</Button>
-                    <Button>Start</Button> */}
-                {/* </CardActions> */}
-            </CardActionArea>
-        </Card>
+        <></>
+        // <Card
+        //     variant="outlined"
+        //     className={`relative border bg-neutral-900 ${priorityOutlineColor}`}
+        // >
+        //     <Typography
+        //         variant="caption"
+        //         className={`${priorityTextColor} absolute right-3 top-1 left-auto`}
+        //     >
+        //         {header}
+        //     </Typography>
+        //     <CardActionArea>
+        //         <CardContent className="pt-6">
+        //             <Typography variant="body1" component="div">
+        //                 {title}
+        //             </Typography>
+        //         </CardContent>
+        //         <Divider />
+        //         <CardContent>
+        //             <Typography
+        //                 variant="caption"
+        //                 component="div"
+        //                 className={`font-bold ${difficultyTextColor}`}
+        //             >
+        //                 {difficultyText}
+        //             </Typography>
+        //             {types.map((type) => {
+        //                 const chip = typeChipMap.get(type);
+        //                 if (!chip) {
+        //                     return <></>;
+        //                 }
+        //                 const { label, textColor, outlineColor, icon } = chip;
+        //                 return (
+        //                     <Chip
+        //                         key={label}
+        //                         label={label}
+        //                         icon={icon}
+        //                         variant="outlined"
+        //                         className={`${textColor} ${outlineColor}`}
+        //                         size="small"
+        //                     />
+        //                 );
+        //             })}
+        //         </CardContent>
+        //         <Divider />
+        //         {/* <CardActions> */}
+        //         {/* <Button>Complete</Button>
+        //             <Button>Start</Button> */}
+        //         {/* </CardActions> */}
+        //     </CardActionArea>
+        // </Card>
     );
 };
 

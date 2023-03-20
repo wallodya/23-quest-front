@@ -1,17 +1,21 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useSignUpMutation } from "../../../../store/api/api.slice";
-import { isServerErrorData } from "../../../../types/error.types";
+import Button from "components/ui/Button";
+import Divider from "components/ui/Divider";
+import FormWrapper from "components/ui/FormWrapper";
+import InputField, { InputFieldProps } from "components/ui/InputField";
+import Submit from "components/ui/Submit";
+import Heading from "components/ui/typography/Heading";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
 import { CreateAccountT, SignUpSchema } from "./signUp.schema";
 import { useSignUp } from "./useSignUp.hook";
 
 const SignUp = () => {
     const {
         handleSubmit,
-        control,
+        register,
         formState: {
             errors: {
                 terms: termsFieldError,
@@ -33,111 +37,71 @@ const SignUp = () => {
         termsFieldError,
     });
 
+    const formFields: InputFieldProps[] = [
+        {
+            fieldName: "login",
+            labelText: "Login",
+            inputError: loginFieldError,
+            registerFn: register,
+            required: true,
+        },
+        {
+            fieldName: "email",
+            labelText: "E-mail",
+            inputError: emailFieldError,
+            registerFn: register,
+            type: "email",
+            required: true,
+        },
+        {
+            fieldName: "password",
+            labelText: "Password",
+            inputError: passwordFieldError,
+            registerFn: register,
+            type: "password",
+            required: true,
+        },
+        {
+            fieldName: "confirmPassword",
+            labelText: "Confirm your password",
+            inputError: confirmPasswordFieldError,
+            registerFn: register,
+            type: "password",
+            required: true,
+        },
+        {
+            fieldName: "terms",
+            labelText: "I agree with terms and conditions",
+            inputError: termsFieldError,
+            registerFn: register,
+            type: "checkbox",
+            required: true,
+        },
+    ]
+
     return (
         <div className="flex justify-center">
-            <form className="w-64 flex flex-col gap-4 transition-all">
-                {/* <Typography
-                    variant="h4"
-                    component="h1"
-                    className="mb-4 font-bold"
-                >
+            <FormWrapper
+                className="flex w-64 flex-col gap-4 transition-all"
+                autoComplete="off"
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <Heading level={1} className="font-bold text-4xl">
                     Create
                     <br />
                     account
-                </Typography>
-                <Controller
-                    name="login"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <TextField
-                            label={"Login"}
-                            autoFocus={true}
-                            inputProps={{
-                                "aria-autocomplete": "none",
-                            }}
-                            value={value ?? ""}
-                            onChange={onChange}
-                            error={!!loginFieldError}
-                            helperText={loginFieldError?.message}
-                        />
-                    )}
-                />
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <TextField
-                            label={"E-mail"}
-                            type={"email"}
-                            inputProps={{
-                                "aria-autocomplete": "none",
-                            }}
-                            value={value ?? ""}
-                            onChange={onChange}
-                            error={!!emailFieldError}
-                            helperText={emailFieldError?.message}
-                        />
-                    )}
-                />
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <TextField
-                            label={"Password"}
-                            type={"password"}
-                            inputProps={{
-                                "aria-autocomplete": "none",
-                            }}
-                            value={value ?? ""}
-                            onChange={onChange}
-                            error={!!passwordFieldError}
-                            helperText={passwordFieldError?.message}
-                            fullWidth
-                        />
-                    )}
-                />
-                <Controller
-                    name="confirmPassword"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <TextField
-                            label={"Confirm password"}
-                            type={"password"}
-                            inputProps={{
-                                "aria-autocomplete": "none",
-                            }}
-                            value={value ?? ""}
-                            onChange={onChange}
-                            error={!!confirmPasswordFieldError}
-                            helperText={confirmPasswordFieldError?.message}
-                        />
-                    )}
-                />
-                <FormControlLabel
-                    label={"I agree with terms and conditions"}
-                    className="text-slate-300"
-                    control={
-                        <Controller
-                            name={"terms"}
-                            control={control}
-                            render={({ field: { onChange, value } }) => (
-                                <Checkbox onChange={onChange} value={value} />
-                            )}
-                        />
-                    }
-                />
-                <LoadingButton
-                    loading={isMutationLoading}
-                    variant={"contained"}
-                    color={"primary"}
-                    className={"bg-sky-500 py-2"}
-                    onClick={handleSubmit(onSubmit)}
-                >
-                    Create
-                </LoadingButton>
-                <BottomErrorLabel/> */}
-            </form>
+                </Heading>
+                <Divider type="space" />
+                {formFields.map((field, index) => (
+                    <InputField {...field} key={index} />
+                ))}
+                <Divider type="space" />
+                <Submit isLoading={isMutationLoading}>Create</Submit>
+                <Button type="text">
+                    <Link href={"/sign-in"}>I already have an account</Link>
+                </Button>
+                <BottomErrorLabel />
+            </FormWrapper>
         </div>
     );
 };
