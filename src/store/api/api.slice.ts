@@ -1,6 +1,6 @@
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CreateAccountT } from "../../app/(pages)/(user)/sign-up/SignUp";
+import { CreateAccountT } from "app/(pages)/(user)/sign-up/signUp.schema";
 import { SignInBody } from "../../common/utils/server/api.types";
 import { isStandartServerError } from "../../types/error.types";
 import { User, UserState } from "../../types/user.types";
