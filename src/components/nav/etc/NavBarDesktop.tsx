@@ -1,24 +1,17 @@
 "use client";
 
-import LogoutRounded from "@mui/icons-material/LogoutRounded";
-import MenuRounded from "@mui/icons-material/MenuRounded";
-import PersonRounded from "@mui/icons-material/PersonRounded";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import Button from "@mui/material/Button"
-import Divider from "@mui/material/Divider"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import Menu from "@mui/material/Menu"
-import MenuItem from "@mui/material/MenuItem"
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import { useSignOutMutation } from "../../../store/api/api.slice";
 
 const NavBarDesktop = () => {
+    // Anchor element for a dropdown
     const [anchorElement, setAnchorElement] =
         useState<HTMLButtonElement | null>(null);
+    // is dropdown open flag
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    // Handlers for opening/closing top dropdown menu on desktop
     const handleOpenProfileMenu = (event: MouseEvent<HTMLButtonElement>) => {
         if (!anchorElement) {
             setAnchorElement(event.currentTarget);
@@ -48,7 +41,7 @@ const NavBarDesktop = () => {
                 <Link href="/new">New</Link>
             </li>
             <li className="text-bold flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
-                <Button
+                {/* <Button
                     id="profile-menu-button"
                     onClick={handleOpenProfileMenu}
                     aria-controls={isOpen ? "profile-menu" : undefined}
@@ -94,7 +87,7 @@ const NavBarDesktop = () => {
                         </ListItemIcon>
                         <ListItemText>Log out</ListItemText>
                     </MenuItem>
-                </Menu>
+                </Menu> */}
             </li>
         </ul>
     );
