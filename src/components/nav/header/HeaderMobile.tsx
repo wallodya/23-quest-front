@@ -16,7 +16,7 @@ const useHeaderContent = ({
     if (isSignedIn) {
         return () => (
               <div className="col-start-2 flex items-center justify-between">
-                  <button onClick={toggleDrawer}><MenuIcon/></button>
+                  <button onClick={toggleDrawer}><MenuIcon size="md"/></button>
                   <span className="font-bold text-slate-800 dark:text-slate-100">
                       {login}
                   </span>
