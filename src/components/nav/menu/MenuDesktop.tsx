@@ -1,5 +1,6 @@
 "use client";
 
+import LogoTemporary from "components/icons/LogoTemporary";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useAppSelector } from "../../../store/hooks";
@@ -32,7 +33,7 @@ const MenuDesktop = () => {
         <div className="col-start-2 grid grid-cols-3 items-stretch">
             <div className="flex gap-4">
                 <div className="flex flex-col justify-center">
-                    <span>Logo</span>
+                    <LogoTemporary/>
                 </div>
                 {/* <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span> */}
             </div>
