@@ -4,7 +4,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import withUnbreakableSpaces from "common/utils/withUnbreakableSpaces";
 import Button from "components/ui/Button";
 import Link from "next/link";
-import { ReactNode } from "react";
 import { useSignOutMutation } from "store/api/api.slice";
 import { UserMenuDropdownContent, UserMenuDropdownTrigger } from "./NavBarDesktopDropDown";
 
