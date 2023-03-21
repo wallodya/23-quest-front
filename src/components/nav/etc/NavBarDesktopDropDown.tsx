@@ -5,7 +5,7 @@ import PersonIcon from 'components/icons/PersonIcon';
 import Link from 'next/link';
 import SettingsIcon from 'components/icons/SettingsIcon';
 
-const DROPDOWN_LINKS: {
+export const DROPDOWN_LINKS: {
     name: string;
     link: string;
     Icon: () => JSX.Element;
@@ -46,8 +46,8 @@ export const UserMenuDropdownContent = () => (
                 key={index}
                 className="flex items-center gap-2 py-1 focus:outline-none focus:ring-sky-300 dark:focus:ring-sky-700  hover:text-sky-500 dark:hover:text-sky-500"
             >
-                <Icon />
-                <Link href={link} className="">
+                <Link href={link} className="w-full flex items-center gap-2">
+                    <Icon />
                     {name}
                 </Link>
             </DropdownMenu.Item>

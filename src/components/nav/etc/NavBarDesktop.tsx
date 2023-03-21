@@ -1,14 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { forwardRef, LegacyRef, MouseEvent, ReactNode, useState } from "react";
-import { useSignOutMutation } from "store/api/api.slice";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import withUnbreakableSpaces from "common/utils/withUnbreakableSpaces";
 import Button from "components/ui/Button";
-import MenuIcon from "components/icons/MenuIcon";
-import { useAppSelector } from "store/hooks";
-import PersonIcon from "components/icons/PersonIcon";
-import SettingsIcon from "components/icons/SettingsIcon";
+import Link from "next/link";
+import { ReactNode } from "react";
+import { useSignOutMutation } from "store/api/api.slice";
 import { UserMenuDropdownContent, UserMenuDropdownTrigger } from "./NavBarDesktopDropDown";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
@@ -24,7 +21,7 @@ const NavLinks = () => (
                 key={index}
                 className="text-bold hidden items-center pr-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400 lg:flex"
             >
-                <Link href={link}>{name}</Link>
+                <Link href={link}>{withUnbreakableSpaces(name)}</Link>
             </li>
         ))}
     </>
@@ -41,7 +38,7 @@ const NavBarDesktop = () => {
     return (
         <ul className="col-start-3 flex justify-between text-sm font-semibold">
             <NavLinks />
-            <li className="text-bold flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
+            <div className="ml-auto text-bold flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                 <DropdownMenu.Root>
                     <UserMenuDropdownTrigger />
 
@@ -54,13 +51,13 @@ const NavBarDesktop = () => {
                                     type="text"
                                     buttonProps={{ onClick: handleSignOut }}
                                 >
-                                    Logout
+                                    Sign out
                                 </Button>
                             </DropdownMenu.Item>
                         </DropdownMenu.Content>
                     </DropdownMenu.Portal>
                 </DropdownMenu.Root>
-            </li>
+            </div>
         </ul>
     );
 };
