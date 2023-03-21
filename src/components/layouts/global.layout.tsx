@@ -1,4 +1,3 @@
-import { AppBar } from "@mui/material";
 import { ReactNode } from "react";
 import { useAppSelector } from "../../store/hooks";
 import DialMobile from "components/nav/etc/DialMobile";

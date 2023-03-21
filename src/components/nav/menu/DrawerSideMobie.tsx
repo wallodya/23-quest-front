@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { FC, useState } from "react";
 import { useSignOut } from "../../../common/hooks/useSignOut.hook";
 
-type UseMobileDrawerType = () => {
+export type UseMobileDrawerType = () => {
     toggleDrawer: () => void,
     isDrawerOpen: boolean
 }
