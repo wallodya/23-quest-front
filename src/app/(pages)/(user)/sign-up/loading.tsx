@@ -1,9 +1,8 @@
+import Loader from "components/ui/Loader";
 import React from "react";
 
 const Loading = () => {
-    console.log("loading sign-up...");
-
-    return <div>Loading...</div>;
+    return <Loader/>;
 };
 
 export default Loading;

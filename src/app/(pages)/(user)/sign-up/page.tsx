@@ -1,3 +1,4 @@
+import Loader from "components/ui/Loader";
 import type { Metadata } from "next";
 import SignUp from "./SignUp";
 

@@ -13,9 +13,9 @@ const GlobalLayout = ({ children }: { children: ReactNode }) => {
     return (
         <>
             <HeaderDesktop />
+            <div className="min-h-screen grid grid-cols-main items-stretch">
             <HeaderMobile />
-            <div className="min-h-screen grid grid-cols-main content-center">
-                <main className="col-start-2 flex flex-col justify-between gap-4">
+                <main className="col-start-2 self-start relative pt-16 flex flex-col justify-between gap-4 h-full w-full">
                         {children}
                 </main>
             </div>
