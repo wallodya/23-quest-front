@@ -4,16 +4,22 @@ import withUnbreakableSpaces from "common/utils/withUnbreakableSpaces";
 import PencilIcon from "components/icons/PencilIcon";
 import Link from "next/link";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { DialAction, DialOptions } from "./dial.types";
+import { useDialActionsPositionClasses, useDialPosotionClasses, useTooltipPositionClasses, useVoidGradientClasses } from "./dial.hooks";
+import { DialAction, DialOptions, DialPositions } from "./dial.types";
 import DialProvider, { useDialContext } from "./DialProvider";
+
+
 
 const Void = () => {
     const {
         controls: { closeDial },
+        options: { dialPosition },
     } = useDialContext();
+
+    const gradientClasses = useVoidGradientClasses(dialPosition)
     return (
         <div
-            className="fixed top-0 left-0 h-screen w-screen bg-gradient-to-t from-slate-800"
+            className={`fixed top-0 left-0 h-screen w-screen ${gradientClasses}`}
             onClick={closeDial}
         ></div>
     );
@@ -22,6 +28,7 @@ const Void = () => {
 const Action = ({Icon, tooltipText, closeOnPush, isTooltipShown, type, href, action}: DialAction) => {
     const {
         controls: { closeDial },
+        options: { dialPosition },
     } = useDialContext();
 
     const handleClick = () => {
@@ -31,7 +38,9 @@ const Action = ({Icon, tooltipText, closeOnPush, isTooltipShown, type, href, act
         if (closeOnPush) {
             closeDial()
         }
-    }
+    } 
+
+    const positionClasses = useTooltipPositionClasses(dialPosition)
 
     return (
         <li
@@ -39,7 +48,7 @@ const Action = ({Icon, tooltipText, closeOnPush, isTooltipShown, type, href, act
             onClick={handleClick}
         >
             {isTooltipShown && (
-                <div className="absolute right-14 rounded-lg bg-sky-300 px-3 py-1 text-sm text-sky-600 shadow-lg shadow-slate-300 dark:bg-sky-100 dark:text-sky-600 dark:shadow-slate-900">
+                <div className={`absolute ${positionClasses} rounded-lg bg-sky-300 px-3 py-1 text-sm text-sky-600 shadow-lg shadow-slate-300 dark:bg-sky-100 dark:text-sky-600 dark:shadow-slate-900`}>
                     {withUnbreakableSpaces(tooltipText)}
                 </div>
             )}
@@ -60,13 +69,15 @@ const Action = ({Icon, tooltipText, closeOnPush, isTooltipShown, type, href, act
 const DialActions = () => {
     const {
         controls: { isOpen },
-        options: { actions },
+        options: { actions, dialPosition },
     } = useDialContext();
     if (!isOpen) return null
+
+    const positionClasses = useDialActionsPositionClasses(dialPosition)
     return (
         <>
             <Void />
-            <ul className="mb-4 flex flex-col items-center gap-4">
+            <ul className={`flex ${positionClasses} flex-col items-center gap-4`}>
                 {actions.map((actionProps, index) => (
                     <Action {...actionProps} key={index}/>
                 ))}
@@ -75,63 +86,29 @@ const DialActions = () => {
     );
 };
 
-const SpeedDial = () => {
+export const SpeedDial = () => {
     const {
         controls: { toggleDial },
+        options: { dialPosition }
     } = useDialContext();
+    
+    const positionClasses = useDialPosotionClasses(dialPosition)
+
     return (
         <>
-            <div className="fixed right-8 bottom-8">
-                <DialActions/>
+            <div className={positionClasses}>
+                {(dialPosition === "bottom-left" ||
+                    dialPosition === "bottom-right") && <DialActions />}
                 <div
                     className="relative z-40 w-fit rounded-full bg-sky-600 p-4 text-sky-300 shadow-lg shadow-slate-300 transition hover:bg-sky-700 dark:bg-sky-400 dark:text-sky-100 dark:shadow-slate-900 dark:hover:bg-sky-500"
                     onClick={toggleDial}
                 >
                     <PencilIcon size="md" />
                 </div>
+                {(dialPosition === "top-left" ||
+                    dialPosition === "top-right") && <DialActions />}
             </div>
         </>
     );
 };
 
-const useDialControls = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const toggleDial = () => setIsOpen(!isOpen);
-    const closeDial = () => setIsOpen(false);
-    return {
-        toggleDial,
-        closeDial,
-        isOpen,
-    };
-};
-
-export const useDial = (options?: DialOptions) => {
-    const isAnimated = options?.isAnimated ?? true
-    const isStyled = options?.isStyled ?? true
-    const dialPosition = options?.dialPosition ?? "bottom-right"
-    const pages = options?.pages || null
-    const Icon = options?.Icon ?? (() => <PencilIcon size="md" />)
-    const withActions = options?.withActions ?? false
-    const actions = options?.actions ?? []
-    const handler = options?.handler ?? (() => {})
-    const dialOptions = {
-        isAnimated,
-        isStyled,
-        dialPosition,
-        pages,
-        Icon,
-        withActions,
-        actions,
-        handler
-    }
-    
-    const dialControls = useDialControls()
-
-    const Dial = () => (
-        <DialProvider options={dialOptions} controls={dialControls}>
-            <SpeedDial />
-        </DialProvider>
-    );
-
-    return { Dial, dialControls };
-}

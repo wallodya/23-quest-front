@@ -22,12 +22,13 @@ export type DialAction = {
 //           action: () => void;
 //       }
 // );
+export type DialPositions = "bottom-left" | "bottom-right" | "top-left" | "top-right"
 
 export type DialOptions = Partial<
     {
         isAnimated: boolean;
         isStyled: boolean;
-        dialPosition: "bottom-left" | "bottom-right" | "top-left" | "top-right";
+        dialPosition: DialPositions;
         pages: string[] | null;
         Icon: () => JSX.Element;
         withActions: boolean;
