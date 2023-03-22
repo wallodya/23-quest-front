@@ -1,5 +1,6 @@
-import PencilIcon from "components/icons/PencilIcon"
-import { useState } from "react"
+    import PencilIcon from "components/icons/PencilIcon"
+import { AnimatePresence } from "framer-motion"
+import { useMemo, useState } from "react"
 import { SpeedDial } from "./Dial"
 import { DialOptions, DialPositions } from "./dial.types"
 import DialProvider from "./DialProvider"
@@ -73,7 +74,7 @@ export const useVoidGradientClasses = (position: DialPositions) => {
     }
 }
 
-const useDialControls = () => {
+export const useDialControls = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const toggleDial = () => setIsOpen(!isOpen);
     const closeDial = () => setIsOpen(false);
@@ -103,14 +104,10 @@ export const useDial = (options?: DialOptions) => {
         actions,
         handler
     }
-    
-    const dialControls = useDialControls()
 
     const Dial = () => (
-        <DialProvider options={dialOptions} controls={dialControls}>
-            <SpeedDial />
-        </DialProvider>
-    );
+            <SpeedDial options={dialOptions}/>
+    );  
 
-    return { Dial, dialControls };
+    return Dial;
 }

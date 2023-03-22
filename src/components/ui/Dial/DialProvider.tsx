@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext } from "react";
+import { AnimatePresence } from "framer-motion";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 import { DialOptions, DialControls } from "./dial.types";
 
 const initialContext: {
@@ -25,11 +26,25 @@ const DialContext = createContext(initialContext);
 export const useDialContext = () => useContext(DialContext)
 
 const DialProvider = ({ children, options, controls }: { children: ReactNode, options: Required<DialOptions>, controls: DialControls }) => {
-    return (
-        <DialContext.Provider value={{ controls, options }}>
-            {children}
-        </DialContext.Provider>
-    );
+    
+    // const DialWithProvider = useMemo(
+    //     () => {
+    //     console.log("dial provider")
+    //     return (
+    //             <DialContext.Provider value={{ controls, options }}>
+    //                 {children}
+    //             </DialContext.Provider>
+    //         )
+    //     },
+    //     []
+    // );
+    // return DialWithProvider
+    // return (
+    //     <DialContext.Provider value={{ controls, options }}>
+    //             {children}
+    //     </DialContext.Provider>
+    // );
+    return 
 };
 
 export default DialProvider
