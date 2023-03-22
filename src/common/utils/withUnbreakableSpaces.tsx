@@ -4,9 +4,9 @@ const withUnbreakableSpaces = (str: string): ReactNode => {
     const words = str.split(" ")
     return words.map((word, index) => {
         if (index !== words.length - 1) {
-            return <>{word}&nbsp;</>
+            return <span key={index}>{word}&nbsp;</span>
         } else {
-            return <>{word}</>
+            return <span key={index}>{word}</span>
         }
     })
 }

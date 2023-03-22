@@ -4,9 +4,12 @@ import DialMobile from "components/nav/etc/DialMobile";
 import HeaderDesktop from "../nav/header/HeaderDesktop";
 import HeaderMobile from "../nav/header/HeaderMobile";
 import MenuMobile from "components/nav/menu/MenuMobile";
+import { useRouter } from "next/router";
 
 const GlobalLayout = ({ children }: { children: ReactNode }) => {
     const { isSignedIn } = useAppSelector(state => state.user)
+
+
     return (
         <>
             <HeaderDesktop />

@@ -5,7 +5,10 @@ import withUnbreakableSpaces from "common/utils/withUnbreakableSpaces";
 import Button from "components/ui/Button";
 import Link from "next/link";
 import { useSignOutMutation } from "store/api/api.slice";
-import { UserMenuDropdownContent, UserMenuDropdownTrigger } from "./NavBarDesktopDropDown";
+import {
+    UserMenuDropdownContent,
+    UserMenuDropdownTrigger,
+} from "./NavBarDesktopDropDown";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
     { name: "Home", link: "/home" },
@@ -14,16 +17,20 @@ const PAGE_LINKS: { name: string; link: string }[] = [
 ];
 
 const NavLinks = () => (
-    <>
-        {PAGE_LINKS.map(({ name, link }, index) => (
-            <li
-                key={index}
-                className="text-bold hidden items-center pr-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400 lg:flex"
-            >
-                <Link href={link}>{withUnbreakableSpaces(name)}</Link>
-            </li>
-        ))}
-    </>
+    <ul>
+        {PAGE_LINKS.map(({ name, link }, index) => {
+            return (
+                <li key={index}>
+                    <Link
+                        href={link}
+                        className="text-bold hidden items-center pr-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400 lg:flex"
+                    >
+                        {withUnbreakableSpaces(name)}
+                    </Link>
+                </li>
+            );
+        })}
+    </ul>
 );
 
 const NavBarDesktop = () => {
@@ -35,9 +42,9 @@ const NavBarDesktop = () => {
     };
 
     return (
-        <ul className="col-start-3 flex justify-between text-sm font-semibold">
+        <nav className="col-start-3 flex justify-between text-sm font-semibold">
             <NavLinks />
-            <div className="ml-auto text-bold flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
+            <div className="text-bold ml-auto flex items-center pl-4 transition-colors hover:text-sky-500 dark:hover:text-sky-400">
                 <DropdownMenu.Root>
                     <UserMenuDropdownTrigger />
 
@@ -57,7 +64,7 @@ const NavBarDesktop = () => {
                     </DropdownMenu.Portal>
                 </DropdownMenu.Root>
             </div>
-        </ul>
+        </nav>
     );
 };
 

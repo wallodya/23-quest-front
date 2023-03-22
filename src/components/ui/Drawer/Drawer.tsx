@@ -50,7 +50,7 @@ const Wrapper = ({ toggleFn, isOpen, children, className }: WrapperProps) => {
 
 const Drawer = ({children, isOpen, toggleFn}: DrawerProps) => {
     return (
-        <Wrapper className="bg-slate-200 dark:bg-slate-700" isOpen={isOpen} toggleFn={toggleFn}>
+        <Wrapper className="bg-slate-200 dark:bg-slate-700 transition-all duration-1000" isOpen={isOpen} toggleFn={toggleFn}>
             {children}
         </Wrapper>
     )

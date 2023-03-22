@@ -8,6 +8,7 @@ import InputField, { InputFieldProps } from "components/ui/InputField";
 import Submit from "components/ui/Submit";
 import Heading from "components/ui/typography/Heading";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { CreateAccountT, SignUpSchema } from "./signUp.schema";
 import { useSignUp } from "./useSignUp.hook";
@@ -78,7 +79,7 @@ const SignUp = () => {
             required: true,
         },
     ]
-
+  
     return (
         <div className="flex justify-center">
             <FormWrapper
