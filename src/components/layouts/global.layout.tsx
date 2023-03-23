@@ -1,13 +1,10 @@
 "use client"
 
-import { ReactNode, useState } from "react";
-import { useAppSelector } from "../../store/hooks";
 import DialMobile from "components/nav/etc/DialMobile";
+import { ReactNode } from "react";
+import { useAppSelector } from "../../store/hooks";
 import HeaderDesktop from "../nav/header/HeaderDesktop";
 import HeaderMobile from "../nav/header/HeaderMobile";
-import MenuMobile from "components/nav/menu/MenuMobile";
-import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
 
 const GlobalLayout = ({ children }: { children: ReactNode }) => {
     const { isSignedIn } = useAppSelector(state => state.user)
@@ -21,11 +18,9 @@ const GlobalLayout = ({ children }: { children: ReactNode }) => {
                     {children}
                 </main>
             </div>
-            {/* {isSignedIn && <MenuMobile />} */}
             {isSignedIn && (
                     <DialMobile />
             )}
-            {/* <button className="fixed bottom-24 right-24 px-3 py-2 rounded-lg" onClick={toggleSquare}>toggle</button> */}
         </>
     );
 };
