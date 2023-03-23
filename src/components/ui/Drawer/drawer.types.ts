@@ -16,7 +16,6 @@ export type DrawerControls = {
     toggleDrawer: () => void,
     isOpen: boolean,
     closeDrawer: () => void,
-    options?: Required<DrawerOptions>
 }
 
 export type UseDrawer = (options?: DrawerOptions) => {

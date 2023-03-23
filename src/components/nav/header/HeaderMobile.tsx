@@ -48,7 +48,7 @@ const HeaderMobile = () => {
                 <button onClick={toggleDrawer}>
                     <MenuIcon size="sm" />
                 </button>
-                <Drawer.Root isOpen={isOpen}>
+                <Drawer.Root isOpen={isOpen} drawerPosition={"left"}>
                     <Drawer.Content>
                         <Drawer.InnerControls toggleFn={toggleDrawer} />
                         hello test 222
