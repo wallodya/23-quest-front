@@ -37,7 +37,7 @@ const Wrapper = ({ toggleFn, isOpen, children, className }: WrapperProps) => {
     const drawerDisplayClass = isOpen ? "fixed" : "hidden";
     return (
         <div
-            className={`${drawerDisplayClass} top-0 left-0 z-40 flex h-screen w-screen`}
+            className={`${drawerDisplayClass} top-0 left-0 flex h-screen w-screen`}
         >
             <div className={className}>
                 <ToggleControls toggleFn={toggleFn}/>

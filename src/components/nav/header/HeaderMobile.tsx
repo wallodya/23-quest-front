@@ -11,11 +11,10 @@ import DrawerSideMobie from "../menu/Drawer/DrawerSideMobie";
 
 const useHeaderContent = ({
     isSignedIn,
-    login,
-    toggleDrawer,
-    isDrawerOpen
-}: UserState & ReturnType<UseMobileDrawerType>) => {
+    login
+}: UserState) => {
 
+    const {isDrawerOpen, toggleDrawer} = useDrawer();
     if (isSignedIn) {
         return () => (
               <div className="col-start-2 flex items-center justify-between">
@@ -41,9 +40,8 @@ const useHeaderContent = ({
 
 const HeaderMobile = () => {
     const userState = useAppSelector((state) => state.user);
-    const drawerControls = useDrawer();
 
-    const NavBarContent = useHeaderContent({...userState, ...drawerControls})
+    const NavBarContent = useHeaderContent({...userState})
 
     return (
         <TopBar isMobile={true}>

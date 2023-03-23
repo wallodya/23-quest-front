@@ -12,23 +12,18 @@ import { AnimatePresence } from "framer-motion";
 const GlobalLayout = ({ children }: { children: ReactNode }) => {
     const { isSignedIn } = useAppSelector(state => state.user)
 
-    const [isShown, setIsShown] = useState<boolean>(false)
-    const toggleSquare = () => {
-        setIsShown(!isShown)
-    }
-    // console.log("global laytout")
     return (
         <>
             <HeaderDesktop />
+            <HeaderMobile />
             <div className="grid min-h-screen grid-cols-main items-stretch">
-                <HeaderMobile />
-                <main className="relative col-start-2 flex h-full w-full flex-col justify-between gap-4 self-start pt-16">
+                <main className="relative col-start-2 flex h-full w-full flex-col justify-between gap-4 self-start mt-16">
                     {children}
                 </main>
             </div>
             {/* {isSignedIn && <MenuMobile />} */}
             {isSignedIn && (
-                    <DialMobile isShown={isShown} key="test123"/>
+                    <DialMobile />
             )}
             {/* <button className="fixed bottom-24 right-24 px-3 py-2 rounded-lg" onClick={toggleSquare}>toggle</button> */}
         </>
