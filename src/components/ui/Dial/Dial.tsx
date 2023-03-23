@@ -120,7 +120,6 @@ export const SpeedDial = ({
 }: {
     options: Required<DialOptions>;
 }) => {
-
     const {toggleDial, isOpen, closeDial} = useDialControls()
 
     const dialPositionClasses = useDialPosotionClasses(dialPosition);

@@ -1,52 +1,61 @@
 "use client";
 
+import CrossIcon from "components/icons/CrossIcon";
 import MenuIcon from "components/icons/MenuIcon";
-import useDrawer, { UseMobileDrawerType } from "components/ui/Drawer/drawer.hooks";
+import Button from "components/ui/Button";
+import Drawer, { useDrawerControls } from "components/ui/Drawer";
 import TopBar from "components/ui/TopBar";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { ReactNode } from "react";
 import { useAppSelector } from "store/hooks";
-import { UserState } from "types/user.types";
-import DrawerSideMobie from "../menu/Drawer/DrawerSideMobie";
 
+const HeaderMobileGuest = () => {
+    return (
+        <div className="col-start-2 flex">
+            <Link href="sign-in" className="ml-auto flex">
+                <span className="font-bold text-slate-800 dark:text-slate-100">
+                    Sign in
+                </span>
+            </Link>
+        </div>
+  )
+}
 
-const useHeaderContent = ({
-    isSignedIn,
-    login
-}: UserState) => {
-
-    const {isDrawerOpen, toggleDrawer} = useDrawer();
-    if (isSignedIn) {
-        return () => (
-              <div className="col-start-2 flex items-center justify-between">
-                  <button onClick={toggleDrawer}><MenuIcon size="sm"/></button>
-                  <span className="font-bold text-slate-800 dark:text-slate-100">
-                      {login}
-                  </span>
-                  <DrawerSideMobie isOpen={isDrawerOpen} toggleFn={toggleDrawer}/>
-              </div>
-        )
-    } else {
-        return () => (
-              <div className="col-start-2 flex">
-                  <Link href="sign-in" className="ml-auto flex">
-                      <span className="font-bold text-slate-800 dark:text-slate-100">
-                          Sign in
-                      </span>
-                  </Link>
-              </div>
-        )
-    }
-};
-
-const HeaderMobile = () => {
-    const userState = useAppSelector((state) => state.user);
-
-    const NavBarContent = useHeaderContent({...userState})
-
+const HeaderMobileUser = ({children, login}:{children: ReactNode, login: string}) => {
     return (
         <TopBar isMobile={true}>
-            <NavBarContent />
+            <div className="col-start-2 flex items-center justify-between">
+                {children}
+                <span className="font-bold text-slate-800 dark:text-slate-100">
+                    {login}
+                </span>
+            </div>
         </TopBar>
+    );
+} 
+
+const HeaderMobile = () => {
+    const { login, isSignedIn } = useAppSelector((state) => state.user);
+
+    const { isOpen, toggleDrawer } = useDrawerControls()
+    if (!isSignedIn) {
+        return <HeaderMobileGuest/>
+    }
+
+    return (
+        <HeaderMobileUser login={login ?? ""} >
+                <button onClick={toggleDrawer}>
+                    <MenuIcon size="sm" />
+                </button>
+                <Drawer.Root isOpen={isOpen}>
+                    <Drawer.Content>
+                        <Drawer.InnerControls toggleFn={toggleDrawer} />
+                        hello test 222
+                    </Drawer.Content>
+                    <Drawer.Background toggleFn={toggleDrawer} />
+                </Drawer.Root>
+        </HeaderMobileUser>
     );
 };
 

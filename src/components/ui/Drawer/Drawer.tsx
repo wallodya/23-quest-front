@@ -1,27 +1,66 @@
 import CrossIcon from "components/icons/CrossIcon";
-import Button from "components/ui/Button";
-import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
-import useDrawer from "./drawer.hooks";
+import Button from "../Button";
+import { DrawerOptions } from "./drawer.types";
 
-type WrapperProps = {
-    toggleFn: () => void;
-    isOpen: boolean;
-    children: ReactNode;
-    className: string
+const Root = ({children, isOpen} : {children: ReactNode, isOpen: boolean, options?: Required<DrawerOptions>}) => {
+    const drawerDisplayClass = isOpen ? "" : "pointer-events-none";
+    return (
+        <div
+            className={`fixed ${drawerDisplayClass} top-0 left-0 h-screen w-screen`}
+        >
+            <AnimatePresence onExitComplete={() => console.log("drawer off")}>
+                {isOpen && <>{children}</>}
+            </AnimatePresence>
+        </div>
+    );
 }
 
-type DrawerProps = {
-    children: ReactNode;
-    toggleFn: () => void;
-    isOpen: boolean
+const Content = ({children} : {children: ReactNode}) => {
+    return (
+        <motion.div
+            key="drawer-container"
+            className={`z-40 h-full w-60 bg-slate-200 dark:bg-slate-700`}
+            initial={{
+                translateX: -100,
+            }}
+            animate={{
+                translateX: 0,
+                transition: {
+                    duration: 3,
+                },
+            }}
+            exit={{
+                translateX: -100,
+                transition: {
+                    duration: 3,
+                },
+            }}
+        >
+            {children}
+        </motion.div>
+    );
 }
 
-const Void = ({ toggleFn }: { toggleFn: () => void }) => (
-    <div className={`w-full dark:bg-slate-800/70`} onClick={toggleFn}></div>
+const Background = ({
+    toggleFn,
+}: {
+    toggleFn: () => void;
+}) => (
+    <motion.div
+        className={`absolute top-0 left-0 h-screen w-screen z-20 dark:bg-slate-800/70`}
+        onClick={toggleFn}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 3 } }}
+        exit={{
+            opacity: 0
+        }}
+    >
+    </motion.div>
 );
 
-const ToggleControls = ({toggleFn} : {toggleFn: () => void}) => {
+const InnerControls = ({toggleFn} : {toggleFn: () => void}) => {
     return (
         <div className="flex w-full items-center justify-end">
             <div className="">
@@ -33,31 +72,9 @@ const ToggleControls = ({toggleFn} : {toggleFn: () => void}) => {
     );
 }
 
-const Wrapper = ({ toggleFn, isOpen, children, className }: WrapperProps) => {
-    const drawerDisplayClass = isOpen ? "fixed" : "hidden";
-    return (
-        <div
-            className={`${drawerDisplayClass} top-0 left-0 flex h-screen w-screen`}
-        >
-            <div className={className}>
-                <ToggleControls toggleFn={toggleFn}/>
-                {children}
-            </div>
-            <Void toggleFn={toggleFn} />
-        </div>
-    );
-};
-
-const Drawer = ({children, isOpen, toggleFn}: DrawerProps) => {
-    return (
-        <Wrapper className="bg-slate-200 dark:bg-slate-700 transition-all duration-1000" isOpen={isOpen} toggleFn={toggleFn}>
-            {children}
-        </Wrapper>
-    )
+export const Drawer = {
+    Root,
+    Content,
+    Background,
+    InnerControls
 }
-
-Drawer.Void = Void
-Drawer.ToggleControls = ToggleControls
-Drawer.Wrapper = Wrapper
-
-export default Drawer
