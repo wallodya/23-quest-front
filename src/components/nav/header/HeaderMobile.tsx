@@ -1,7 +1,7 @@
 "use client";
 
 import MenuIcon from "components/icons/MenuIcon";
-import useDrawer, { UseMobileDrawerType } from "components/ui/Drawer/useDrawer.hook";
+import useDrawer, { UseMobileDrawerType } from "components/ui/Drawer/drawer.hooks";
 import TopBar from "components/ui/TopBar";
 import Link from "next/link";
 import { useAppSelector } from "store/hooks";

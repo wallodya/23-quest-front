@@ -7,7 +7,7 @@ import { useSignOut } from "common/hooks/useSignOut.hook";
 import {
     DROPDOWN_LINKS
 } from "../../etc/NavBarDesktopDropDown";
-import useDrawer from "components/ui/Drawer/useDrawer.hook";
+import useDrawer from "components/ui/Drawer/drawer.hooks";
 
 export const DrawerLinks = ({
     links,

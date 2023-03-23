@@ -2,7 +2,7 @@ import CrossIcon from "components/icons/CrossIcon";
 import Button from "components/ui/Button";
 import Link from "next/link";
 import { ReactNode } from "react";
-import useDrawer from "./useDrawer.hook";
+import useDrawer from "./drawer.hooks";
 
 type WrapperProps = {
     toggleFn: () => void;
