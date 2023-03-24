@@ -85,12 +85,11 @@ const Background = ({ toggleFn }: { toggleFn: () => void }) => {
 
 const InnerControls = ({toggleFn} : {toggleFn: () => void}) => {
     return (
-        <div className="flex w-full items-center justify-end">
-            <div className="">
-                <Button type="text" buttonProps={{ onClick: toggleFn }}>
-                    <CrossIcon size="sm" />
-                </Button>
-            </div>
+        <div className="mb-2 flex w-full items-center justify-between py-1 font-bold text-slate-600 dark:text-slate-500">
+                <span className="text-xs">v0.1.0</span>
+                <button className="">
+                    <CrossIcon size="xs" />
+                </button>
         </div>
     );
 }

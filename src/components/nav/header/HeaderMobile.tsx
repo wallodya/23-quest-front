@@ -1,62 +1,60 @@
 "use client";
 
-import CrossIcon from "components/icons/CrossIcon";
 import MenuIcon from "components/icons/MenuIcon";
-import Button from "components/ui/Button";
 import Drawer, { useDrawerControls } from "components/ui/Drawer";
 import TopBar from "components/ui/TopBar";
-import { AnimatePresence, motion } from "framer-motion";
+import MobileHeaderDrawerContent from "components/nav/etc/MobileHeaderDrawerContent";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { useAppSelector } from "store/hooks";
 
-const HeaderMobileGuest = () => {
+const HeaderGuest = () => {
     return (
-        <div className="col-start-2 flex">
-            <Link href="sign-in" className="ml-auto flex">
-                <span className="font-bold text-slate-800 dark:text-slate-100">
-                    Sign in
-                </span>
-            </Link>
-        </div>
+        <TopBar isMobile={true}>
+            <div className="col-start-2 flex">
+                <Link href="sign-in" className="ml-auto flex">
+                    <span className="font-bold text-slate-800 dark:text-slate-100">
+                        Sign in
+                    </span>
+                </Link>
+            </div>
+        </TopBar>
   )
 }
 
-const HeaderMobileUser = ({children, login}:{children: ReactNode, login: string}) => {
+const HeaderUser = ({children}:{children: ReactNode}) => {
     return (
         <TopBar isMobile={true}>
             <div className="col-start-2 flex items-center justify-between">
                 {children}
-                <span className="font-bold text-slate-800 dark:text-slate-100">
-                    {login}
-                </span>
             </div>
         </TopBar>
     );
 } 
 
-const HeaderMobile = () => {
-    const { login, isSignedIn } = useAppSelector((state) => state.user);
+const MobileHeader = () => {
+    const { isSignedIn } = useAppSelector((state) => state.user);
 
     const { isOpen, toggleDrawer } = useDrawerControls()
     if (!isSignedIn) {
-        return <HeaderMobileGuest/>
+        return <HeaderGuest/>
     }
 
     return (
-        <HeaderMobileUser login={login ?? ""} >
+        <HeaderUser>
                 <button onClick={toggleDrawer}>
                     <MenuIcon size="sm" />
                 </button>
                 <Drawer.Root isOpen={isOpen} drawerPosition={"left"}>
                     <Drawer.Content>
-                        <Drawer.InnerControls toggleFn={toggleDrawer} />
-                        hello test 222
+                        <MobileHeaderDrawerContent>
+                            <Drawer.InnerControls toggleFn={toggleDrawer} />
+                        </MobileHeaderDrawerContent>
                     </Drawer.Content>
                     <Drawer.Background toggleFn={toggleDrawer} />
                 </Drawer.Root>
-        </HeaderMobileUser>
+        </HeaderUser>
     );
 };
 
-export default HeaderMobile;
+export default MobileHeader;

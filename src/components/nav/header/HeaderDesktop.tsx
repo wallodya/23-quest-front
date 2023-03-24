@@ -1,11 +1,10 @@
 "use-client";
 
 import TopBar from "components/ui/TopBar";
-import Link from "next/link";
 import React from "react";
 import MenuDesktop from "../menu/MenuDesktop";
 
-const Header = () => {
+const DesktopHeader = () => {
     return (
         <TopBar isMobile={false}>        
             <MenuDesktop />
@@ -13,4 +12,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default DesktopHeader;

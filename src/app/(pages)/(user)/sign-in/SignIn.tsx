@@ -60,7 +60,7 @@ const SignIn = () => {
     ];
 
     return (
-        <div className="flex justify-center">
+        <div className="absolute inset-0 w-fit h-fit m-auto">
             <FormWrapper
                 className="flex w-64 flex-col gap-4"
                 autoComplete="off"
