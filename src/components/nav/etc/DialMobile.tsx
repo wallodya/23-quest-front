@@ -14,14 +14,14 @@ const DIAL_ACTIONS: DialAction[] = [
         isTooltipShown: true,
         Icon: () => <FileIcon size="sm" />,
         type: "link",
-        href: "/new-task"
+        href: "/tasks/new"
     },
     {
         tooltipText: "New quest",
         isTooltipShown: true,
         Icon: () => <ReaderIcon size="sm" />,
         type: "link",
-        href: "/new-quest"
+        href: "/quests/new"
     },
 ];
 

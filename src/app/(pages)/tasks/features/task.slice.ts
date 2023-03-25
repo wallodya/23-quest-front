@@ -8,4 +8,5 @@ const taskSlice = createSlice({
     reducers: {}
 })
 
-export default taskSlice.reducer
+
+export const taskReducer = taskSlice.reducer

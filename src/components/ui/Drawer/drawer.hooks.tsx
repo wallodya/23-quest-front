@@ -2,8 +2,7 @@ import { useState } from "react";
 import {
     DrawerControls,
     DrawerOptions,
-    DrawerPositions,
-    UseDrawer,
+    DrawerPositions
 } from "./drawer.types";
 
 const ANIMATION_DURATION = 0.3;

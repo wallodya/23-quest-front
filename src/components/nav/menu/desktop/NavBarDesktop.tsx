@@ -8,7 +8,7 @@ import { useSignOutMutation } from "store/api/api.slice";
 import {
     UserMenuDropdownContent,
     UserMenuDropdownTrigger,
-} from "../etc/NavBarDesktopDropDown";
+} from "./NavBarDesktopDropDown";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
     { name: "Home", link: "/home" },
