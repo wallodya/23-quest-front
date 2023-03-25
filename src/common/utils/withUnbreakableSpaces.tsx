@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-const withUnbreakableSpaces = (str: string): ReactNode => {
+export const withUnbreakableSpaces = (str: string): ReactNode => {
     const words = str.split(" ")
     return words.map((word, index) => {
         if (index !== words.length - 1) {
@@ -10,5 +10,3 @@ const withUnbreakableSpaces = (str: string): ReactNode => {
         }
     })
 }
-
-export default withUnbreakableSpaces

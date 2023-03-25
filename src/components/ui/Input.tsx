@@ -11,7 +11,7 @@ const Input = forwardRef(({prefix, postfix, ...props}: InputProps, ref: LegacyRe
             <input
                 {...props}
                 ref={ref}
-                className="block w-full rounded-lg border border-slate-300 bg-slate-100 p-2.5 text-sm text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
+                className="block w-full rounded-lg border border-slate-300 bg-slate-200 p-2.5 text-sm text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
             />
         </div>
     );

@@ -1,6 +1,5 @@
-import { AnimatePresence } from "framer-motion";
-import { createContext, ReactNode, useContext, useMemo } from "react";
-import { DialOptions, DialControls } from "./dial.types";
+import { createContext, ReactNode, useContext } from "react";
+import { DialControls, DialOptions } from "./dial.types";
 
 const initialContext: {
     options: Required<DialOptions>,

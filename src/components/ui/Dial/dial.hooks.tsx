@@ -1,9 +1,7 @@
     import PencilIcon from "components/icons/PencilIcon"
-import { AnimatePresence } from "framer-motion"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { SpeedDial } from "./Dial"
 import { DialOptions, DialPositions } from "./dial.types"
-import DialProvider from "./DialProvider"
 
 export const useDialPosotionClasses = (position: DialPositions) => {
     switch (position) {

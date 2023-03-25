@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsIncludedOnPage } from "common/hooks";
 import FileIcon from "components/icons/FileIcon";
 import ReaderIcon from "components/icons/ReaderIcon";
 import useDial from "components/ui/Dial";
@@ -28,7 +29,10 @@ const PAGES_WITH_DIAL = [""];
 
 const DialMobile = () => {
     const Dial = useDial({ withActions: true, actions: DIAL_ACTIONS, dialPosition: "bottom-right" });
-
+    const isIncludedOnPage = useIsIncludedOnPage(null, ["sign-up", "sign-in"])
+    if (!isIncludedOnPage) {
+        return null
+    }
     return (
         <Dial />
     );

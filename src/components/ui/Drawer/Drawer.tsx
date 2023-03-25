@@ -1,8 +1,8 @@
 import CrossIcon from "components/icons/CrossIcon";
 import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { useIsIncludedOnPage } from "common/hooks"
 import { createContext, ReactNode, useContext } from "react";
-import Button from "../Button";
+
 import {
     getDrawerOptions,
     useDrawerBackgroundAnimation,
@@ -29,13 +29,12 @@ const useDrawerOptions = () => useContext(DrawerContext)
 const Root = ({children, isOpen, ...options} : {children: ReactNode, isOpen: boolean} & DrawerOptions) => {
     const drawerOptions = getDrawerOptions(options)
     const drawerDisplayClass = isOpen ? "" : "pointer-events-none";
-    const pathname = usePathname().split("/").pop() ?? ""
-
-    const isIncludedOnPage = !drawerOptions.pages || drawerOptions.pages.includes(pathname)
-    const isExcludedOnPage = !!drawerOptions.excludePages && drawerOptions.excludePages.includes(pathname)
-    if (isExcludedOnPage || !isIncludedOnPage) {
+    
+    const isIncludedOnPage = useIsIncludedOnPage(drawerOptions.pages, drawerOptions.excludePages)
+    if (!isIncludedOnPage) {
         return null
     }
+
     const drawerPositionClasses = useDrawerPositionClasses(drawerOptions.drawerPosition)
     return (
         <DrawerContext.Provider value={drawerOptions}>
@@ -87,8 +86,8 @@ const InnerControls = ({toggleFn} : {toggleFn: () => void}) => {
     return (
         <div className="mb-2 flex w-full items-center justify-between py-1 font-bold text-slate-600 dark:text-slate-500">
                 <span className="text-xs">v0.1.0</span>
-                <button className="">
-                    <CrossIcon size="xs" />
+                <button className="" onClick={toggleFn}>
+                    <CrossIcon size="xs" /> 
                 </button>
         </div>
     );

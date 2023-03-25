@@ -1,7 +1,7 @@
 "use client";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import withUnbreakableSpaces from "common/utils/withUnbreakableSpaces";
+import { withUnbreakableSpaces }from "common/utils";
 import Button from "components/ui/Button";
 import Link from "next/link";
 import { useSignOutMutation } from "store/api/api.slice";

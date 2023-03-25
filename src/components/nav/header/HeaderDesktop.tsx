@@ -4,7 +4,7 @@ import TopBar from "components/ui/TopBar";
 import React from "react";
 import MenuDesktop from "../menu/MenuDesktop";
 
-const DesktopHeader = () => {
+export const DesktopHeader = () => {
     return (
         <TopBar isMobile={false}>        
             <MenuDesktop />
@@ -12,4 +12,3 @@ const DesktopHeader = () => {
     );
 };
 
-export default DesktopHeader;

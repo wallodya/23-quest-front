@@ -7,6 +7,7 @@ import MobileHeaderDrawerContent from "components/nav/etc/MobileHeaderDrawerCont
 import Link from "next/link";
 import { ReactNode } from "react";
 import { useAppSelector } from "store/hooks";
+import { useIsIncludedOnPage } from "common/hooks";
 
 const HeaderGuest = () => {
     return (
@@ -32,10 +33,14 @@ const HeaderUser = ({children}:{children: ReactNode}) => {
     );
 } 
 
-const MobileHeader = () => {
+export const MobileHeader = () => {
     const { isSignedIn } = useAppSelector((state) => state.user);
-
+    const isIncludedOnPage = useIsIncludedOnPage(null, ["sign-up", "sign-in"])
     const { isOpen, toggleDrawer } = useDrawerControls()
+    
+    if (!isIncludedOnPage) {
+        return null
+    }
     if (!isSignedIn) {
         return <HeaderGuest/>
     }
@@ -47,7 +52,7 @@ const MobileHeader = () => {
                 </button>
                 <Drawer.Root isOpen={isOpen} drawerPosition={"left"}>
                     <Drawer.Content>
-                        <MobileHeaderDrawerContent>
+                        <MobileHeaderDrawerContent toggleFn={toggleDrawer}>
                             <Drawer.InnerControls toggleFn={toggleDrawer} />
                         </MobileHeaderDrawerContent>
                     </Drawer.Content>
@@ -56,5 +61,3 @@ const MobileHeader = () => {
         </HeaderUser>
     );
 };
-
-export default MobileHeader;
