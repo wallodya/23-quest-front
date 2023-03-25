@@ -1,5 +1,4 @@
-import React from 'react'
-import { Task } from '../types/task.types'
+import { Task } from '@task/types'
 
 const TaskCard = ({} : Task) => {
   return (
