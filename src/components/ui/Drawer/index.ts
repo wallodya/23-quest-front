@@ -1,5 +1,3 @@
-import { useControls } from "./drawer.hooks";
-import { Drawer } from "./Drawer";
+export { useControls } from "./drawer.hooks"
+export * from "./Drawer"
 
-export const useDrawerControls = useControls;
-export default Drawer;

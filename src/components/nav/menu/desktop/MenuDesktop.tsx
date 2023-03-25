@@ -3,11 +3,11 @@
 import LogoTemporary from "components/icons/LogoTemporary";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import { useAppSelector } from "../../../store/hooks";
-import NavBarDesktop from "../etc/NavBarDesktop";
-import NavBarDesktopGuest from "../etc/NavBarDesktopGuest";
+import { useAppSelector } from "store/hooks";
+import NavBarDesktop from "./NavBarDesktop";
+import NavBarDesktopGuest from "./NavBarDesktopGuest";
 
-const MenuDesktop = () => {
+export const MenuDesktop = () => {
     const { isSignedIn } = useAppSelector((state) => state.user);
 
     const { theme, setTheme } = useTheme();
@@ -41,5 +41,3 @@ const MenuDesktop = () => {
         </div>
     );
 };
-
-export default MenuDesktop;

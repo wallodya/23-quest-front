@@ -1,9 +1,9 @@
 "use client";
 
 import MenuIcon from "components/icons/MenuIcon";
-import Drawer, { useDrawerControls } from "components/ui/Drawer";
+import { Drawer, useControls as useDrawerControls } from "components/ui/Drawer";
 import TopBar from "components/ui/TopBar";
-import MobileHeaderDrawerContent from "components/nav/etc/MobileHeaderDrawerContent";
+import { MenuMobile } from "components/nav/menu";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { useAppSelector } from "store/hooks";
@@ -52,9 +52,9 @@ export const MobileHeader = () => {
                 </button>
                 <Drawer.Root isOpen={isOpen} drawerPosition={"left"}>
                     <Drawer.Content>
-                        <MobileHeaderDrawerContent toggleFn={toggleDrawer}>
+                        <MenuMobile toggleFn={toggleDrawer}>
                             <Drawer.InnerControls toggleFn={toggleDrawer} />
-                        </MobileHeaderDrawerContent>
+                        </MenuMobile>
                     </Drawer.Content>
                     <Drawer.Background toggleFn={toggleDrawer} />
                 </Drawer.Root>
