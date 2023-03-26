@@ -17,7 +17,7 @@ const PAGE_LINKS: { name: string; link: string }[] = [
 ];
 
 const NavLinks = () => (
-    <ul>
+    <ul className="flex gap-4 items-center">
         {PAGE_LINKS.map(({ name, link }, index) => {
             return (
                 <li key={index}>

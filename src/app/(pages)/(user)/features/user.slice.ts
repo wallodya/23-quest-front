@@ -1,11 +1,9 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import jwt_decode from "jwt-decode";
-import { apiSlice } from "../../../store/api/api.slice";
-import { isUserStateType, isUserType, User, UserState } from "../../../types/user.types";
-import "client-only"
-import { IS_BROWSER } from "./user.utils";
+import "client-only";
+import { apiSlice } from "store/api";
+import { isUserStateType, isUserType, UserState } from "@user/types";
 
 const initialState: UserState = {
     refreshedAt: (new Date()).toDateString(),

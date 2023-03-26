@@ -1,18 +1,21 @@
-"use client"
+"use client";
 
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { taskFiltersReducer, taskReducer } from "@task/features";
 import {
-    combineReducers,
-    configureStore,
-    getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+    refreshUserMiddleware,
+    removeUserMiddleware,
+    saveUserMiddleware,
+} from "../app/(pages)/(user)/common/user.utils";
+import userReducer from "../app/(pages)/(user)/features/user.slice";
 import { apiSlice } from "./api/api.slice";
 import authReducer from "./auth/auth.slice";
-import userReducer from "../app/(pages)/(user)/user.slice";
-import { refreshUserMiddleware, removeUserMiddleware, saveUserMiddleware } from "../app/(pages)/(user)/user.utils";
 
 const rootReducer = combineReducers({
     user: userReducer,
     auth: authReducer,
+    tasks: taskReducer,
+    taskFilters: taskFiltersReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

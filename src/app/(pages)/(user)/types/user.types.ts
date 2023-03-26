@@ -1,5 +1,3 @@
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { isNumberObject } from "util/types";
 
 export type User = {
     uuid: string;

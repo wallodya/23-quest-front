@@ -1,6 +1,5 @@
 import { Middleware } from "@reduxjs/toolkit"
-import { RootState } from "../../../store/store"
-import { UserState } from "../../../types/user.types"
+import { RootState } from "store"
 
 export const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
 

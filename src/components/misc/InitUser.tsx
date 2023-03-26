@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { initUser } from "../../app/(pages)/(user)/user.slice";
+import { initUser } from "../../app/(pages)/(user)/features/user.slice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { User, UserState } from "../../types/user.types";
+import { User, UserState } from "../../app/(pages)/(user)/types/user.types";
 import jwt_decode from "jwt-decode";
 
 const InitUser = () => {
