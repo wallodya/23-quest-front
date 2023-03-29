@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Task, TasksState } from "@task/types";
+import { isTaskType, Task, TasksState } from "@task/types";
 
 const $TEST_task: Task = {
     task_id: 1,
@@ -34,14 +34,22 @@ const initialState: TasksState = {
     activeTasks: $TEST_tasks,
     completedTasks: $TEST_completed_tasks,
     failedTasks: $TEST_failed_tasks,
+    addedTasks: [],
     refreshedAt: (new Date()).toDateString()
 }
 
 const taskSlice = createSlice({
     name: "tasks",
     initialState,
-    reducers: {}
+    reducers: {
+        addTask: (state, { payload }) => {
+            console.log(("task slice: adding task"))
+            if (isTaskType(payload)) {
+                state.addedTasks = [...state.addedTasks, payload]
+            }
+        }
+    }
 })
 
-
+export const { addTask } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer

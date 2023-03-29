@@ -1,5 +1,6 @@
 "use client";
 
+import TasksConfig from "@task/tasks.config";
 import { useIsIncludedOnPage } from "common/hooks";
 import FileIcon from "components/icons/FileIcon";
 import ReaderIcon from "components/icons/ReaderIcon";
@@ -14,14 +15,16 @@ const DIAL_ACTIONS: DialAction[] = [
         isTooltipShown: true,
         Icon: () => <FileIcon size="sm" />,
         type: "link",
-        href: "/tasks/new"
+        href: `/tasks?${TasksConfig.tabs.urlParam}=${TasksConfig.tabs.acitve.urlParamValue}&${TasksConfig.form.urlParam}`,
+        closeOnPush: true,
     },
     {
         tooltipText: "New quest",
         isTooltipShown: true,
         Icon: () => <ReaderIcon size="sm" />,
         type: "link",
-        href: "/quests/new"
+        href: "/quests",
+        closeOnPush: true,
     },
 ];
 

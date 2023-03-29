@@ -1,10 +1,12 @@
+import { UrlObject } from "url";
+
 export type DialAction = {
     tooltipText: string;
     isTooltipShown?: boolean;
     closeOnPush?: boolean;
     Icon: () => JSX.Element;
     type: "link" | "handler";
-    href?: string;
+    href?: string | UrlObject;
     action?: () => void;
 };
 // export type DialAction = {
