@@ -1,9 +1,11 @@
 import { useTaskFormState } from "@task/hooks";
 import { Task } from "@task/types";
+import CrossIcon from "components/icons/CrossIcon";
 import Button from "components/ui/Button";
 import { Drawer } from "components/ui/Drawer";
+import InputField from "components/ui/InputField";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { TaskTypeChips } from "../Card/TaskCardChips";
 import { TaskCardHeader } from "../Card/TaskCardHeader";
 import { TaskDescription } from "../Card/TaskDescription";
@@ -34,17 +36,16 @@ const $TEST_new_task: Task = {
     updatedAt: (new Date("20-03-2023")).toDateString(),
 }
 
-const NewTaskForm = () => {
-    const { moveFormToList, closeTaskForm } = useTaskFormState();
-    const handleAdd = () => {
-        moveFormToList($TEST_new_task);
-    };
+const NewTaskForm = ({addTaskFn, closeFn, children}:{addTaskFn: () => void, closeFn: () => void, children: ReactNode}) => {
+
     return (
-        <>
-            <TaskCardHeader
+        <div className="px-4 py-3">  
+            {children}
+            {/* <TaskCardHeader
                 taskTitle="task inside form"
                 taskPriority="URGENT"
-            />
+            /> */}
+            <InputField/>
             <div>
                 <TaskDuration duration={null} />
                 <TaskRepeatCount repeatTimes={4} />
@@ -52,79 +53,30 @@ const NewTaskForm = () => {
             <TaskTypeChips taskTypes={["PERIODIC", "REPEAT"]} />
             <TaskDescription text={"lorem ipsum bla bla"} isExpanded={true} />
             <TaskPeriod startTime={1298603123} endTime={123123213123} />
-            <Button type="filled" buttonProps={{ onClick: handleAdd }}>
+            <Button type="filled" buttonProps={{ onClick: addTaskFn }}>
                 Add task
             </Button>
-            <Button type="outlined" buttonProps={{ onClick: closeTaskForm }}>
-                Close form
-            </Button>
-        </>
+        </div>
     );
 }
 
 const NewTask = () => {
 
-    const {isAdded, isShown} = useTaskFormState()
-    // const [isShown, setIsShown] = useState(false)
-    // const toggleShown = () => {
-    //     setIsShown(!isShown)
-    // }
-    // if (!isShown) {
-    //     return null
-    // }
+    const {isShown, closeForm, saveTask} = useTaskFormState()
+
+    const handleAdd = () => {
+        saveTask($TEST_new_task)
+    }
+
     return (
-        <AnimatePresence>
-            {isShown && (
-                <NewTaskContainer isAdded={isAdded} isShown={isShown}>
-                    <NewTaskForm/>
-                </NewTaskContainer>
-                // <motion.div
-                //     key="test-square"
-                //     className="h-24 w-24 rounded-lg bg-red-400"
-                //     initial={{
-                //         opacity: 0,
-                //     }}
-                //     animate={{
-                //         opacity: 1,
-                //         transition: {
-                //             duration: 3
-                //         }
-                //     }}
-                //     exit={{
-                //         opacity: 0,
-                //         translateX: 100,
-                //         transition: {
-                //             duration: 3
-                //         }
-                //     }}
-                // ></motion.div>
-            )}
-            {/* <NewTaskContainer isAdded={isAdded}>
-                <TaskCardHeader
-                    taskTitle="newly created task"
-                    taskPriority="URGENT"
-                />
-                <div>
-                    <TaskDuration duration={null} />
-                    <TaskRepeatCount repeatTimes={4} />
-                </div>
-                <TaskTypeChips taskTypes={["PERIODIC", "REPEAT"]} />
-                <TaskDescription
-                    text={"lorem ipsum bla bla"}
-                    isExpanded={true}
-                />
-                <TaskPeriod startTime={1298603123} endTime={123123213123} />
-                <Button type="filled" buttonProps={{ onClick: handleAdd }}>
-                    Add task
-                </Button>
-                <Button
-                    type="outlined"
-                    buttonProps={{ onClick: closeTaskForm }}
-                >
-                    Close form
-                </Button>
-            </NewTaskContainer> */}
-        </AnimatePresence>
+        <Drawer.Root isOpen={isShown} drawerPosition="bottom">
+            <Drawer.Content>
+                <NewTaskForm addTaskFn={handleAdd} closeFn={closeForm}>
+                    <Drawer.InnerControls toggleFn={closeForm}/>
+                </NewTaskForm>
+            </Drawer.Content>
+            <Drawer.Background toggleFn={closeForm}/>
+        </Drawer.Root>
     );
 };
 

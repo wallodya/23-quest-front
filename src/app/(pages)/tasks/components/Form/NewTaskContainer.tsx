@@ -1,107 +1,105 @@
 import { useNewTaskContainerClasses } from "@task/hooks";
-import { motion, MotionStyle, useMotionTemplate, useMotionValue, useTransform, Variants } from "framer-motion";
+import {
+    motion,
+    MotionStyle,
+    MotionValue,
+    useMotionTemplate,
+    useMotionValue,
+    useTransform,
+    Variants,
+} from "framer-motion";
 import React, { ReactNode, useEffect } from "react";
 
 const taskFormContainerVariants: Variants = {
-    initial: (isAdded: boolean) => (
-        isAdded  
-        ? {
-            opacity: 1,
-            translateY: 0,
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            width: "100vw",
-            transition: {
-                duration: 3,
-            },
+    hidden: {
+        opacity: 0,
+        position: "fixed",
+        translateY: 400,
+        transition: {
+            duration: 3,
+        },
+    },
+    // visible: {
+    //     opacity: 1,
+    //     translateY: 0,
+    //     position: "static",
+    //     width: "auto",
+    //     transition: {
+    //         duration: 3,
+    //     },
+    // },
+    exit: {
+        opacity: 0,
+        translateY: 400,
+        transition: {
+            duration: 3
         }
-        : {
-            opacity: 0,
-            position: "fixed",
-            translateY: 500,
-            transition: {
-                duration: 3,
-            },
-        }
-    ),
-    visible: (isAdded: boolean) =>
-        isAdded
-            ? {
-                  opacity: 1,
-                  translateY: 0,
-                  position: "static",
-                  width: "auto",
-                  transition: {
-                      duration: 3,
-                  },
-              }
-            : {
-                  opacity: 1,
-                  translateY: 0,
-                  position: "fixed",
-                  bottom: 0,
-                  left: 0,
-                  width: "100vw",
-                  transition: {
-                      duration: 3,
-                  },
-              },
+    }
 };
 
 const NewTaskContainer = ({
     children,
     isAdded,
-    isShown
+    isShown,
 }: {
     children: ReactNode;
     isAdded: boolean;
-    isShown: boolean
+    isShown: boolean;
 }) => {
-    const formStateValue = useMotionValue(100)
-    
-    const positionValue = useTransform<string, string>(formStateValue, [101, 201, 300], ["fixed", "fixed", "static"])
+    // const formStateValue = useMotionValue(100);
 
-    const opacityValue = useTransform<string, number>(formStateValue, [101, 201, 300], [0, 1, 1])
-    const translateYValue = useTransform<string, number>(formStateValue, [101, 201, 300], [400, 0, 0])
+    // const positionValue = useTransform<string, string>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     ["fixed", "fixed", "static"],
+    // );
 
-    const widthValue = useTransform<string, string>(formStateValue, [101, 201, 300], ["100vw", "100vw", "auto"])
-    const leftValue = useTransform<string, number | string>(formStateValue, [101, 201, 300], [0, 0, "auto"])
-    const bottomValue = useTransform<string, number | string>(formStateValue, [101, 201, 300], [0, 0, "auto"])
+    // const opacityValue = useTransform<string, number>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     [0, 1, 1],
+    // );
+    // const translateYValue = useTransform<string, number>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     [400, 0, 0],
+    // );
 
-    useEffect(() => {
-        console.log(`isShown: ${isShown} isAdded: ${isAdded}`)
-        !isShown && formStateValue.set(100)
-        isShown && !isAdded && formStateValue.set(200)
-        isShown && isAdded && formStateValue.set(300)
-        console.log('formStateValue', formStateValue)
-    }, [isAdded, isShown])
+    // const widthValue = useTransform<string, string>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     ["100vw", "100vw", "auto"],
+    // );
+    // const leftValue = useTransform<string, number | string>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     [0, 0, "auto"],
+    // );
+    // const bottomValue = useTransform<string, number | string>(
+    //     formStateValue,
+    //     [100, 200, 300],
+    //     [0, 0, "auto"],
+    // );
+
+    // useEffect(() => {
+    //     console.log(`isShown: ${isShown} isAdded: ${isAdded}`);
+    //     !isShown && !isAdded && formStateValue.set(100);
+    //     isShown && !isAdded && formStateValue.set(199);
+    //     isShown && isAdded && formStateValue.set(300);
+    //     console.log("formStateValue", formStateValue);
+    // }, [isAdded, isShown]);
+    // useEffect(() => {}, [isAdded, isShown]);
 
     const classes = useNewTaskContainerClasses(isAdded);
     return (
         <motion.div
             className={
-                "flex flex-col rounded-xl bg-gray-900 px-5 py-3 shadow shadow-slate-900"
+                "fixed w-screen left-0 bottom-0 flex flex-col rounded-xl bg-gray-900 px-5 py-3 shadow shadow-slate-900"
             }
             key={"new-task-form-container"}
-
-            style={{
-                position: positionValue,
-                width: widthValue,
-                bottom: bottomValue,
-                left: leftValue,
-                opacity: opacityValue,
-                translateY: translateYValue,
-            }}
-            initial={"initial"}
-            animate={"visible"}
-            exit={{
-                opacity: 0,
-                translateY: 600,
-                transition: {
-                    duration: 5,
-                },
-            }}
+            variants={taskFormContainerVariants}
+            initial={"hidden"}
+            exit={"exit"}
         >
             {children}
         </motion.div>
