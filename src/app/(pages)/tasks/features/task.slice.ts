@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isTaskType, Task, TasksState } from "@task/types";
+import { isTaskFormStep, isTaskType, Task, TasksState } from "@task/types";
 
 const $TEST_task: Task = {
     task_id: 1,
@@ -35,6 +35,10 @@ const initialState: TasksState = {
     completedTasks: $TEST_completed_tasks,
     failedTasks: $TEST_failed_tasks,
     addedTasks: [],
+    taskForm: {
+        isOpen: false,
+        currentStep: "title&type"
+    },
     refreshedAt: (new Date()).toDateString()
 }
 
@@ -43,13 +47,24 @@ const taskSlice = createSlice({
     initialState,
     reducers: {
         addTask: (state, { payload }) => {
-            console.log(("task slice: adding task"))
             if (isTaskType(payload)) {
                 state.addedTasks = [...state.addedTasks, payload]
+                state.taskForm.isOpen = false
             }
-        }
+        },
+        openTaskForm: (state) => {
+            state.taskForm.isOpen = true
+        },
+        closeTaskForm: (state) => {
+            state.taskForm.isOpen = false
+        },
+        setCurrentStep: (state, { payload }) => {
+            if (isTaskFormStep(payload)) {
+                state.taskForm.currentStep = payload
+            }
+        },
     }
 })
 
-export const { addTask } = taskSlice.actions;
+export const { addTask, openTaskForm, closeTaskForm, setCurrentStep } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer

@@ -53,7 +53,7 @@ const Action = ({
     dialPosition,
 }: DialAction & { handleClose: () => void; dialPosition: DialPositions }) => {
     const handleClick = () => {
-        if (type === "handler" && action) {
+        if (action) {
             action();
         }
         if (closeOnPush) {

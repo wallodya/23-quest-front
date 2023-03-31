@@ -1,4 +1,4 @@
-import { TasksConfig } from "@task/types"
+import { TaskFormStep, TaskFormSteps, TasksConfig } from "@task/types"
 
 const TasksConfig: TasksConfig = {
     tabs: {
@@ -17,7 +17,23 @@ const TasksConfig: TasksConfig = {
         }
     },
     form: {
-        urlParam: "new"
+        urlParam: "new",
+        stepNames: {
+            tilte: "title&type",
+            description: "description",
+            priority: "priority",
+            duration: "duration",
+            timeframe: "timeframe",
+            repeatCount: "repeatCount",
+        },
+        steps: new Map<TaskFormSteps, TaskFormStep>([
+            ["title&type", {buttonLabel: "Choose type and title"}],
+            ["description", {buttonLabel: "Add description"}],
+            ["priority", {buttonLabel: "Choose priority"}],
+            ["duration", {buttonLabel: "Set duration"}],
+            ["timeframe", {buttonLabel: "Set timeframe"}],
+            ["repeatCount", {buttonLabel: "Set repetitions"}],
+        ])
     }
 }
 
