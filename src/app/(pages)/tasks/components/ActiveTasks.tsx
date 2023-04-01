@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
-import { TaskCard } from "./Card";
 import { useAppSelector } from "store";
-import { useTaskFormState } from "@task/hooks";
+import { TaskCard } from "./Card";
 import NewTask from "./Form/NewTask";
-import { AnimatePresence } from "framer-motion";
 
 export const ActiveTasks = () => {
     const { activeTasks, addedTasks } = useAppSelector((state) => state.tasks);

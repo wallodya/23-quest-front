@@ -62,7 +62,7 @@ export const useDrawerPositionClasses = (position: DrawerPositions) => {
 export const useDrawerContentPositionClasses = (position: DrawerPositions) => {
     switch (position) {
         case "bottom": {
-            return "w-full min-h-60";
+            return "w-full min-h-60 rounded-t-xl";
         }
         case "left": {
             return "h-full w-72";

@@ -1,5 +1,5 @@
 import { TaskFormSteps } from "@task/components/Form/steps";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormGetValues, UseFormRegister } from "react-hook-form";
 import { string } from "zod";
 
 export type TaskPriority = "NOT_IMPORTANT" | "MEDIUM" | "URGENT";
@@ -13,6 +13,7 @@ export type TaskTabs = "active" | "failed" | "completed";
 
 export type TaskFormStep = {
     buttonLabel: string,
+    name: string
 }
 
 export type TasksConfig = {
@@ -66,20 +67,24 @@ export type CreateTaskBody = Pick<
     Task,
     | "title"
     | "text"
-    | "types"
     | "startTime"
     | "endTime"
     | "duration"
     | "repeatTimes"
     | "priority"
     | "difficulty"
->;
+> & {
+    isTimer: boolean,
+    isPeriodic: boolean,
+    isRepeat: boolean
+};
 
 export type TaskFormSteps = "title&type" | "description" | "priority" | "timeframe" | "duration" | "repeatCount"
 
 export type TaskFormState = {
     isOpen: boolean;
-    currentStep: TaskFormSteps
+    currentStep: TaskFormSteps,
+    types: TaskType
 } & Partial<CreateTaskBody>;
 
 export type TasksState = {
@@ -105,6 +110,9 @@ export type TaskTypeChipProps = {
 export type TaskStepProps = {
     registerFn: UseFormRegister<CreateTaskBody>;
     errors: FieldErrors<CreateTaskBody>;
+    onNext?: () => void,
+    onPrevious?: () => void
+    // getValuesFn: UseFormGetValues<CreateTaskBody>
 }
 
 export const isTaskFormStep = (str: unknown): str is TaskFormSteps  => {
@@ -157,7 +165,7 @@ export const isTaskDifficultyType = (str: unknown): str is TaskPriority => {
 };
 
 export const isTaskTypeType = (obj: unknown): obj is TaskType => {
-    if (obj === null || typeof obj !== "object" || !Array.isArray(obj)) {
+    if (obj === null || typeof obj !== "object" || !Array.isArray(obj) || obj.length > 3) {
         return false;
     }
     for (const entry of obj) {

@@ -1,14 +1,18 @@
 import TasksConfig from "@task/tasks.config"
-import FormStepControls from "./FormStepControls"
+import FormStepContainer from "./FormStepContainer";
+import FormStepControls from "./FormStepContainer"
 
 export const DescriptionStep = () => {
     return (
-        <div className="flex flex-col gap-4 font-bold text-red-400">
-            Description
-            <FormStepControls
+        <FormStepContainer
+            nextStep={TasksConfig.form.stepNames.priority}
+            previousStep={TasksConfig.form.stepNames.title}
+        >
+            {/* <FormStepControls
                 nextStep={TasksConfig.form.stepNames.priority}
                 previousStep={TasksConfig.form.stepNames.tilte}
-            />
-        </div>
+            > */}
+            Description
+        </FormStepContainer>
     );
 }

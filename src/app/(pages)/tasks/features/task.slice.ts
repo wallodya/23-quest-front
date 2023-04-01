@@ -1,5 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { isTaskFormStep, isTaskType, Task, TasksState } from "@task/types";
+import { createSelector, createSlice, current } from "@reduxjs/toolkit";
+import {
+    isTaskFormStep,
+    isTaskType,
+    isTaskTypeType,
+    Task,
+    TasksState,
+} from "@task/types";
 
 const $TEST_task: Task = {
     task_id: 1,
@@ -19,16 +25,29 @@ const $TEST_task: Task = {
     isInQuest: false,
     questId: null,
     isCurrentInQuest: false,
-    createdAt: (new Date("20-03-2023")).toDateString(),
-    updatedAt: (new Date("20-03-2023")).toDateString(),
-}
+    createdAt: new Date("20-03-2023").toDateString(),
+    updatedAt: new Date("20-03-2023").toDateString(),
+};
 
-const $TEST_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+const $TEST_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const $TEST_tasks: Task[] = $TEST_ids.map(i => ({...$TEST_task, task_id: i, title: `test task ${i}`}))
-const $TEST_completed_tasks: Task[] = $TEST_ids.map(i => ({...$TEST_task, task_id: i, isCompleted: true, title: `test completed task ${i}`}))
-const $TEST_failed_tasks: Task[] = $TEST_ids.map(i => ({...$TEST_task, task_id: i, isFailed: true, title: `test failed task ${i}`}))
-
+const $TEST_tasks: Task[] = $TEST_ids.map((i) => ({
+    ...$TEST_task,
+    task_id: i,
+    title: `test task ${i}`,
+}));
+const $TEST_completed_tasks: Task[] = $TEST_ids.map((i) => ({
+    ...$TEST_task,
+    task_id: i,
+    isCompleted: true,
+    title: `test completed task ${i}`,
+}));
+const $TEST_failed_tasks: Task[] = $TEST_ids.map((i) => ({
+    ...$TEST_task,
+    task_id: i,
+    isFailed: true,
+    title: `test failed task ${i}`,
+}));
 
 const initialState: TasksState = {
     activeTasks: $TEST_tasks,
@@ -37,10 +56,11 @@ const initialState: TasksState = {
     addedTasks: [],
     taskForm: {
         isOpen: false,
-        currentStep: "title&type"
+        currentStep: "title&type",
+        types: ["BASIC"],
     },
-    refreshedAt: (new Date()).toDateString()
-}
+    refreshedAt: new Date().toDateString(),
+};
 
 const taskSlice = createSlice({
     name: "tasks",
@@ -48,23 +68,38 @@ const taskSlice = createSlice({
     reducers: {
         addTask: (state, { payload }) => {
             if (isTaskType(payload)) {
-                state.addedTasks = [...state.addedTasks, payload]
-                state.taskForm.isOpen = false
+                state.addedTasks = [...state.addedTasks, payload];
+                state.taskForm.isOpen = false;
             }
         },
         openTaskForm: (state) => {
-            state.taskForm.isOpen = true
+            state.taskForm.isOpen = true;
         },
         closeTaskForm: (state) => {
-            state.taskForm.isOpen = false
+            state.taskForm.isOpen = false;
         },
         setCurrentStep: (state, { payload }) => {
             if (isTaskFormStep(payload)) {
-                state.taskForm.currentStep = payload
+                state.taskForm.currentStep = payload;
             }
         },
-    }
-})
+        setTypes: (state, { payload }) => {
+            console.log('payload: ', payload)
+            if (isTaskTypeType(payload)) {
+                state.taskForm.types = payload
+                console.log(current(state))
+            }
+        },
+    },
+});
 
-export const { addTask, openTaskForm, closeTaskForm, setCurrentStep } = taskSlice.actions;
-export const taskReducer = taskSlice.reducer
+// export const selectActiveTasks = createSelector()
+
+export const {
+    addTask,
+    openTaskForm,
+    closeTaskForm,
+    setCurrentStep,
+    setTypes,
+} = taskSlice.actions;
+export const taskReducer = taskSlice.reducer;

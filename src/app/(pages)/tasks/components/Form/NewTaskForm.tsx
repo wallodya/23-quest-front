@@ -1,10 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FormControl, FormField, FormLabel, FormMessage, FormSubmit } from "@radix-ui/react-form";
+import { setTypes } from "@task/features";
 import { useCurrentFormStep, useTaskFormControls } from "@task/hooks";
-import { CreateTaskBody, Task } from "@task/types";
+import { CreateTaskBody, Task, TaskType } from "@task/types";
 import FormWrapper from "components/ui/FormWrapper";
-import { ReactNode } from "react";
-import { useForm } from "react-hook-form";
-import { TaskFormSteps } from "./steps";
+import Submit from "components/ui/Submit";
+import { motion } from "framer-motion";
+import { ReactNode, useCallback, useEffect, useMemo } from "react";
+import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { useAppDispatch } from "store";
 import { createTaskSchema } from "./taskForm.schema";
 
 const $TEST_new_task: Task = {
@@ -29,41 +33,41 @@ const $TEST_new_task: Task = {
     updatedAt: new Date("20-03-2023").toDateString(),
 };
 
-
-
-
-
-
-
-
 export const NewTaskForm = ({ children }: { children: ReactNode }) => {
-    const { saveTask, currentStep } = useTaskFormControls();
-
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors: formErrors },
     } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema) });
-
-    const handleAdd = () => {
-        saveTask($TEST_new_task);
-    };
-
-    const Step = useCurrentFormStep({registerFn: register, errors: formErrors})
+    const {typesInState, saveTaskTypes} = useTaskFormControls(watch)
+    const registerFn: UseFormRegister<CreateTaskBody> = useCallback(
+      (fieldName) => {
+        return register(fieldName)
+      },
+      [],
+    )
+    
+    const Step = useCurrentFormStep({
+        registerFn,
+        errors: formErrors,
+        onNext: saveTaskTypes,
+    });
+    const onSubmit: SubmitHandler<CreateTaskBody> = (data) => {
+        console.log('submit', data)
+    }
 
     return (
-        <FormWrapper className="px-4 py-3" onSubmit={handleSubmit(handleAdd)}>
-            <div>{currentStep}</div>
-            {children}
-            {/* <TaskCardHeader
-                taskTitle="task inside form"
-                taskPriority="URGENT"
-            /> */}
-            <Step/>
-
-            {/* <Button type="filled" buttonProps={{ onClick: handleAdd }}>
-                Add task
-            </Button> */}
+        <FormWrapper
+            className="flex min-h-[40vh] flex-col justify-between gap-2 px-4 py-3"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <Step />
+{/* 
+            <FormSubmit asChild>
+                <input type={"submit"} />
+            </FormSubmit> */}
+            <Submit>Save</Submit>
         </FormWrapper>
     );
 };

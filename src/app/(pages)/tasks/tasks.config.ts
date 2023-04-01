@@ -19,7 +19,7 @@ const TasksConfig: TasksConfig = {
     form: {
         urlParam: "new",
         stepNames: {
-            tilte: "title&type",
+            title: "title&type",
             description: "description",
             priority: "priority",
             duration: "duration",
@@ -27,12 +27,12 @@ const TasksConfig: TasksConfig = {
             repeatCount: "repeatCount",
         },
         steps: new Map<TaskFormSteps, TaskFormStep>([
-            ["title&type", {buttonLabel: "Choose type and title"}],
-            ["description", {buttonLabel: "Add description"}],
-            ["priority", {buttonLabel: "Choose priority"}],
-            ["duration", {buttonLabel: "Set duration"}],
-            ["timeframe", {buttonLabel: "Set timeframe"}],
-            ["repeatCount", {buttonLabel: "Set repetitions"}],
+            ["title&type", {buttonLabel: "Choose type and title", name: "Title and Type"}],
+            ["description", {buttonLabel: "Add description", name: "Description"}],
+            ["priority", {buttonLabel: "Choose priority", name: "Priority"}],
+            ["duration", {buttonLabel: "Set duration", name: "Duration"}],
+            ["timeframe", {buttonLabel: "Set timeframe", name: "Timeframe"}],
+            ["repeatCount", {buttonLabel: "Set repetitions", name: "Repeat Count"}],
         ])
     }
 }
