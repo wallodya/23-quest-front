@@ -9,7 +9,7 @@ export const TimeframeStep = () => {
         types.includes("REPEAT") &&
         TasksConfig.form.stepNames.repeatCount;
 
-    const previousStep = types && types.includes("TIMER") && TasksConfig.form.stepNames.duration
+    const previousStep = types && types.includes("TIMER") && TasksConfig.form.stepNames.duration || TasksConfig.form.stepNames.priority
 
     return (
         <FormStepContainer nextStep={nextStep || undefined} previousStep={previousStep || undefined}>

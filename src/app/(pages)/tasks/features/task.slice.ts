@@ -84,10 +84,8 @@ const taskSlice = createSlice({
             }
         },
         setTypes: (state, { payload }) => {
-            console.log('payload: ', payload)
             if (isTaskTypeType(payload)) {
                 state.taskForm.types = payload
-                console.log(current(state))
             }
         },
     },

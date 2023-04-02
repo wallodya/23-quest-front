@@ -7,7 +7,7 @@ export const RepeatCountStep = () => {
     const previousStep =
         types &&
         ((types.includes("PERIODIC") && TasksConfig.form.stepNames.timeframe) ||
-            (types.includes("TIMER") && TasksConfig.form.stepNames.duration));
+            (types.includes("TIMER") && TasksConfig.form.stepNames.duration)) || TasksConfig.form.stepNames.priority;
     return (
         <FormStepContainer previousStep={previousStep || undefined}>
             Repeat count
