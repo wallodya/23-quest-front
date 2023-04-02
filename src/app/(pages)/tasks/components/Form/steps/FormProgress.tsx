@@ -18,7 +18,11 @@ const FormProgress = () => {
                 <div>
                     {currentStepCount}/{stepsTotal}
                     {allSteps.map((step, index) => (
-                        <span key={index} onClick={() => handleSwitchStep(step)}>
+                        <span
+                            key={index}
+                            className={"cursor-pointer hover:text-sky-200"}
+                            onClick={() => handleSwitchStep(step)}
+                        >
                             ||{step}||
                         </span>
                     ))}

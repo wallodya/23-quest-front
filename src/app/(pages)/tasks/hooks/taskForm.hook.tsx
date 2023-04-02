@@ -129,19 +129,19 @@ export const useCurrentFormStep = ({
             );
         }
         case "description": {
-            return () => <DescriptionStep />;
+            return () => <DescriptionStep registerFn={registerFn} errors={errors}/>;
         }
         case "priority": {
-            return () => <PriorityStep />;
+            return () => <PriorityStep  registerFn={registerFn} errors={errors}/>;
         }
         case "timeframe": {
-            return () => <TimeframeStep />;
+            return () => <TimeframeStep registerFn={registerFn} errors={errors}/>;
         }
         case "duration": {
-            return () => <DurationStep />;
+            return () => <DurationStep registerFn={registerFn} errors={errors}/>;
         }
         case "repeatCount": {
-            return () => <RepeatCountStep />;
+            return () => <RepeatCountStep registerFn={registerFn} errors={errors}/>;
         }
     }
 };
