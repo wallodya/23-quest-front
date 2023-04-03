@@ -7,10 +7,10 @@ type SubmitProps = {
 } & Form.FormSubmitProps &
     React.RefAttributes<HTMLButtonElement>;
 
-const Submit = ({ isLoading, children, ...props }: SubmitProps) => {
+const Submit = ({ isLoading, children, disabled, ...props }: SubmitProps) => {
     return (
         <Form.Submit asChild {...props}>
-            <Button type="filled" isLoading={isLoading}>
+            <Button type="filled" isLoading={isLoading} buttonProps={{disabled: disabled}}>
                 {children}
             </Button>
         </Form.Submit>

@@ -12,7 +12,7 @@ export const DescriptionStep = ({registerFn, errors: { text: DescriptionFieldErr
         >
             <InputField
                 registerFn={registerFn}
-                fieldName="description"
+                fieldName="text"
                 labelText="Add Description (optional)"
             />
         </FormStepContainer>

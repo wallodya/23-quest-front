@@ -16,15 +16,15 @@ interface ButtonProps {
     buttonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-const useButtonClassNames = (type: ButtonTypes): string => {
+const useButtonClassNames = (type: ButtonTypes, isDisabled?: boolean): string => {
     switch (type) {
         case "filled":
-            return "bg-sky-700 text-slate-100 hover:bg-sky-800 dark:bg-sky-500 dark:hover:bg-sky-600";
+            return isDisabled ? "bg-slate-500 text-slate-300 cursor-not-allowed" : "bg-sky-700 text-slate-100 hover:bg-sky-800 dark:bg-sky-500 dark:hover:bg-sky-600";
         case "text":
-            return "text-sky-700 hover:text-sky-800 dark:text-sky-500 dark:hover:text-sky-600";
+            return isDisabled ? "text-slate-500 cursor-not-allowed" :"text-sky-700 hover:text-sky-800 dark:text-sky-500 dark:hover:text-sky-600";
 
         case "outlined":
-            return "text-sky-700 hover:text-slate-100 dark:text-sky-500 dark:hover:text-slate-100 hover:bg-sky-800 dark:hover:bg-sky-600 border border-sky-700 dark:border-sky-600 hover:border-sky-800 dark:hover:border-sky-600";
+            return isDisabled ? "text-slate-400 border border-slate-400 cursor-not-allowed" :"text-sky-700 hover:text-slate-100 dark:text-sky-500 dark:hover:text-slate-100 hover:bg-sky-800 dark:hover:bg-sky-600 border border-sky-700 dark:border-sky-600 hover:border-sky-800 dark:hover:border-sky-600";
     }
 };
 
@@ -33,7 +33,7 @@ const Button = forwardRef(
         { children, isLoading, type, buttonProps }: ButtonProps,
         ref: LegacyRef<HTMLButtonElement> | undefined,
     ) => {
-        const buttonTypeClassNames = useButtonClassNames(type);
+        const buttonTypeClassNames = useButtonClassNames(type, buttonProps?.disabled);
         return (
             <button
                 ref={ref}

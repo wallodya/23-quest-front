@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormControl, FormField, FormLabel, FormMessage, FormSubmit } from "@radix-ui/react-form";
+import * as Form from "@radix-ui/react-form";
 import { setTypes } from "@task/features";
 import { useCurrentFormStep, useTaskFormControls } from "@task/hooks";
-import { CreateTaskBody, Task, TaskType } from "@task/types";
+import { CreateTaskBody, Task, TaskOptimistic, TaskType } from "@task/types";
 import FormWrapper from "components/ui/FormWrapper";
 import Submit from "components/ui/Submit";
 import { motion } from "framer-motion";
@@ -12,7 +12,6 @@ import { useAppDispatch } from "store";
 import { createTaskSchema } from "./taskForm.schema";
 
 const $TEST_new_task: Task = {
-    task_id: 1,
     userId: 1,
     uniqueTaskId: "some-task-id",
     text: "another some new task text for testing bla bla jwfbfoebiwf",
@@ -23,14 +22,13 @@ const $TEST_new_task: Task = {
     startTime: Number(new Date("2023-03-24")),
     endTime: Number(new Date("2023-03-25")),
     duration: 30 * 60 * 1000,
-    repeatTimes: 3,
+    repeatCount: 3,
     priority: "MEDIUM",
-    difficulty: "EASY",
     isInQuest: false,
     questId: null,
     isCurrentInQuest: false,
-    createdAt: new Date("20-03-2023").toDateString(),
-    updatedAt: new Date("20-03-2023").toDateString(),
+    createdAt: Number(new Date("20-03-2023")),
+    updatedAt: Number(new Date("20-03-2023")),
 };
 
 export const NewTaskForm = ({ children }: { children: ReactNode }) => {
@@ -38,9 +36,10 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors: formErrors },
+        
+        formState: { errors: formErrors, isValid },
     } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema) });
-    const {typesInState, saveTaskTypes} = useTaskFormControls(watch)
+    const { saveTaskTypes, saveTask } = useTaskFormControls(watch);
     const registerFn: UseFormRegister<CreateTaskBody> = useCallback(
       (fieldName) => {
         return register(fieldName)
@@ -54,7 +53,45 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
         onNext: saveTaskTypes,
     });
     const onSubmit: SubmitHandler<CreateTaskBody> = (data) => {
-        console.log('submit', data)
+        const types: TaskType = []
+        data.isPeriodic && types.push("PERIODIC")
+        data.isTimer && types.push("TIMER")
+        data.isRepeat && types.push("REPEAT")
+        types.length === 0 && types.push("BASIC")
+
+        const reqData: TaskOptimistic &
+            Partial<{
+                isTimer: boolean;
+                isRepeat: boolean;
+                isPeriodic: boolean;
+            }> = {
+            title: data.title,
+            text: data.text,
+            priority: data.priority,
+
+            duration: data.duration || null,
+            startTime: data.startTime || null,
+            endTime: data.endTime || null,
+            repeatCount: data.repeatCount || null,
+
+
+            types,
+            isCompleted: false,
+            isFailed: false,
+
+            isCurrentInQuest: false,
+            isInQuest: false,
+            questId: null,
+            createdAt: Number(new Date()),
+            updatedAt: Number(new Date())
+        };
+
+        delete reqData.isRepeat
+        delete reqData.isTimer
+        delete reqData.isPeriodic
+
+        console.log('submit', {...reqData, types })
+        saveTask(reqData)
     }
 
     return (
@@ -67,7 +104,12 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
             <FormSubmit asChild>
                 <input type={"submit"} />
             </FormSubmit> */}
-            <Submit>Save</Submit>
+            {/* <div>isValid: {String(isValid)}</div>
+                {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
+                {Object.keys(formErrors).map((err, index) => <span key={index}>{err}</span>)} */}
+            {/* <Form.ValidityState>
+            </Form.ValidityState> */}
+            <Submit disabled={!isValid}>Save</Submit>
         </FormWrapper>
     );
 };

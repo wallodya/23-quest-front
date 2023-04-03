@@ -1,5 +1,6 @@
 import { createSelector, createSlice, current } from "@reduxjs/toolkit";
 import {
+    isOptimisticTaskType,
     isTaskFormStep,
     isTaskType,
     isTaskTypeType,
@@ -8,7 +9,7 @@ import {
 } from "@task/types";
 
 const $TEST_task: Task = {
-    task_id: 1,
+    // task_id: 1,
     userId: 1,
     uniqueTaskId: "some-task-id",
     text: "some task text for testing bla bla jwfbfoebiwf",
@@ -19,14 +20,14 @@ const $TEST_task: Task = {
     startTime: Number(new Date("2023-03-24")),
     endTime: Number(new Date("2023-03-25")),
     duration: 30 * 60 * 1000,
-    repeatTimes: 3,
+    repeatCount: 3,
     priority: "MEDIUM",
-    difficulty: "EASY",
+    // difficulty: "EASY",
     isInQuest: false,
     questId: null,
     isCurrentInQuest: false,
-    createdAt: new Date("20-03-2023").toDateString(),
-    updatedAt: new Date("20-03-2023").toDateString(),
+    createdAt: Number(new Date("20-03-2023")),
+    updatedAt: Number(new Date("20-03-2023")),
 };
 
 const $TEST_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -67,7 +68,9 @@ const taskSlice = createSlice({
     initialState,
     reducers: {
         addTask: (state, { payload }) => {
-            if (isTaskType(payload)) {
+            console.log("payload: ", payload)
+            if (isOptimisticTaskType(payload)) {
+                console.log("updating state")
                 state.addedTasks = [...state.addedTasks, payload];
                 state.taskForm.isOpen = false;
             }
@@ -83,7 +86,7 @@ const taskSlice = createSlice({
                 state.taskForm.currentStep = payload;
             }
         },
-        setTypes: (state, { payload }) => {
+        setTypes: (state, { payload }) => { 
             if (isTaskTypeType(payload)) {
                 state.taskForm.types = payload
             }

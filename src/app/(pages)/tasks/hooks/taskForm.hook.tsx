@@ -18,6 +18,7 @@ import {
     CreateTaskBody,
     Task,
     TaskFormSteps,
+    TaskOptimistic,
     TaskStepProps,
     TaskType,
 } from "@task/types";
@@ -55,9 +56,10 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     //     dispatch(setCurrentStep(step))
     // }
 
-    const saveTask = (payload: Task) => {
+    const saveTask = (payload: TaskOptimistic) => {
         // closeTaskForm()
         // setIsShown(false)
+        console.log("Submited")
         dispatch(addTask(payload));
     };
 
@@ -67,6 +69,7 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
 
     useEffect(() => {
         const { unsubscribe } = watch((values) => {
+            // console.log("title", values.title)
             if (values.isPeriodic) {
                 !taskTypes.includes("PERIODIC") && taskTypes.push("PERIODIC");
             } else {

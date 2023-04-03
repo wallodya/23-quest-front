@@ -42,7 +42,6 @@ export type TasksConfig = {
 };
 
 export type Task = {
-    task_id: number;
     userId: number;
     uniqueTaskId: string;
     isCompleted: boolean;
@@ -53,14 +52,13 @@ export type Task = {
     startTime: number | null;
     endTime: number | null;
     duration: number | null;
-    repeatTimes: number | null;
+    repeatCount: number | null;
     priority: TaskPriority;
-    difficulty: TaskDifficulty;
     isInQuest: boolean;
     questId: number | null;
     isCurrentInQuest: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: number;
+    updatedAt: number;
 };
 
 export type CreateTaskBody = Pick<
@@ -70,9 +68,8 @@ export type CreateTaskBody = Pick<
     | "startTime"
     | "endTime"
     | "duration"
-    | "repeatTimes"
+    | "repeatCount"
     | "priority"
-    | "difficulty"
 > & {
     isTimer: boolean,
     isPeriodic: boolean,
@@ -87,11 +84,13 @@ export type TaskFormState = {
     types: TaskType
 } & Partial<CreateTaskBody>;
 
+export type TaskOptimistic = Omit<Task, "userId" | "uniqueTaskId">
+
 export type TasksState = {
     activeTasks: Task[];
     completedTasks: Task[];
     failedTasks: Task[];
-    addedTasks: Task[];
+    addedTasks: TaskOptimistic[];
     taskForm: TaskFormState;
     refreshedAt: string;
 };
@@ -198,8 +197,8 @@ export const isTaskType = (obj: unknown): obj is Task => {
         (typeof obj.endTime === "number" || obj.endTime === null) &&
         "duration" in obj &&
         (typeof obj.duration === "number" || obj.duration === null) &&
-        "repeatTimes" in obj &&
-        (typeof obj.repeatTimes === "number" || obj.repeatTimes === null) &&
+        "repeatCount" in obj &&
+        (typeof obj.repeatCount === "number" || obj.repeatCount === null) &&
         "priority" in obj &&
         isTaskPriorityType(obj.priority) &&
         "difficulty" in obj &&
@@ -211,8 +210,48 @@ export const isTaskType = (obj: unknown): obj is Task => {
         "isCurrentInQuest" in obj &&
         typeof obj.isCurrentInQuest === "boolean" &&
         "createdAt" in obj &&
-        typeof obj.createdAt === "string" &&
+        typeof obj.createdAt === "number" &&
         "updatedAt" in obj &&
-        typeof obj.updatedAt === "string"
+        typeof obj.updatedAt === "number"
     );
 };
+
+export const isOptimisticTaskType = (obj: unknown): obj is TaskOptimistic => {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+
+        "isCompleted" in obj &&
+        typeof obj.isCompleted === "boolean" &&
+        "isFailed" in obj &&
+        typeof obj.isFailed === "boolean" &&
+        "title" in obj &&
+        typeof obj.title === "string" &&
+        "text" in obj &&
+        typeof obj.text === "string" &&
+        "types" in obj &&
+        isTaskTypeType(obj.types) &&
+        "startTime" in obj &&
+        (typeof obj.startTime === "number" || obj.startTime === null) &&
+        "endTime" in obj &&
+        (typeof obj.endTime === "number" || obj.endTime === null) &&
+        "duration" in obj &&
+        (typeof obj.duration === "number" || obj.duration === null) &&
+        "repeatCount" in obj &&
+        (typeof obj.repeatCount === "number" || obj.repeatCount === null) &&
+        "priority" in obj &&
+        isTaskPriorityType(obj.priority) &&
+
+        "isInQuest" in obj &&
+        typeof obj.isInQuest === "boolean" &&
+        "questId" in obj &&
+        (typeof obj.questId === "number" || obj.questId === null) &&
+        "isCurrentInQuest" in obj &&
+        typeof obj.isCurrentInQuest === "boolean" &&
+        "createdAt" in obj &&
+        typeof obj.createdAt === "number" &&
+        "updatedAt" in obj &&
+        typeof obj.updatedAt === "number"
+    );
+};
+

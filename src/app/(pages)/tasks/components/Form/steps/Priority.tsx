@@ -2,8 +2,17 @@ import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store";
 import FormStepContainer from "./FormStepContainer";
 import { TaskStepProps } from "@task/types";
+import {
+    FormControl,
+    FormField,
+    FormLabel,
+    FormMessage,
+} from "@radix-ui/react-form";
 
-export const PriorityStep = ({ registerFn, errors }: TaskStepProps) => {
+export const PriorityStep = ({
+    registerFn,
+    errors: { priority: priorityFieldError },
+}: TaskStepProps) => {
     const { types } = useAppSelector((state) => state.tasks.taskForm);
     const nextStep =
         types &&
@@ -18,28 +27,50 @@ export const PriorityStep = ({ registerFn, errors }: TaskStepProps) => {
             previousStep={TasksConfig.form.stepNames.description}
         >
             <div>
-                <fieldset
+                {/* <fieldset
                     {...registerFn("priority")}
                     className="flex flex-col gap-2"
-                >
-                    <div>
-                        <input name="priority" type="radio" value={"URGENT"} id="urgent"/>
-                        <label htmlFor="urgent">Urgent</label>
-                    </div>
-                    <div>
-                        <input name="priority" type="radio" value={"MEDIUM"} id="medium"/>
-                        <label htmlFor="medium">Medium</label>
-                    </div>
-                    <div>
-                        <input
-                            name="priority"
-                            type="radio"
-                            value={"NOT_IMPORTANT"}
-                            id="not_important"
-                        />
-                        <label htmlFor="not_important">Not important</label>
-                    </div>
-                </fieldset>
+                > */}
+                    {/* <FormLabel>How important this taks is?</FormLabel> */}
+                    <FormField name="priotity">
+                        <FormControl asChild>
+                            <input
+                                // name="priority"
+                                {...registerFn("priority")}
+                                type="radio"
+                                value={"MEDIUM"}
+                                id="medium"
+                            />
+                        </FormControl>
+                        <FormLabel htmlFor="medium">Medium</FormLabel>
+                    </FormField>
+                    <FormField name="priority">
+                        <FormControl asChild>
+                            <input
+                                // name="priority"
+                                {...registerFn("priority")}
+                                type="radio"
+                                value={"URGENT"}
+                                id="urgent"
+                            />
+                        </FormControl>
+                        <FormLabel htmlFor="urgent">Urgent</FormLabel>
+                    </FormField>
+                    <FormField name="priority">
+                        <FormControl asChild>
+                            <input
+                                // name="priority"
+                                {...registerFn("priority")}
+                                type="radio"
+                                value={"NOT_IMPORTANT"}
+                                id="not_important"
+                            />
+                        </FormControl>
+                        <FormLabel htmlFor="not_important">
+                            Not important
+                        </FormLabel>
+                    </FormField>
+                {/* </fieldset> */}
             </div>
         </FormStepContainer>
     );
