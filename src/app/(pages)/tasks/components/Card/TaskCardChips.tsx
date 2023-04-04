@@ -1,8 +1,10 @@
 import { useTypeChipProps } from "@task/hooks";
 import { TaskType } from "@task/types";
 import TaskTypeChip from "./TaskTypeChip";
+import { useTask } from "./TaskCard.provider";
 
-export const TaskTypeChips = ({ taskTypes }: { taskTypes: TaskType }) => {
+export const TaskTypeChips = () => {
+    const {task: {types: taskTypes}} = useTask()
     const typeChipsProps = useTypeChipProps(taskTypes);
 
     if (taskTypes.includes("BASIC")) {

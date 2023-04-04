@@ -1,6 +1,8 @@
 import { useTaskDescriptionStyles } from "@task/hooks"
+import { useTask } from "./TaskCard.provider"
 
-export const TaskDescription = ({text, isExpanded}:{text: string | null, isExpanded: boolean}) => {
+export const TaskDescription = () => {
+    const {task: {text}, isDescriptionExpanded: isExpanded} = useTask()
     const taskDescriptionStyles = useTaskDescriptionStyles(isExpanded)
 
     if (!text) {    

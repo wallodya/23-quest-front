@@ -114,7 +114,22 @@ export type TaskStepProps = {
     errors: FieldErrors<CreateTaskBody>;
     onNext?: () => void,
     onPrevious?: () => void
-    // getValuesFn: UseFormGetValues<CreateTaskBody>
+}
+
+//TODO type this better
+export type TaskContext = {
+    task: Task | TaskOptimistic,
+    isSaved: boolean,
+    areActionsShown: boolean,
+    isValidTimePeriod: boolean,
+    isDescriptionExpanded: boolean,
+    toggleExpanded: () => void,
+    isPeriodic: boolean,
+    isTimer: boolean,
+    isRepeat: boolean,
+    actions: {
+        [K in string]: () => void
+    }
 }
 
 export const isTaskFormStep = (str: unknown): str is TaskFormSteps  => {

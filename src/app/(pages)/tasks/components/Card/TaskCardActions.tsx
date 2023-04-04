@@ -1,6 +1,7 @@
 import { useTaskTypeFlags } from "@task/hooks";
 import { TaskType } from "@task/types";
 import React from "react";
+import { useTask } from "./TaskCard.provider";
 
 const FailButton = () => {
     return (
@@ -34,30 +35,21 @@ const StartButton = () => {
     )
 }
 
-const TaskCardActions = ({
-    isShown,
-    types,
-    repeatCount
-}: {
-    types: TaskType;
-    isShown: boolean;
-    repeatCount: number | null;
-}) => {
-    const {
-        isBasic,
-        isRepeat, // TODO if one repetition left: complete, otherwise: check + fail button for each rep
-        isTimer, // TODO start button (timer starts), completes after timeout + fail button always
-    } = useTaskTypeFlags(types);
+const TaskCardActions = () => {
+    const {task: {types, repeatCount}, areActionsShown: isShown, isRepeat, isTimer} = useTask()
     if (!isShown) {
         return null;
     }
     const MainActionButton = () => {
         if (isTimer) {
+            // TODO start button (timer starts), completes after timeout + fail button always
             return <StartButton/>
         }
 
-        const isCheckButton = isRepeat && repeatCount !== null && repeatCount > 1
+        // TODO if one repetition left: complete, otherwise: check + fail button for each rep
+        const isCheckButton = isRepeat && repeatCount !== null && repeatCount > 1 
         if (isCheckButton) {
+            
             return <CheckButton/>
         }
         return <CompleteButton/>

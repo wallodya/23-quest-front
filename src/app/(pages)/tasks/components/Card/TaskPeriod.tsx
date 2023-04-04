@@ -1,14 +1,11 @@
 import { useNormilizedTimePeriod } from "@task/hooks";
+import { useTask } from "./TaskCard.provider";
 
-export const TaskPeriod = ({
-    startTime,
-    endTime,
-    isPeriodic,
-}: {
-    startTime: number | null;
-    endTime: number | null;
-    isPeriodic: boolean
-}) => {
+export const TaskPeriod = () => {
+    const {
+        task: { startTime, endTime },
+        isPeriodic,
+    } = useTask();
     const periodClue = useNormilizedTimePeriod(startTime, endTime);
     if (!startTime || !endTime || !isPeriodic) {
         return null;

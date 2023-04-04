@@ -1,14 +1,14 @@
-import { createSelector, createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
+    Task,
+    TasksState,
     isOptimisticTaskType,
     isTaskFormStep,
     isTaskType,
     isTaskTypeType,
-    Task,
-    TasksState,
 } from "@task/types";
 
-const $TEST_task: Task = {
+export const $TEST_task: Task = {
     uuid: "1",
     uniqueTaskId: "some-task-id",
     text: "some task text for testing bla bla jwfbfoebiwf",
@@ -71,7 +71,7 @@ const taskSlice = createSlice({
     reducers: {
         addTask: (state, { payload }) => {
             if (isOptimisticTaskType(payload)) {
-                console.log("payload: ", payload)
+                console.log("payload: ", payload);
                 state.addedTasks = [...state.addedTasks, payload];
                 state.taskForm.isOpen = false;
             }
@@ -87,9 +87,31 @@ const taskSlice = createSlice({
                 state.taskForm.currentStep = payload;
             }
         },
-        setTypes: (state, { payload }) => { 
+        setTypes: (state, { payload }) => {
             if (isTaskTypeType(payload)) {
-                state.taskForm.types = payload
+                state.taskForm.types = payload;
+            }
+        },
+        completeTask: (state, { payload }) => {
+            state.activeTasks = state.activeTasks.filter(
+                (task) => task.uniqueTaskId !== payload.uniqueTaskId,
+            );
+            if (isTaskType(payload)) {
+                state.completedTasks = [
+                    ...state.completedTasks,
+                    { ...payload, isCompleted: true },
+                ];
+            }
+        },
+        failTask: (state, { payload }) => {
+            if (isTaskType(payload)) {
+                state.activeTasks = state.activeTasks.filter(
+                    (task) => task.uniqueTaskId !== payload.uniqueTaskId,
+                );
+                state.failedTasks = [
+                    ...state.completedTasks,
+                    { ...payload, isFailed: true },
+                ];
             }
         },
     },
@@ -101,5 +123,7 @@ export const {
     closeTaskForm,
     setCurrentStep,
     setTypes,
+    completeTask,
+    failTask
 } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;
