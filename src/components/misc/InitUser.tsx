@@ -11,9 +11,9 @@ const InitUser = () => {
     const dispatch = useAppDispatch()
     
     useEffect(() => {
-        const token = localStorage.getItem("JWT_TOKEN")
+        const token = localStorage.getItem("JWT_TOKEN") //TODO encapsulate and use const from config file
         if (!isSignedIn && token) {
-            const decodedToken = jwt_decode<{sub: User, iat: number, exp: number}>(token).sub
+            const decodedToken = jwt_decode<{sub: User, iat: number, exp: number}>(token).sub //TODO encapsulate
             const payload: UserState = {
                 ...decodedToken,
                 token: token,

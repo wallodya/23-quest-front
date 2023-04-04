@@ -42,7 +42,7 @@ export type TasksConfig = {
 };
 
 export type Task = {
-    userId: number;
+    uuid: string;
     uniqueTaskId: string;
     isCompleted: boolean;
     isFailed: boolean;
@@ -55,7 +55,7 @@ export type Task = {
     repeatCount: number | null;
     priority: TaskPriority;
     isInQuest: boolean;
-    questId: number | null;
+    questId: number | null; //FIXME replace with uqid string, remove DB numbered ids (PK)
     isCurrentInQuest: boolean;
     createdAt: number;
     updatedAt: number;
@@ -84,7 +84,10 @@ export type TaskFormState = {
     types: TaskType
 } & Partial<CreateTaskBody>;
 
-export type TaskOptimistic = Omit<Task, "userId" | "uniqueTaskId">
+export type TaskOptimistic = Omit<Task, "uniqueTaskId"> & {
+    isCompleted: false,
+    isFailed: false
+}
 
 export type TasksState = {
     activeTasks: Task[];

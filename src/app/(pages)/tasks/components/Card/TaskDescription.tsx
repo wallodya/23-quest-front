@@ -11,3 +11,5 @@ export const TaskDescription = ({text, isExpanded}:{text: string | null, isExpan
         <div className="text-sm text-gray-400 overflow-hidden transition-all" style={taskDescriptionStyles}>{text}</div>
     )
 }
+
+// TODO update design, user needs to be see that card could be expanded

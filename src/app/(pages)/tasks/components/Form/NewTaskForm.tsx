@@ -1,3 +1,5 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Form from "@radix-ui/react-form";
 import { setTypes } from "@task/features";
@@ -10,9 +12,11 @@ import { ReactNode, useCallback, useEffect, useMemo } from "react";
 import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { useAppDispatch } from "store";
 import { createTaskSchema } from "./taskForm.schema";
+import jwt_decode from "jwt-decode";
+import { User } from "@user/types";
 
 const $TEST_new_task: Task = {
-    userId: 1,
+    uuid: "1",
     uniqueTaskId: "some-task-id",
     text: "another some new task text for testing bla bla jwfbfoebiwf",
     title: "already added task",
@@ -59,12 +63,16 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
         data.isRepeat && types.push("REPEAT")
         types.length === 0 && types.push("BASIC")
 
+        const userToken = localStorage.getItem("JWT_TOKEN") // TODO encapsulate and use const from config
+        const uuid = userToken ?  jwt_decode<{sub: User, iat: number, exp: number}>(userToken).sub.uuid : "token-not-exists" // TODO encapsulate
+
         const reqData: TaskOptimistic &
             Partial<{
                 isTimer: boolean;
                 isRepeat: boolean;
                 isPeriodic: boolean;
             }> = {
+            uuid,
             title: data.title,
             text: data.text,
             priority: data.priority,
@@ -84,13 +92,12 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
             questId: null,
             createdAt: Number(new Date()),
             updatedAt: Number(new Date())
-        };
+        }; // TODO encapsulate
 
         delete reqData.isRepeat
         delete reqData.isTimer
         delete reqData.isPeriodic
 
-        console.log('submit', {...reqData, types })
         saveTask(reqData)
     }
 

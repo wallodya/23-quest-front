@@ -9,20 +9,22 @@ import {
 } from "@task/types";
 
 const $TEST_task: Task = {
-    // task_id: 1,
-    userId: 1,
+    uuid: "1",
     uniqueTaskId: "some-task-id",
     text: "some task text for testing bla bla jwfbfoebiwf",
     title: "task 1",
     types: ["PERIODIC", "TIMER", "REPEAT"],
+    // types: ["REPEAT"],
+    // types: ["PERIODIC"],
+    // types: ["TIMER"],
+    // types: ["BASIC"],
     isCompleted: false,
     isFailed: false,
     startTime: Number(new Date("2023-03-24")),
-    endTime: Number(new Date("2023-03-25")),
+    endTime: Number(new Date("2023-04-25")),
     duration: 30 * 60 * 1000,
-    repeatCount: 3,
+    repeatCount: 4,
     priority: "MEDIUM",
-    // difficulty: "EASY",
     isInQuest: false,
     questId: null,
     isCurrentInQuest: false,
@@ -68,9 +70,8 @@ const taskSlice = createSlice({
     initialState,
     reducers: {
         addTask: (state, { payload }) => {
-            console.log("payload: ", payload)
             if (isOptimisticTaskType(payload)) {
-                console.log("updating state")
+                console.log("payload: ", payload)
                 state.addedTasks = [...state.addedTasks, payload];
                 state.taskForm.isOpen = false;
             }
@@ -93,8 +94,6 @@ const taskSlice = createSlice({
         },
     },
 });
-
-// export const selectActiveTasks = createSelector()
 
 export const {
     addTask,

@@ -1,15 +1,29 @@
-    import PencilIcon from "components/icons/PencilIcon"
+import PencilIcon from "components/icons/PencilIcon"
 import { useState } from "react"
 import { SpeedDial } from "./Dial"
 import { DialOptions, DialPositions } from "./dial.types"
+import { usePathname } from "next/navigation"
+
+
 
 export const useDialPosotionClasses = (position: DialPositions) => {
+
+    // TODO find better way to path this as a prop and make component reusable
+    const pathname = usePathname().split("/").pop() ?? ""
+    const pagesWithBottomMenu = ["tasks"] //TODO use config file
+    let bottomPositionClass: string
+    if (pagesWithBottomMenu.includes(pathname)) {
+        bottomPositionClass = "bottom-16"
+    } else {
+        bottomPositionClass = "bottom-6"
+    }
+
     switch (position) {
         case "bottom-left": {
-            return "fixed left-6 bottom-6"
+            return "fixed left-6 " + bottomPositionClass
         }
         case "bottom-right": {
-            return "fixed right-6 bottom-6"
+            return "fixed right-6 " + bottomPositionClass
         }
         case "top-left": {
             return "fixed left-6 top-24"

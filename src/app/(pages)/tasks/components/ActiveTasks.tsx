@@ -25,7 +25,7 @@ export const ActiveTasks = () => {
     //     }
     // },[addedTasks.length])
     return (
-        <section className="mt-16 flex flex-col gap-4">
+        <section className="flex flex-col gap-4">
             <NewTask />
             {addedTasks.map((task, index) => (
                 <TaskCard {...task} key={index} />

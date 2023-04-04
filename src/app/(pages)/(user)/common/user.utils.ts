@@ -11,7 +11,7 @@ export const saveUserMiddleware: Middleware<{}, RootState> = ({ getState }) => n
     ) {
         const accessToken = action.payload.token.split(" ")[1];
         if (accessToken) {
-            localStorage.setItem("JWT_TOKEN", accessToken)
+            localStorage.setItem("JWT_TOKEN", accessToken) //TODO make util func's for getting and setting user in LS + make config with token name
         }
     }
     return next(action)

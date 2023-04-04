@@ -1,9 +1,8 @@
 import { useNormilizedDuration } from "@task/hooks";
 
-export const TaskDuration = ({ duration }: { duration: number | null }) => {
+export const TaskDuration = ({ duration, isTimer }: { duration: number | null, isTimer: boolean }) => {
     const durationClue = useNormilizedDuration(duration);
-
-    if (!duration) {
+    if (!isTimer || !durationClue) {
         return null;
     }
 

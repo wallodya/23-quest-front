@@ -2,6 +2,7 @@ import { BasicTaskType, ModifiedTaskType, TaskType, TaskTypeChipProps } from "@t
 import PeriodIcon from "components/icons/PeriodIcon";
 import RepeatIcon from "components/icons/RepeatIcon";
 import TimerIcon from "components/icons/TimerIcon";
+import { number } from "zod";
 
 export const basicChipProps = {
     label: "Basic",
@@ -50,8 +51,30 @@ export const useTypeChipProps = (types: TaskType) => {
 
 export const useTaskTypeFlags = (types: TaskType) => {
     return {
+        isBasic: types.includes("BASIC"),
         isPeriodic: types.includes("PERIODIC" as ModifiedTaskType),
         isTimer: types.includes("TIMER" as ModifiedTaskType),
         isRepeat: types.includes("REPEAT" as ModifiedTaskType),
     };
-}
+} //TODO add this to task form components
+
+export const useValidTimePeriod = ({
+    isPeriodic,
+    startTime,
+    endTime,
+}: {
+    isPeriodic: boolean;
+    startTime: number | null;
+    endTime: number | null;
+}): boolean => {
+    if (!isPeriodic) {
+        return true
+    }
+    if (startTime === null || endTime === null) {
+        return false
+    }
+    const currentTimeMs = Number(new Date())
+    return startTime <= currentTimeMs && currentTimeMs <= endTime
+}; // TODO better typing
+
+
