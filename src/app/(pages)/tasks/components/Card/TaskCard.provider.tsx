@@ -14,6 +14,35 @@ const TaskContext = createContext<TaskContext>({
     isPeriodic: false,
     isTimer: false,
     isRepeat: false,
+    actions: {
+        complete: {
+            handleFn: () => {},
+            isError: false,
+            isLoading: false,
+            isSuccess: false
+        },
+        fail: {
+            handleFn: () => {},
+            isError: false,
+            isLoading: false,
+            isSuccess: false
+        },
+        check: {
+            handleFn: () => {},
+            isError: false,
+            isLoading: false,
+            isSuccess: false
+        },
+        timer: {
+            setCompleteTimeout: () => {},
+            isTimerSet: false,
+            timeValues: {
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            }
+        }
+    },
 });
 export const useTask = () => useContext(TaskContext)
 

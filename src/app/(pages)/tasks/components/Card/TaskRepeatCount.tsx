@@ -5,6 +5,6 @@ export const TaskRepeatCount = () => {
     if (!isRepeat || !repeatCount) {
         return null
     }
-    return <span className="text-sm text-gray-400">{repeatCount} times</span>
+    return <span className="text-sm text-gray-400">{repeatCount > 1 ? `${repeatCount} times` : "1 time"}</span>
 }
 

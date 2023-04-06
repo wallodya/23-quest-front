@@ -1,3 +1,5 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { TaskFormSteps } from "@task/components/Form/steps";
 import { FieldErrors, UseFormGetValues, UseFormRegister } from "react-hook-form";
 import { string } from "zod";
@@ -49,18 +51,19 @@ export type Task = {
     title: string;
     text: string | null;
     types: TaskType;
-    startTime: number | null;
-    endTime: number | null;
+    startTime: Date | null;
+    endTime: Date | null;
     duration: number | null;
     repeatCount: number | null;
     priority: TaskPriority;
     isInQuest: boolean;
     questId: number | null; //FIXME replace with uqid string, remove DB numbered ids (PK)
     isCurrentInQuest: boolean;
-    createdAt: number;
-    updatedAt: number;
+    createdAt: string;
+    updatedAt: string;
 };
 
+//TODO better naming
 export type CreateTaskBody = Pick<
     Task,
     | "title"
@@ -76,6 +79,20 @@ export type CreateTaskBody = Pick<
     isRepeat: boolean
 };
 
+//TODO better naming
+export type CreateTaskReqBody = {
+    title: string,
+    text?: string,
+    priority: TaskPriority,
+    types: TaskType,
+    // startTime: string | null,
+    // endTime: string | null,
+    startTime?: Date,
+    endTime?: Date,
+    duration?: number,
+    repeatTimes?: number,
+};
+
 export type TaskFormSteps = "title&type" | "description" | "priority" | "timeframe" | "duration" | "repeatCount"
 
 export type TaskFormState = {
@@ -89,12 +106,19 @@ export type TaskOptimistic = Omit<Task, "uniqueTaskId"> & {
     isFailed: false
 }
 
+export type TaskTimer = {
+    taskId: string;
+    timerSetTime: number;
+    timerFinishTime: number;
+}
+
 export type TasksState = {
     activeTasks: Task[];
     completedTasks: Task[];
     failedTasks: Task[];
     addedTasks: TaskOptimistic[];
     taskForm: TaskFormState;
+    timers: TaskTimer[]
     refreshedAt: string;
 };
 
@@ -116,6 +140,24 @@ export type TaskStepProps = {
     onPrevious?: () => void
 }
 
+export type TaskActionMutation = {
+    handleFn: () => void,
+    isLoading: boolean,
+    isError: boolean,
+    isSuccess: boolean,
+    error?: FetchBaseQueryError | SerializedError,
+}
+
+export type TaskTimerAction = {
+    setCompleteTimeout: () => void,
+    isTimerSet: boolean,
+    timeValues: {
+        hours: number,
+        minutes: number,
+        seconds: number,
+    }
+}
+
 //TODO type this better
 export type TaskContext = {
     task: Task | TaskOptimistic,
@@ -128,7 +170,10 @@ export type TaskContext = {
     isTimer: boolean,
     isRepeat: boolean,
     actions: {
-        [K in string]: () => void
+        complete: TaskActionMutation,
+        fail: TaskActionMutation,
+        check: TaskActionMutation,
+        timer: TaskTimerAction
     }
 }
 
@@ -210,17 +255,15 @@ export const isTaskType = (obj: unknown): obj is Task => {
         "types" in obj &&
         isTaskTypeType(obj.types) &&
         "startTime" in obj &&
-        (typeof obj.startTime === "number" || obj.startTime === null) &&
+        (typeof obj.startTime === "string" || obj.startTime === null) &&
         "endTime" in obj &&
-        (typeof obj.endTime === "number" || obj.endTime === null) &&
+        (typeof obj.endTime === "string" || obj.endTime === null) &&
         "duration" in obj &&
         (typeof obj.duration === "number" || obj.duration === null) &&
         "repeatCount" in obj &&
         (typeof obj.repeatCount === "number" || obj.repeatCount === null) &&
         "priority" in obj &&
         isTaskPriorityType(obj.priority) &&
-        "difficulty" in obj &&
-        isTaskDifficultyType(obj.difficulty) &&
         "isInQuest" in obj &&
         typeof obj.isInQuest === "boolean" &&
         "questId" in obj &&
@@ -228,9 +271,9 @@ export const isTaskType = (obj: unknown): obj is Task => {
         "isCurrentInQuest" in obj &&
         typeof obj.isCurrentInQuest === "boolean" &&
         "createdAt" in obj &&
-        typeof obj.createdAt === "number" &&
+        typeof obj.createdAt === "string" &&
         "updatedAt" in obj &&
-        typeof obj.updatedAt === "number"
+        typeof obj.updatedAt === "string"
     );
 };
 
@@ -250,9 +293,9 @@ export const isOptimisticTaskType = (obj: unknown): obj is TaskOptimistic => {
         "types" in obj &&
         isTaskTypeType(obj.types) &&
         "startTime" in obj &&
-        (typeof obj.startTime === "number" || obj.startTime === null) &&
+        (typeof obj.startTime === "string" || obj.startTime === null) &&
         "endTime" in obj &&
-        (typeof obj.endTime === "number" || obj.endTime === null) &&
+        (typeof obj.endTime === "string" || obj.endTime === null) &&
         "duration" in obj &&
         (typeof obj.duration === "number" || obj.duration === null) &&
         "repeatCount" in obj &&
@@ -267,9 +310,21 @@ export const isOptimisticTaskType = (obj: unknown): obj is TaskOptimistic => {
         "isCurrentInQuest" in obj &&
         typeof obj.isCurrentInQuest === "boolean" &&
         "createdAt" in obj &&
-        typeof obj.createdAt === "number" &&
+        typeof obj.createdAt === "string" &&
         "updatedAt" in obj &&
-        typeof obj.updatedAt === "number"
+        typeof obj.updatedAt === "string"
     );
 };
 
+export const isTaskTimerType = (obj: unknown): obj is TaskTimer => {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "taskId" in obj &&
+        typeof obj.taskId === "string" &&
+        "timerSetTime" in obj &&
+        typeof obj.timerSetTime === "number" &&
+        "timerFinishTime" in obj &&
+        typeof obj.timerFinishTime === "number"
+    );
+}

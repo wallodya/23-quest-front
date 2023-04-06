@@ -6,28 +6,18 @@ import FailedTasks from "@task/components/FailedTasks";
 import * as Tabs from "@radix-ui/react-tabs";
 import Button from "components/ui/Button";
 import CompletedTasks from "./components/CompletedTasks";
+import { useGetTasksQuery } from "./features/taskApi.slice";
+import { useAppSelector } from "store";
 
 const Tasks = () => {
     // TODO make selected tab trigger highlighted
+    const { uuid } = useAppSelector((state) => state.user);
+    useGetTasksQuery(null, {});
 
-    //     const isCompletedSelected =
-    //         document
-    //             .getElementById("radix-:R1llld5:-content-completed")
-    //             ?.getAttribute("data-state") === "active";
-    //     const isFailedSelected =
-    //         document
-    //             .getElementById("radix-:R1llld5:-content-failed")
-    //             ?.getAttribute("data-state") === "active";
-    //     const isActiveSelected =
-    //         document
-    //             .getElementById("radix-:R1llld5:-content-active")
-    //             ?.getAttribute("data-state") === "active";
-
-    // console.log("comp : ", isActiveSelected, isCompletedSelected, isFailedSelected)
     const [isActiveSelected, isCompletedSelected, isFailedSelected] = [false, false, false]
     return (
         <div>
-            <Tabs.Root defaultValue="active" className="mt-16">
+            <Tabs.Root defaultValue="active" className="my-16">
                 <Tabs.Content value="active">
                     <ActiveTasks />
                 </Tabs.Content>

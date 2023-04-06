@@ -13,9 +13,11 @@ import {
     setCurrentStep,
     setTypes,
 } from "@task/features";
+import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
 import {
     CreateTaskBody,
+    CreateTaskReqBody,
     Task,
     TaskFormSteps,
     TaskOptimistic,
@@ -28,44 +30,40 @@ import { useAppDispatch, useAppSelector } from "store";
 
 export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     const dispatch = useAppDispatch();
+    const [createTask, { isLoading, isError, error, isSuccess }] = useCreateTaskMutation()
 
     const {
         isOpen: isShown,
         currentStep,
         types: typesInState,
     } = useAppSelector((state) => state.tasks.taskForm);
-    // const [typesInForm, setTypesInForm] = useState<TaskType>([])
+
     let taskTypes = [...typesInState];
 
     const openForm = () => {
         dispatch(openTaskForm());
     };
 
-    // const closeForm = () => {
-    //     dispatch(closeTaskForm())
-    // }
-
-    // const setTaskTypes = (types: TaskType) => {
-    //     setTypesInForm(types)
-    // }
     const saveTaskTypes = () => {
         dispatch(setTypes(taskTypes));
     };
 
-    // const setStep = (step: TaskFormSteps) => {
-    //     dispatch(setCurrentStep(step))
-    // }
-
     const saveTask = (payload: TaskOptimistic) => {
-        // closeTaskForm()
-        // setIsShown(false)
         console.log("Submited")
+        const createTaskReqBody: CreateTaskReqBody = {
+            title: payload.title,
+            text: payload.text ?? undefined,
+            priority: payload.priority,
+            types: payload.types,
+            startTime: payload.startTime ? new Date(payload.startTime) : undefined,
+            endTime: payload.endTime ? new Date(payload.endTime) : undefined,
+            duration: payload.duration ?? undefined,
+            repeatTimes: payload.repeatCount ?? undefined,
+        };
         dispatch(addTask(payload));
+        createTask(createTaskReqBody)
     };
 
-    // const watchPeriodic = watch("isPeriodic")
-    // const watchTimer = watch("isTimer")
-    // const watchRepeat = watch("isRepeat")
 
     useEffect(() => {
         const { unsubscribe } = watch((values) => {

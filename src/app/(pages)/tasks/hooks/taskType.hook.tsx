@@ -64,8 +64,8 @@ export const useValidTimePeriod = ({
     endTime,
 }: {
     isPeriodic: boolean;
-    startTime: number | null;
-    endTime: number | null;
+    startTime: Date | null;
+    endTime: Date | null;
 }): boolean => {
     if (!isPeriodic) {
         return true
@@ -73,7 +73,7 @@ export const useValidTimePeriod = ({
     if (startTime === null || endTime === null) {
         return false
     }
-    const currentTimeMs = Number(new Date())
+    const currentTimeMs = new Date()
     return startTime <= currentTimeMs && currentTimeMs <= endTime
 }; // TODO better typing
 

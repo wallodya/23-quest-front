@@ -4,33 +4,49 @@ import React from "react";
 import { useTask } from "./TaskCard.provider";
 
 const FailButton = () => {
+    const {
+        actions: {
+            fail: { handleFn: handleFail, isLoading },
+        },
+    } = useTask();
     return (
-        <button className="rounded-lg px-2 py-1 text-sm font-bold text-red-400">
-            Failed
+        <button className="rounded-lg px-2 py-1 text-sm font-bold text-red-400" onClick={handleFail}>
+            {isLoading? "..." : "Fail"}
         </button>
     );
 };
 
 const CompleteButton = () => {
+    const {actions: {complete: {handleFn: handleComplete, isLoading}}} = useTask()
     return (
-        <button className="rounded-lg bg-sky-500/80 px-2 py-1 text-sm font-bold">
-            Complete
+        <button className="rounded-lg bg-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleComplete}>
+            {isLoading ? "..." : "Done"}
         </button>
     );
 };
 
 const CheckButton = () => {
+    const {
+        actions: {
+            check: { handleFn: handleCheck, isLoading },
+        },
+    } = useTask();
     return (
-        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold">
-            Check
+        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleCheck}>
+            {isLoading ? "..." : "Check"}
         </button>
     )
 }
 
 const StartButton = () => {
+    const {
+        actions: {
+            timer: { setCompleteTimeout, isTimerSet },
+        },
+    } = useTask();
     return (
-        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold">
-            Start
+        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={setCompleteTimeout}>
+            {isTimerSet ? "..." : "Start"}
         </button>
     )
 }

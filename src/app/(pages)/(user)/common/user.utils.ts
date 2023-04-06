@@ -30,9 +30,10 @@ export const removeUserMiddleware: Middleware<{}, RootState> = ({ getState }) =>
 
 export const refreshUserMiddleware: Middleware<{}, RootState> = ({ getState }) => next => action => {
     if (
+        IS_BROWSER &&
         action?.meta?.arg?.endpointName !== "signOut" &&
         action?.meta?.requestStatus === "fulfilled" &&
-        IS_BROWSER
+        action.meta.baseQueryMeta.response.headers.get("Authorization")
     ) {
         localStorage.setItem(
             "JWT_TOKEN",

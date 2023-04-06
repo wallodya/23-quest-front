@@ -18,28 +18,18 @@ export const createTaskSchema = z
         isPeriodic: z.boolean(),
         isRepeat: z.boolean(),
         priority: z.string(),
-        startTime: z
-            .string()
-            .transform((value) => Number(new Date(value)))
-            .pipe(
-                z.number().min(Number(new Date()), {
-                    message: "Start time can't be earlier than current time",
-                }),
-            )
-            .optional(),
-        endTime: z
-            .string()
-            .transform((value) => Number(new Date(value)))
-            .pipe(
-                z.number().min(Number(new Date()), {
-                    message: "End time can't be earlier than current time",
-                }),
-            )
-            .optional(),
+        startTime: z.string().optional(),
+        endTime: z.string().optional(),
         duration: z
             .string()
             .transform((value) => Number(value) * 60 * 1000)
-            .pipe(z.number().min(1, { message: "Duration should be at least 1 minute"}))
+            .pipe(
+                z
+                    .number()
+                    .min(60 * 1000, {
+                        message: "Duration should be at least 1 minute",
+                    }),
+            )
             .optional(),
         repeatCount: z
             .string()
@@ -52,11 +42,41 @@ export const createTaskSchema = z
             .optional(),
     })
     .refine(
-        (data) =>
-            (data.endTime === undefined && data.startTime === undefined) ||
-            (data.startTime && data.endTime && data.endTime > data.startTime),
+        (data) => {
+            const { isPeriodic, startTime, endTime } = data;
+            if (!isPeriodic) {
+                return true;
+            }
+            if (startTime === undefined || endTime === undefined) {
+                return false;
+            }
+            const startMs = Number(new Date(startTime));
+            const endMs = Number(new Date(endTime));
+            const currentTimeMs = Number(new Date());
+            const isStartTimeValid = startMs > currentTimeMs;
+            const isEndTimeValid = endMs > currentTimeMs;
+            const isPeriodValid = endMs > startMs;
+            return isStartTimeValid && isEndTimeValid && isPeriodValid;
+        },
         {
             path: ["endTime"],
-            message : "End can't be earlier than start time"
+            message: "Time period is not valid",
+        },
+    )
+    .refine((data) => {
+        const { isTimer, duration } = data;
+        if (!isTimer) {
+            return true;
         }
-    );
+        if (duration === undefined) {
+            return false;
+        }
+        const isDurationValid = duration >= 1000 * 60 && duration % 1000 === 0;
+        return isDurationValid;
+    })
+    // .refine(
+    //     data => {
+    //         console.log(data)
+    //         return true
+    //     }
+    // );

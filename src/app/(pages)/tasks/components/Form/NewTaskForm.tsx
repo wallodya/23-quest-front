@@ -23,16 +23,16 @@ const $TEST_new_task: Task = {
     types: ["PERIODIC", "TIMER", "REPEAT"],
     isCompleted: false,
     isFailed: false,
-    startTime: Number(new Date("2023-03-24")),
-    endTime: Number(new Date("2023-03-25")),
+    startTime: new Date("2023-03-24"),
+    endTime: new Date("2023-03-25"),
     duration: 30 * 60 * 1000,
     repeatCount: 3,
     priority: "MEDIUM",
     isInQuest: false,
     questId: null,
     isCurrentInQuest: false,
-    createdAt: Number(new Date("20-03-2023")),
-    updatedAt: Number(new Date("20-03-2023")),
+    createdAt: String(new Date("20-03-2023")),
+    updatedAt: String(new Date("20-03-2023")),
 };
 
 export const NewTaskForm = ({ children }: { children: ReactNode }) => {
@@ -41,8 +41,8 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
         handleSubmit,
         watch,
         
-        formState: { errors: formErrors, isValid },
-    } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema) });
+        formState: { errors: formErrors, isDirty, isValid, isValidating },
+    } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema)});
     const { saveTaskTypes, saveTask } = useTaskFormControls(watch);
     const registerFn: UseFormRegister<CreateTaskBody> = useCallback(
       (fieldName) => {
@@ -90,8 +90,8 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
             isCurrentInQuest: false,
             isInQuest: false,
             questId: null,
-            createdAt: Number(new Date()),
-            updatedAt: Number(new Date())
+            createdAt: String(new Date()),
+            updatedAt: String(new Date())
         }; // TODO encapsulate
 
         delete reqData.isRepeat
@@ -100,23 +100,21 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
 
         saveTask(reqData)
     }
-
+    console.log("render")
     return (
         <FormWrapper
             className="flex min-h-[40vh] flex-col justify-between gap-2 px-4 py-3"
             onSubmit={handleSubmit(onSubmit)}
         >
             <Step />
-{/* 
-            <FormSubmit asChild>
-                <input type={"submit"} />
-            </FormSubmit> */}
-            {/* <div>isValid: {String(isValid)}</div>
+
+            <div>isValid: {String(isValid)} isValidating: {String(isValidating)}
+                {/* {Object.keys(dirtyFields).map((field, index) => <span key={index}>{field}</span>)}
                 {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
                 {Object.keys(formErrors).map((err, index) => <span key={index}>{err}</span>)} */}
-            {/* <Form.ValidityState>
-            </Form.ValidityState> */}
-            <Submit disabled={!isValid}>Save</Submit>
+            </div>
+
+            <Submit disabled={!isDirty}>Save</Submit>
         </FormWrapper>
     );
 };

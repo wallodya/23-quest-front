@@ -13,9 +13,9 @@ export const TaskPeriod = () => {
 
     return (
         <div className="mt-4 pt-4 border-t border-gray-400/20 text-xs italic text-gray-400">
-            {periodClue?.from}
+            From: {periodClue?.from}
             <br />
-            {periodClue?.to}
+            To: {periodClue?.to}
         </div>
     );
 };
