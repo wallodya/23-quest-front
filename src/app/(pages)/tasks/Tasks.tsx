@@ -18,7 +18,7 @@ const Tasks = () => {
     const [isActiveSelected, isCompletedSelected, isFailedSelected] = [false, false, false]
     return (
         <div>
-            <Tabs.Root defaultValue="active" className="my-16">
+            <Tabs.Root defaultValue="active" className="mt-16 mb-32">
                 <Tabs.Content value="active">
                     <NewTask />
                     <ActiveTasks />
