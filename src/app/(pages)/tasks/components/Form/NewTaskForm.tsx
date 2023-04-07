@@ -100,7 +100,6 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
 
         saveTask(reqData)
     }
-    console.log("render")
     return (
         <FormWrapper
             className="flex min-h-[40vh] flex-col justify-between gap-2 px-4 py-3"

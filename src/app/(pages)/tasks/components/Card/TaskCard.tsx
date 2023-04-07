@@ -3,7 +3,7 @@ import {
     useTaskTypeFlags,
     useValidTimePeriod,
 } from "@task/hooks";
-import { Task, TaskOptimistic } from "@task/types";
+import { Task, TaskOptimistic, isTaskType } from "@task/types";
 import { TaskTypeChips } from "./TaskCardChips";
 import { TaskCardHeader } from "./TaskCardHeader";
 import { TaskDescription } from "./TaskDescription";
@@ -26,7 +26,10 @@ const TaskCardContainer = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export const TaskCard = (task: Task | TaskOptimistic) => {
+export const TaskCard = (task: Task) => {
+    if (isTaskType(task) && task.types.includes("TIMER")) {
+        // console.log("task: ", task.title)
+    }
     return (
         <TaskProvider task={task}>
             <TaskCardContainer>

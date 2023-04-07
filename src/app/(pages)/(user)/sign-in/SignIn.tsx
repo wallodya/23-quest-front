@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { SignInBody } from "../../../../common/utils/server/api.types";
+import { SignInBody } from "common/utils/server/api.types";
 import { useSignIn } from "./useSignIn.hook";
 import * as Form from "@radix-ui/react-form";
 import FormWrapper from "components/ui/FormWrapper";

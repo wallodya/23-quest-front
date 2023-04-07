@@ -7,8 +7,8 @@ import {
     FC, useEffect
 } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { SignInBody } from "../../../../common/utils/server/api.types";
-import { useSignInMutation } from "../../../../store/api/api.slice";
+import { SignInBody } from "common/utils/server/api.types";
+import { useSignInMutation } from "store/api";
 import SignInErrorLabel from "./SignInErrorLabel";
 
 type UseSignInArgsType = {

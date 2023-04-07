@@ -1,6 +1,6 @@
 import { useTaskTypeFlags } from "@task/hooks";
-import { TaskType } from "@task/types";
-import React from "react";
+import { TaskType, isTaskType } from "@task/types";
+import React, { useState } from "react";
 import { useTask } from "./TaskCard.provider";
 
 const FailButton = () => {
@@ -41,25 +41,82 @@ const CheckButton = () => {
 const StartButton = () => {
     const {
         actions: {
-            timer: { setCompleteTimeout, isTimerSet },
+            timer: {
+                restart,
+                pause,
+                resume,
+                isRunning,
+                isStarted,
+                setIsStarted
+            }
         },
-    } = useTask();
+        task
+    } = useTask()
+    // const [isStarted, setIsStarted] = useState<boolean>(false)
+    const handleClick = () => {
+        if (isRunning) {
+            pause()
+        } else {
+                resume()
+        }
+        if (!isStarted) {
+            setIsStarted(true)
+        }
+    }
     return (
-        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={setCompleteTimeout}>
-            {isTimerSet ? "..." : "Start"}
+        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleClick}>
+            {isRunning ? "Pause" : "Start"}
         </button>
     )
 }
 
+const StopButton = () => {
+    const {
+        task: { duration },
+        actions: {
+            timer: { setIsStarted, isStarted, restart },
+        },
+    } = useTask();
+    const handleClick = () => {
+        const expiresTime = new Date()
+        expiresTime.setMilliseconds(expiresTime.getMilliseconds() + (duration ?? 1000))
+        restart(expiresTime, false)
+        setIsStarted(false)
+    }
+    return (
+        <button
+            className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold"
+            onClick={handleClick}
+        >
+            Reset
+        </button>
+    );
+}
+
 const TaskCardActions = () => {
-    const {task: {types, repeatCount}, areActionsShown: isShown, isRepeat, isTimer} = useTask()
+    const {
+        task: { types, repeatCount },
+        areActionsShown: isShown,
+        isRepeat,
+        isTimer,
+        actions: {
+            timer: { isStarted },
+        },
+    } = useTask();
     if (!isShown) {
         return null;
     }
     const MainActionButton = () => {
         if (isTimer) {
             // TODO start button (timer starts), completes after timeout + fail button always
-            return <StartButton/>
+            return isStarted ? (
+                <>
+                    <StopButton/>
+                    <StartButton />
+                </>
+            ) : (
+                <StartButton />
+            );
         }
 
         // TODO if one repetition left: complete, otherwise: check + fail button for each rep

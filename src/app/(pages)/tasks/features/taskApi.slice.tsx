@@ -38,9 +38,9 @@ export const taskApi = apiSlice.injectEndpoints({
                     body: task,
                 }
             },
-            transformResponse: (res) => {
+            transformResponse: (res: Task & { repeatTimes: number}) => {
                 console.log("create task res: ", res)
-                return res
+                return {...res, repeatCount: res.repeatTimes}
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
                 console.log("Error while creating task", err?.data.message)

@@ -34,13 +34,17 @@ const TaskContext = createContext<TaskContext>({
             isSuccess: false
         },
         timer: {
-            setCompleteTimeout: () => {},
-            isTimerSet: false,
-            timeValues: {
-                hours: 0,
-                minutes: 0,
-                seconds: 0
-            }
+            seconds: 0,
+            minutes: 0,
+            hours: 0,
+            days: 0,
+            isRunning: false,
+            isStarted: false,
+            setIsStarted: () => {},
+            start: () => {},
+            pause: () => {},
+            restart: () => {},
+            resume: () => {},
         }
     },
 });
@@ -51,7 +55,7 @@ const TaskProvider = ({
     task,
 }: {
     children: ReactNode;
-    task: Task | TaskOptimistic;
+    task: Task;
 }) => {
     const isSaved = isTaskType(task)
     const {isPeriodic, isTimer, isRepeat} = useTaskTypeFlags(task.types)

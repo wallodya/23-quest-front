@@ -8,14 +8,14 @@ import { useEffect } from "react";
 
 export const ActiveTasks = () => {
     const { activeTasks, addedTasks } = useAppSelector((state) => state.tasks);
+    // TODO add optimistic updates
     return (
         <section className="flex flex-col gap-4">
-            <NewTask />
-            {addedTasks.map((task, index) => (
+            {/* {addedTasks.map((task, index) => (
                 <TaskCard {...task} key={index} />
-            ))}
+            ))} */}
             {activeTasks.map((task, index) => (
-                <TaskCard {...task} key={index} />
+                <TaskCard {...task} key={task.uniqueTaskId} />
             ))}
         </section>
     );

@@ -1,7 +1,9 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { TaskFormSteps } from "@task/components/Form/steps";
+import { SetStateAction, Dispatch } from "react";
 import { FieldErrors, UseFormGetValues, UseFormRegister } from "react-hook-form";
+import { TimerResult } from "react-timer-hook";
 import { string } from "zod";
 
 export type TaskPriority = "NOT_IMPORTANT" | "MEDIUM" | "URGENT";
@@ -118,7 +120,7 @@ export type TasksState = {
     failedTasks: Task[];
     addedTasks: TaskOptimistic[];
     taskForm: TaskFormState;
-    timers: TaskTimer[]
+    // timers: TaskTimer[]
     refreshedAt: string;
 };
 
@@ -173,7 +175,7 @@ export type TaskContext = {
         complete: TaskActionMutation,
         fail: TaskActionMutation,
         check: TaskActionMutation,
-        timer: TaskTimerAction
+        timer: TimerResult & { isStarted: boolean, setIsStarted: Dispatch<SetStateAction<boolean>>}
     }
 }
 

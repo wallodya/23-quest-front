@@ -95,18 +95,10 @@ const FormStepContainer = ({
                 </div>
             </div>
             <FormProgress />
-            {/* <AnimatePresence onExitComplete={() => console.log("form exit complete")}> */}
-            <motion.div
-                className="my-auto"
-                key={"task-form-content"}
-                variants={formStepVariants}
-                initial={"enter"}
-                animate={"whenCurrent"}
-                exit={"exit"}
-            >
-                {children}
-            </motion.div>
-            {/* </AnimatePresence> */}
+            <div>
+            {children}
+            </div>
+
             {nextStep && (
                 <Button type="filled" buttonProps={{ onClick: handleNext }}>
                     {nextStepLabel}

@@ -8,6 +8,7 @@ import Button from "components/ui/Button";
 import CompletedTasks from "./components/CompletedTasks";
 import { useGetTasksQuery } from "./features/taskApi.slice";
 import { useAppSelector } from "store";
+import NewTask from "./components/Form/NewTask";
 
 const Tasks = () => {
     // TODO make selected tab trigger highlighted
@@ -19,6 +20,7 @@ const Tasks = () => {
         <div>
             <Tabs.Root defaultValue="active" className="my-16">
                 <Tabs.Content value="active">
+                    <NewTask />
                     <ActiveTasks />
                 </Tabs.Content>
                 <Tabs.Content value="completed">

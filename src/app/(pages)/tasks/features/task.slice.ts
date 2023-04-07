@@ -69,7 +69,6 @@ const initialState: TasksState = {
         currentStep: "title&type",
         types: ["BASIC"],
     },
-    timers: [],
     refreshedAt: new Date().toDateString(),
 };
 
@@ -105,8 +104,8 @@ const taskSlice = createSlice({
             );
             if (isTaskType(payload)) {
                 state.completedTasks = [
-                    ...state.completedTasks,
                     { ...payload, isCompleted: true },
+                    ...state.completedTasks,
                 ];
             }
         },
@@ -116,8 +115,8 @@ const taskSlice = createSlice({
                     (task) => task.uniqueTaskId !== payload.uniqueTaskId,
                 );
                 state.failedTasks = [
-                    ...state.completedTasks,
                     { ...payload, isFailed: true },
+                    ...state.completedTasks,
                 ];
             }
         },
@@ -133,29 +132,6 @@ const taskSlice = createSlice({
                 }
             }
         },
-        setTimer: (state, {payload}) => {
-            const isTaskTimerSet = state.timers.find(
-                (timer) => timer.taskId === payload.uniqueTaskId,
-            );
-            const isValidTask = payload.task && isTaskType(payload.task)
-            const isValidTimer = payload.timer && isTaskTimerType(payload.timer)
-            if (isValidTask && isValidTimer && !isTaskTimerSet) {
-                const newTimer: TaskTimer = {
-                    taskId: payload.uniqueTaskId,
-                    timerSetTime: payload.timer.timerSetTime,
-                    timerFinishTime: payload.timer.timerFinishTime,
-                }
-                state.timers = [...state.timers, newTimer];
-            }
-        },
-        removeTimer: (state, { payload }) => {
-            const isTaskId = typeof payload === "string"
-            if (isTaskId) {
-                state.timers = state.timers.filter(
-                    (timer) => timer.taskId !== payload,
-                );
-            }
-        }
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -171,9 +147,11 @@ const taskSlice = createSlice({
         builder.addMatcher(
             taskApi.endpoints.createTask.matchFulfilled,
             (state, { payload }) => {
+                console.log("create task match")
                 if (isTaskType(payload)) {
-                    state.activeTasks = [...state.activeTasks, payload]
+                    state.activeTasks = [payload, ...state.activeTasks]
                     state.addedTasks = state.addedTasks.filter(task => task.title !== payload.title)
+                    console.log(current(state))
                 }
             },
         ),
@@ -195,7 +173,6 @@ export const {
     completeTask,
     failTask,
     checkTask,
-    setTimer,
-    removeTimer
+
 } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;
