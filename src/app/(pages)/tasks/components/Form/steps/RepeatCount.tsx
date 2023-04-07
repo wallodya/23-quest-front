@@ -1,10 +1,17 @@
 import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store"
 import FormStepContainer from "./FormStepContainer";
-import { TaskStepProps } from "@task/types";
+import { StepProps} from "@task/types";
 import InputField from "components/ui/InputField";
 
-export const RepeatCountStep = ({registerFn, errors}:TaskStepProps) => {
+export const RepeatCountStep = ({
+    formControls: {
+        register,
+        formState: { errors: {
+            repeatCount: repeatCountError
+        }},
+    },
+}: StepProps) => {
     const { types } = useAppSelector((state) => state.tasks.taskForm);
     const previousStep =
         types &&
@@ -14,11 +21,12 @@ export const RepeatCountStep = ({registerFn, errors}:TaskStepProps) => {
         <FormStepContainer previousStep={previousStep || undefined}>
             <InputField
                 fieldName={"repeatCount"}
-                registerFn={registerFn}
+                registerFn={register}
                 labelText={"Set number of repeats"}
                 type="number"
                 min={1}
                 max={200}
+                inputError={repeatCountError}
             />
         </FormStepContainer>
     )

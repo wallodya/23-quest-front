@@ -1,36 +1,17 @@
 "use client";
 
-import { DescriptionStep } from "@task/components/Form/steps/Description";
-import { DurationStep } from "@task/components/Form/steps/Duration";
-import { PriorityStep } from "@task/components/Form/steps/Priority";
-import { RepeatCountStep } from "@task/components/Form/steps/RepeatCount";
-import { TimeframeStep } from "@task/components/Form/steps/Timeframe";
-import { TitleAndTypeStep } from "@task/components/Form/steps/TitleAndType";
-import {
-    addTask,
-    closeTaskForm,
-    openTaskForm,
-    setCurrentStep,
-    setTypes,
-} from "@task/features";
+import { addTask, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
-import {
-    CreateTaskBody,
-    CreateTaskReqBody,
-    Task,
-    TaskFormSteps,
-    TaskOptimistic,
-    TaskStepProps,
-    TaskType,
-} from "@task/types";
-import { useEffect, useState } from "react";
+import { CreateTaskBody, CreateTaskReqBody, TaskOptimistic } from "@task/types";
+import { useEffect } from "react";
 import { UseFormWatch } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
 
 export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     const dispatch = useAppDispatch();
-    const [createTask, { isLoading, isError, error, isSuccess }] = useCreateTaskMutation()
+    const [createTask, { isLoading, isError, error, isSuccess }] =
+        useCreateTaskMutation();
 
     const {
         isOpen: isShown,
@@ -49,21 +30,22 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     };
 
     const saveTask = (payload: TaskOptimistic) => {
-        console.log("Submited")
+        console.log("Submited");
         const createTaskReqBody: CreateTaskReqBody = {
             title: payload.title,
             text: payload.text ?? undefined,
             priority: payload.priority,
             types: payload.types,
-            startTime: payload.startTime ? new Date(payload.startTime) : undefined,
+            startTime: payload.startTime
+                ? new Date(payload.startTime)
+                : undefined,
             endTime: payload.endTime ? new Date(payload.endTime) : undefined,
             duration: payload.duration ?? undefined,
             repeatTimes: payload.repeatCount ?? undefined,
         };
         dispatch(addTask(payload));
-        createTask(createTaskReqBody)
+        createTask(createTaskReqBody);
     };
-
 
     useEffect(() => {
         const { unsubscribe } = watch((values) => {
@@ -113,39 +95,39 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     };
 };
 
-export const useCurrentFormStep = ({
-    registerFn,
-    errors,
-    onNext,
-}: TaskStepProps) => {
-    const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
-    switch (currentStep) {
-        case "title&type": {
-            return () => (
-                <TitleAndTypeStep
-                    registerFn={registerFn}
-                    errors={errors}
-                    onNext={onNext}
-                />
-            );
-        }
-        case "description": {
-            return () => <DescriptionStep registerFn={registerFn} errors={errors}/>;
-        }
-        case "priority": {
-            return () => <PriorityStep  registerFn={registerFn} errors={errors}/>;
-        }
-        case "timeframe": {
-            return () => <TimeframeStep registerFn={registerFn} errors={errors}/>;
-        }
-        case "duration": {
-            return () => <DurationStep registerFn={registerFn} errors={errors}/>;
-        }
-        case "repeatCount": {
-            return () => <RepeatCountStep registerFn={registerFn} errors={errors}/>;
-        }
-    }
-};
+// export const useCurrentFormStep = ({
+//     registerFn,
+//     errors,
+//     onNext,
+// }: TaskStepProps) => {
+//     const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
+//     switch (currentStep) {
+//         case "title&type": {
+//             return () => (
+//                 <TitleAndTypeStep
+//                     registerFn={registerFn}
+//                     errors={errors}
+//                     onNext={onNext}
+//                 />
+//             );
+//         }
+//         case "description": {
+//             return () => <DescriptionStep registerFn={registerFn} errors={errors}/>;
+//         }
+//         case "priority": {
+//             return () => <PriorityStep  registerFn={registerFn} errors={errors}/>;
+//         }
+//         case "timeframe": {
+//             return () => <TimeframeStep registerFn={registerFn} errors={errors}/>;
+//         }
+//         case "duration": {
+//             return () => <DurationStep registerFn={registerFn} errors={errors}/>;
+//         }
+//         case "repeatCount": {
+//             return () => <RepeatCountStep registerFn={registerFn} errors={errors}/>;
+//         }
+//     }
+// };
 
 export const useFormProgress = () => {
     const { currentStep, types } = useAppSelector(
@@ -190,21 +172,23 @@ export const useFormProgress = () => {
             break;
         }
     }
-    const allSteps = Object.values(TasksConfig.form.stepNames).filter(stepName => {
-        return (
-            stepName === "title&type" ||
-            stepName === "description" ||
-            stepName === "priority" ||
-            (stepName === "duration" && types.includes("TIMER")) ||
-            (stepName === "repeatCount" && types.includes("REPEAT")) ||
-            (stepName === "timeframe" && types.includes("PERIODIC"))
-        );
-    })
+    const allSteps = Object.values(TasksConfig.form.stepNames).filter(
+        (stepName) => {
+            return (
+                stepName === "title&type" ||
+                stepName === "description" ||
+                stepName === "priority" ||
+                (stepName === "duration" && types.includes("TIMER")) ||
+                (stepName === "repeatCount" && types.includes("REPEAT")) ||
+                (stepName === "timeframe" && types.includes("PERIODIC"))
+            );
+        },
+    );
 
     return {
         isProgressShown,
         stepsTotal,
         currentStepCount,
-        allSteps
+        allSteps,
     };
 };

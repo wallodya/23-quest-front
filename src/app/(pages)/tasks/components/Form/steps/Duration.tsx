@@ -1,10 +1,17 @@
 import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store";
 import FormStepContainer from "./FormStepContainer"
-import { TaskStepProps } from "@task/types";
+import { StepProps } from "@task/types";
 import InputField from "components/ui/InputField";
 
-export const DurationStep = ({registerFn, errors}: TaskStepProps) => {
+export const DurationStep = ({
+    formControls: {
+        register,
+        formState: { errors: {
+            duration: durationError
+        }},
+    },
+}: StepProps) => {
     const { types } = useAppSelector((state) => state.tasks.taskForm);
     const nextStep =
         types &&
@@ -19,12 +26,13 @@ export const DurationStep = ({registerFn, errors}: TaskStepProps) => {
         >
             <InputField
                 fieldName={"duration"}
-                registerFn={registerFn}
+                registerFn={register}
                 labelText={"Set duration (in minutes)"}
                 type="number"
                 min={1}
                 max={24 * 60}
+                inputError={durationError}
             />
         </FormStepContainer>
     );
-}
+};

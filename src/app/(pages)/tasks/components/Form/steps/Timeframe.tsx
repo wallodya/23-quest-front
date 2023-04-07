@@ -1,10 +1,18 @@
 import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store";
 import FormStepContainer from "./FormStepContainer"
-import { TaskStepProps } from "@task/types";
 import InputField from "components/ui/InputField";
+import { StepProps } from "@task/types";
 
-export const TimeframeStep = ({registerFn, errors}: TaskStepProps) => {
+export const TimeframeStep = ({
+    formControls: {
+        register,
+        formState: { errors: {
+            startTime: startTimeError,
+            endTime: endTimeError,
+        }},
+    },
+}: StepProps) => {
     const { types } = useAppSelector((state) => state.tasks.taskForm);
     const nextStep =
         types &&
@@ -22,17 +30,19 @@ export const TimeframeStep = ({registerFn, errors}: TaskStepProps) => {
             
             <InputField
                 fieldName={"startTime"}
-                registerFn={registerFn}
+                registerFn={register}
                 labelText={"Set start time:"}
                 type="datetime-local"
+                inputError={startTimeError}
                 // min={1}
                 // max={200}
             />
             <InputField
                 fieldName={"endTime"}
-                registerFn={registerFn}
+                registerFn={register}
                 labelText={"Set end time:"}
                 type="datetime-local"
+                inputError={endTimeError}
                 // min={1}
                 // max={200}
             />

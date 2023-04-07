@@ -73,8 +73,11 @@ export const useValidTimePeriod = ({
     if (startTime === null || endTime === null) {
         return false
     }
+    console.log("startTime:", Number(startTime))
+    console.log("endTime:", Number(endTime))
     const currentTimeMs = new Date()
-    return startTime <= currentTimeMs && currentTimeMs <= endTime
+    console.log("isValid: ", new Date(startTime) <= currentTimeMs && currentTimeMs <= new Date(endTime))
+    return (new Date(startTime)) <= currentTimeMs && currentTimeMs <= (new Date(endTime))
 }; // TODO better typing
 
 

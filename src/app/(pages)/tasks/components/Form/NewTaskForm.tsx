@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Form from "@radix-ui/react-form";
 import { setTypes } from "@task/features";
-import { useCurrentFormStep, useTaskFormControls } from "@task/hooks";
+import { useTaskFormControls } from "@task/hooks";
 import { CreateTaskBody, Task, TaskOptimistic, TaskType } from "@task/types";
 import FormWrapper from "components/ui/FormWrapper";
 import Submit from "components/ui/Submit";
@@ -14,6 +14,7 @@ import { useAppDispatch } from "store";
 import { createTaskSchema } from "./taskForm.schema";
 import jwt_decode from "jwt-decode";
 import { User } from "@user/types";
+import { CurrentStep } from "./steps";
 
 const $TEST_new_task: Task = {
     uuid: "1",
@@ -36,26 +37,27 @@ const $TEST_new_task: Task = {
 };
 
 export const NewTaskForm = ({ children }: { children: ReactNode }) => {
-    const {
-        register,
-        handleSubmit,
-        watch,
+    const formControls = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema), mode: "onBlur"});
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     watch,
         
-        formState: { errors: formErrors, isDirty, isValid, isValidating },
-    } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema)});
-    const { saveTaskTypes, saveTask } = useTaskFormControls(watch);
+    //     formState: { errors: formErrors, isDirty, isValid, isValidating },
+    // } = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema), mode: "onBlur"});
+    const { saveTaskTypes, saveTask } = useTaskFormControls(formControls.watch);
     const registerFn: UseFormRegister<CreateTaskBody> = useCallback(
       (fieldName) => {
-        return register(fieldName)
+        return formControls.register(fieldName)
       },
       [],
     )
     
-    const Step = useCurrentFormStep({
-        registerFn,
-        errors: formErrors,
-        onNext: saveTaskTypes,
-    });
+    // const Step = useCurrentFormStep({
+    //     registerFn,
+    //     errors: formControls.formState.errors,
+    //     onNext: saveTaskTypes,
+    // });
     const onSubmit: SubmitHandler<CreateTaskBody> = (data) => {
         const types: TaskType = []
         data.isPeriodic && types.push("PERIODIC")
@@ -103,17 +105,16 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
     return (
         <FormWrapper
             className="flex min-h-[40vh] flex-col justify-between gap-2 px-4 py-3"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={formControls.handleSubmit(onSubmit)}
         >
-            <Step />
+            <CurrentStep formControls={formControls} callbacks={{ title: { onNext: saveTaskTypes } }}/>
 
-            <div>isValid: {String(isValid)} isValidating: {String(isValidating)}
-                {/* {Object.keys(dirtyFields).map((field, index) => <span key={index}>{field}</span>)}
-                {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
+            <div>isValid: {String(formControls.formState.isValid)}
+                {/* {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
                 {Object.keys(formErrors).map((err, index) => <span key={index}>{err}</span>)} */}
             </div>
 
-            <Submit disabled={!isDirty}>Save</Submit>
+            <Submit disabled={!formControls.formState.isValid}>Save</Submit>
         </FormWrapper>
     );
 };

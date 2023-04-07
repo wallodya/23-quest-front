@@ -1,7 +1,7 @@
 import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store";
 import FormStepContainer from "./FormStepContainer";
-import { TaskStepProps } from "@task/types";
+import { StepProps } from "@task/types";
 import {
     FormControl,
     FormField,
@@ -10,9 +10,13 @@ import {
 } from "@radix-ui/react-form";
 
 export const PriorityStep = ({
-    registerFn,
-    errors: { priority: priorityFieldError },
-}: TaskStepProps) => {
+    formControls: {
+        register,
+        formState: { errors: {
+            priority: priorityError 
+        }},
+    },
+}: StepProps) => {
     const { types } = useAppSelector((state) => state.tasks.taskForm);
     const nextStep =
         types &&
@@ -36,7 +40,7 @@ export const PriorityStep = ({
                         <FormControl asChild>
                             <input
                                 // name="priority"
-                                {...registerFn("priority")}
+                                {...register("priority")}
                                 type="radio"
                                 value={"MEDIUM"}
                                 id="medium"
@@ -48,7 +52,7 @@ export const PriorityStep = ({
                         <FormControl asChild>
                             <input
                                 // name="priority"
-                                {...registerFn("priority")}
+                                {...register("priority")}
                                 type="radio"
                                 value={"URGENT"}
                                 id="urgent"
@@ -60,7 +64,7 @@ export const PriorityStep = ({
                         <FormControl asChild>
                             <input
                                 // name="priority"
-                                {...registerFn("priority")}
+                                {...register("priority")}
                                 type="radio"
                                 value={"NOT_IMPORTANT"}
                                 id="not_important"

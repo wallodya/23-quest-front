@@ -1,8 +1,7 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { TaskFormSteps } from "@task/components/Form/steps";
 import { SetStateAction, Dispatch } from "react";
-import { FieldErrors, UseFormGetValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormGetValues, UseFormRegister, UseFormReturn } from "react-hook-form";
 import { TimerResult } from "react-timer-hook";
 import { string } from "zod";
 
@@ -135,9 +134,20 @@ export type TaskTypeChipProps = {
     Icon: () => JSX.Element;
 };
 
-export type TaskStepProps = {
-    registerFn: UseFormRegister<CreateTaskBody>;
-    errors: FieldErrors<CreateTaskBody>;
+export type TaskFormStepsProps = {
+    formControls: UseFormReturn<CreateTaskBody, any>,
+    callbacks?: Partial<{
+        [K in keyof CreateTaskBody]: {
+            onNext?: () => void,
+            onPrevious?: () => void
+        }   
+    }>
+}
+
+export type StepProps = {
+    // registerFn: UseFormRegister<CreateTaskBody>;
+    // errors: FieldErrors<CreateTaskBody>;
+    formControls: UseFormReturn<CreateTaskBody, any>,
     onNext?: () => void,
     onPrevious?: () => void
 }

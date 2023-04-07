@@ -87,6 +87,7 @@ const taskSlice = createSlice({
         },
         closeTaskForm: (state) => {
             state.taskForm.isOpen = false;
+            state.taskForm.currentStep = "title&type"
         },
         setCurrentStep: (state, { payload }) => {
             if (isTaskFormStep(payload)) {
