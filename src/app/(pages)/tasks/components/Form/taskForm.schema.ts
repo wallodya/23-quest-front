@@ -74,9 +74,15 @@ export const createTaskSchema = z
         const isDurationValid = duration >= 1000 * 60 && duration % 1000 === 0;
         return isDurationValid;
     })
-    // .refine(
-    //     data => {
-    //         console.log(data)
-    //         return true
-    //     }
-    // );
+    .refine(
+        data => {
+            const { isRepeat, repeatCount } = data
+            if (!isRepeat) {
+                return true
+            }
+            if (!repeatCount) {
+                return false
+            }
+            return repeatCount < 200
+        }
+    );

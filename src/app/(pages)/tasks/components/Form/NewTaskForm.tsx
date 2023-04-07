@@ -37,7 +37,7 @@ const $TEST_new_task: Task = {
 };
 
 export const NewTaskForm = ({ children }: { children: ReactNode }) => {
-    const formControls = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema), mode: "onBlur"});
+    const formControls = useForm<CreateTaskBody>({ resolver: zodResolver(createTaskSchema), mode: "onChange"});
     // const {
     //     register,
     //     handleSubmit,
