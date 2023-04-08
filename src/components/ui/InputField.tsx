@@ -8,6 +8,7 @@ export type InputFieldProps = {
     inputError?: FieldError,
     labelText?: string,
     fieldName: string,
+    isInline?: boolean
     registerFn: UseFormRegister<any>,
 } & InputProps
 
@@ -37,12 +38,14 @@ const CheckboxLabel = ({ text }: { text?: string }) => (
     ) : null
 );
 
-const TextField = ({inputError, fieldName, labelText, registerFn, ...inputProps} : InputFieldProps) => (
+const TextField = ({inputError, fieldName, labelText, registerFn, isInline, ...inputProps} : InputFieldProps) => (
     <Form.Field name={fieldName}>
+        <div className={isInline ? "flex gap-2 items-center justify-between" : ""}>
         <Label text={labelText} />
         <Form.Control asChild>
             <Input {...inputProps} {...registerFn(fieldName)} />
         </Form.Control>
+        </div>
         <ErrorLabel error={inputError} />
     </Form.Field>
 );

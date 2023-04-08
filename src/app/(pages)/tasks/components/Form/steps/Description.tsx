@@ -1,8 +1,5 @@
-import TasksConfig from "@task/tasks.config"
-import FormStepContainer from "./FormStepContainer";
-import FormStepControls from "./FormStepContainer"
-import InputField from "components/ui/InputField";
 import { StepProps, } from "@task/types";
+import InputField from "components/ui/InputField";
 
 export const DescriptionStep = ({
     formControls: {
@@ -13,16 +10,13 @@ export const DescriptionStep = ({
     },
 }: StepProps) => {
     return (
-        <FormStepContainer
-            nextStep={TasksConfig.form.stepNames.priority}
-            previousStep={TasksConfig.form.stepNames.title}
-        >
+        <div>
             <InputField
                 registerFn={register}
                 fieldName="text"
                 labelText="Add Description (optional)"
                 inputError={descriptionFieldError}
             />
-        </FormStepContainer>
+        </div>
     );
 };

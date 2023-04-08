@@ -1,6 +1,5 @@
 import TasksConfig from "@task/tasks.config";
 import { useAppSelector } from "store";
-import FormStepContainer from "./FormStepContainer"
 import InputField from "components/ui/InputField";
 import { StepProps } from "@task/types";
 
@@ -13,20 +12,8 @@ export const TimeframeStep = ({
         }},
     },
 }: StepProps) => {
-    const { types } = useAppSelector((state) => state.tasks.taskForm);
-    const nextStep =
-        types &&
-        types.includes("REPEAT") &&
-        TasksConfig.form.stepNames.repeatCount;
-
-    const previousStep =
-        (types &&
-            types.includes("TIMER") &&
-            TasksConfig.form.stepNames.duration) ||
-        TasksConfig.form.stepNames.priority;
-
     return (
-        <FormStepContainer nextStep={nextStep || undefined} previousStep={previousStep || undefined}>
+        <div className="h-full flex flex-col gap-4 ">
             
             <InputField
                 fieldName={"startTime"}
@@ -34,6 +21,7 @@ export const TimeframeStep = ({
                 labelText={"Set start time:"}
                 type="datetime-local"
                 inputError={startTimeError}
+                isInline={true}
                 // min={1}
                 // max={200}
             />
@@ -43,9 +31,10 @@ export const TimeframeStep = ({
                 labelText={"Set end time:"}
                 type="datetime-local"
                 inputError={endTimeError}
+                isInline={true}
                 // min={1}
                 // max={200}
             />
-        </FormStepContainer>
+        </div>
     )
 }

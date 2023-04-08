@@ -14,12 +14,7 @@ export const CurrentStep = ({
     const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
     switch (currentStep) {
         case "title&type": {
-            return (
-                <TitleAndTypeStep
-                    formControls={formControls}
-                    onNext={callbacks?.title?.onNext}   
-                />
-            );
+            return <TitleAndTypeStep formControls={formControls} />;
         }
         case "description": {
             return <DescriptionStep formControls={formControls} />;

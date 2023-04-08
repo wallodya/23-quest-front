@@ -16,7 +16,11 @@ export type TaskTabs = "active" | "failed" | "completed";
 
 export type TaskFormStep = {
     buttonLabel: string,
-    name: string
+    name: string,
+    nextStep?: TaskFormSteps,
+    previousStep?: TaskFormSteps,
+    onNext?: () => void,
+    onPrevious?: () => void
 }
 
 export type TasksConfig = {
@@ -148,8 +152,6 @@ export type StepProps = {
     // registerFn: UseFormRegister<CreateTaskBody>;
     // errors: FieldErrors<CreateTaskBody>;
     formControls: UseFormReturn<CreateTaskBody, any>,
-    onNext?: () => void,
-    onPrevious?: () => void
 }
 
 export type TaskActionMutation = {

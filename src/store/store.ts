@@ -29,24 +29,6 @@ export const store = configureStore({
             removeUserMiddleware,
             refreshUserMiddleware,
         ),
-    // preloadedState: {
-    //     user: {
-    //         refreshedAt: (new Date()).toDateString(),
-    //         isSignedIn: false
-    //     },
-    //     tasks: {
-    //         activeTasks: [],
-    //         completedTasks: [],
-    //         failedTasks: [],
-    //         addedTasks: [],
-    //         taskForm: {
-    //             isOpen: false,
-    //             currentStep: "title&type",
-    //             types: ["BASIC"],
-    //         },
-    //         refreshedAt: new Date().toDateString(),
-    //     },
-    // }
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

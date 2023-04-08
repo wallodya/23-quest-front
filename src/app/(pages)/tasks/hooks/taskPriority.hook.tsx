@@ -15,7 +15,7 @@ export const usePriorityTextClassNames = (priority: TaskPriority) => {
             return "hidden";
         }
         case "URGENT": {
-            return "text-red-500/70";
+            return "text-red-500/70 ";
         }
     }
 };

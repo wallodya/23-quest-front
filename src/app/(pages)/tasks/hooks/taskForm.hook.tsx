@@ -95,39 +95,10 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     };
 };
 
-// export const useCurrentFormStep = ({
-//     registerFn,
-//     errors,
-//     onNext,
-// }: TaskStepProps) => {
-//     const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
-//     switch (currentStep) {
-//         case "title&type": {
-//             return () => (
-//                 <TitleAndTypeStep
-//                     registerFn={registerFn}
-//                     errors={errors}
-//                     onNext={onNext}
-//                 />
-//             );
-//         }
-//         case "description": {
-//             return () => <DescriptionStep registerFn={registerFn} errors={errors}/>;
-//         }
-//         case "priority": {
-//             return () => <PriorityStep  registerFn={registerFn} errors={errors}/>;
-//         }
-//         case "timeframe": {
-//             return () => <TimeframeStep registerFn={registerFn} errors={errors}/>;
-//         }
-//         case "duration": {
-//             return () => <DurationStep registerFn={registerFn} errors={errors}/>;
-//         }
-//         case "repeatCount": {
-//             return () => <RepeatCountStep registerFn={registerFn} errors={errors}/>;
-//         }
-//     }
-// };
+export const useTaskFormNavigation = () => {
+    
+    return {}
+}
 
 export const useFormProgress = () => {
     const { currentStep, types } = useAppSelector(
