@@ -2,6 +2,11 @@ import { useTaskTypeFlags } from "@task/hooks";
 import { TaskType, isTaskType } from "@task/types";
 import React, { useState } from "react";
 import { useTask } from "./TaskCard.provider";
+import StopIcon from "components/icons/StopIcon";
+import CheckIcon from "components/icons/CheckIcon";
+import CrossIcon from "components/icons/CrossIcon";
+import PauseIcon from "components/icons/PauseIcon";
+import PlayIcon from "components/icons/PlayIcon";
 
 const FailButton = () => {
     const {
@@ -10,8 +15,8 @@ const FailButton = () => {
         },
     } = useTask();
     return (
-        <button className="rounded-lg px-2 py-1 text-sm font-bold text-red-400" onClick={handleFail}>
-            {isLoading? "..." : "Fail"}
+        <button className="rounded-lg px-3 py-1 text-sm font-bold text-red-500/70 border-2 border-red-500/70" onClick={handleFail}>
+            {isLoading? "..." : <CrossIcon size="xs"/>}
         </button>
     );
 };
@@ -19,8 +24,8 @@ const FailButton = () => {
 const CompleteButton = () => {
     const {actions: {complete: {handleFn: handleComplete, isLoading}}} = useTask()
     return (
-        <button className="rounded-lg bg-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleComplete}>
-            {isLoading ? "..." : "Done"}
+        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleComplete}>
+            {isLoading ? "..." : <CheckIcon size="xs"/>}
         </button>
     );
 };
@@ -32,8 +37,8 @@ const CheckButton = () => {
         },
     } = useTask();
     return (
-        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleCheck}>
-            {isLoading ? "..." : "Check"}
+        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleCheck}>
+            {isLoading ? "..." : <CheckIcon size="xs"/>}
         </button>
     )
 }
@@ -64,8 +69,8 @@ const StartButton = () => {
         }
     }
     return (
-        <button className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold" onClick={handleClick}>
-            {isRunning ? "Pause" : "Start"}
+        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleClick}>
+            {isRunning ? <PauseIcon size="xs"/> : <PlayIcon size="xs"/>}
         </button>
     )
 }
@@ -85,10 +90,10 @@ const StopButton = () => {
     }
     return (
         <button
-            className="rounded-lg border border-sky-500/80 px-2 py-1 text-sm font-bold"
+            className="rounded-lg border-2 border-sky-500 px-3 py-1 text-sm font-bold"
             onClick={handleClick}
         >
-            Reset
+            <StopIcon size="xs"/>
         </button>
     );
 }
@@ -128,7 +133,7 @@ const TaskCardActions = () => {
         return <CompleteButton/>
     }
     return (
-        <div className={"mt-4 flex justify-end gap-4"}>
+        <div className={"ml-auto flex justify-end gap-4"}>
             <FailButton />
             <MainActionButton/>
         </div>

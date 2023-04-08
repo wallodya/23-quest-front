@@ -8,17 +8,10 @@ import InitUser from "../components/misc/InitUser";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
     return (
-        <Provider store={store}>
-            {/* <ThemeProvider
-                themes={["dark", "light"]}
-                enableSystem={false}
-                defaultTheme={"dark"}
-                attribute="class"
-            > */}
-                    {children}
-            {/* </ThemeProvider> */}
-            <InitUser/>
-        </Provider>
+            <Provider store={store}>
+                {children}
+                <InitUser />
+            </Provider>
     );
 };
 

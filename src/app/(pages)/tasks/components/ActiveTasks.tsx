@@ -14,6 +14,7 @@ export const ActiveTasks = () => {
             {/* {addedTasks.map((task, index) => (
                 <TaskCard {...task} key={index} />
             ))} */}
+            <NewTask />
             {activeTasks.map((task, index) => (
                 <TaskCard {...task} key={task.uniqueTaskId} />
             ))}

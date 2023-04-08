@@ -11,11 +11,16 @@ export const useNormilizedTimePeriod = (startTime: Date | null, endTime: Date | 
     // console.log("today: ", isThisWeek)
 
     const dateTimeFormatOptions: Intl.DateTimeFormatOptions = {
-        hour: "numeric",
-        minute: "2-digit",
-        weekday: isThisWeek && !isToday ? "short" : undefined,
-        month: isToday ? undefined : "short",
-        day: isToday ? undefined : "numeric",
+        // hour: "numeric",
+        // minute: "2-digit",
+        dateStyle: "short",
+        timeStyle: "short"
+        
+
+        // weekday: isThisWeek && !isToday ? "short" : undefined,
+
+        // month: isToday ? undefined : "2-digit",
+        // day: isToday ? undefined : "2-digit",
     }
     const formatDate = new Intl.DateTimeFormat("en-us", dateTimeFormatOptions).format
     return { from: formatDate(start), to: formatDate(end) }; // TODO use library

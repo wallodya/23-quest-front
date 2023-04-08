@@ -6,6 +6,7 @@ export const TaskDuration = () => {
     const {
         task: { duration },
         isTimer,
+        isPeriodic,
         actions: { timer: {
             isStarted,
             isRunning,
@@ -20,7 +21,8 @@ export const TaskDuration = () => {
     }
     // console.log("isstarted: ", isStarted)
     if (!isStarted) {
-        return <span className="text-sm text-gray-400">{durationClue}</span>;
+        return <div className={`italic`}>{durationClue}</div>;
+        // return <div className={`mr-auto italic`}>{durationClue}</div>;
     } 
 
     return (

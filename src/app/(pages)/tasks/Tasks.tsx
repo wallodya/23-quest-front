@@ -9,18 +9,26 @@ import CompletedTasks from "./components/CompletedTasks";
 import { useGetTasksQuery } from "./features/taskApi.slice";
 import { useAppSelector } from "store";
 import NewTask from "./components/Form/NewTask";
+import { useRouter } from "next/navigation";
 
 const Tasks = () => {
-    // TODO make selected tab trigger highlighted
-    const { uuid } = useAppSelector((state) => state.user);
-    useGetTasksQuery(null, {});
+    const { isSignedIn } = useAppSelector(state => state.user)
+    const router = useRouter()
 
+    useEffect(() => {
+        if (!isSignedIn) {
+            router.replace("/sign-in")
+        }
+    }, [isSignedIn])
+
+    useGetTasksQuery(null);
+    
+    // TODO make selected tab trigger highlighted
     const [isActiveSelected, isCompletedSelected, isFailedSelected] = [false, false, false]
     return (
         <div>
             <Tabs.Root defaultValue="active" className="mt-16 mb-32">
                 <Tabs.Content value="active">
-                    <NewTask />
                     <ActiveTasks />
                 </Tabs.Content>
                 <Tabs.Content value="completed">

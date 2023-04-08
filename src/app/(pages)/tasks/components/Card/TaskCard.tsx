@@ -27,24 +27,22 @@ const TaskCardContainer = ({ children }: { children: ReactNode }) => {
 };
 
 export const TaskCard = (task: Task) => {
-    if (isTaskType(task) && task.types.includes("TIMER")) {
-        // console.log("task: ", task.title)
-    }
+
     return (
         <TaskProvider task={task}>
             <TaskCardContainer>
                 <TaskCardHeader />
-                <div className="flex justify-between">
+                {/* <div className="grid grid-cols-[repeat(auto-fit,minmax(30%,70%))] mt-1 pt-1 border-t border-gray-400/20 text-xs text-gray-400"> */}
+                <div className="mt-1 flex flex-wrap justify-between gap-1 border-t border-gray-400/20 pt-1 text-xs text-gray-400">
+                    <TaskPeriod />
                     <TaskDuration />
-                    <TaskRepeatCount />
                 </div>
-                <TaskTypeChips/>
-                <TaskDescription
-                />
-                <TaskCardActions
-                />
-                <TaskPeriod
-                />
+                <TaskTypeChips />
+                <TaskDescription />
+                <div className="mt-4 flex justify-between items-center text-xs">
+                    <TaskRepeatCount />
+                    <TaskCardActions />
+                </div>
             </TaskCardContainer>
         </TaskProvider>
     );
