@@ -104,15 +104,15 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
     }
     return (
         <FormWrapper
-            className="flex min-h-[40vh] flex-col justify-between gap-2 px-4 py-3"
+            className="flex h-[45vh] flex-col justify-between gap-2 px-4 py-3"
             onSubmit={formControls.handleSubmit(onSubmit)}
         >
             <CurrentStep formControls={formControls} callbacks={{ title: { onNext: saveTaskTypes } }}/>
 
-            <div>isValid: {String(formControls.formState.isValid)}
+            {/* <div>isValid: {String(formControls.formState.isValid)} */}
                 {/* {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
                 {Object.keys(formErrors).map((err, index) => <span key={index}>{err}</span>)} */}
-            </div>
+            {/* </div> */}
 
             <Submit disabled={!formControls.formState.isValid}>Save</Submit>
         </FormWrapper>

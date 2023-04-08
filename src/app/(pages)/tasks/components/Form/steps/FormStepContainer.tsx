@@ -75,36 +75,46 @@ const FormStepContainer = ({
         closeForm();
     };
     return (
-        <>
-            <div className="flex h-10 items-center">
-                <div className="mr-auto">
+        <div className="h-full flex flex-col gap-2">
+            <div className="grid h-12 grid-cols-3 items-center">
+                <div className="flex">
                     {previousStep && (
-                        <Button
-                            type="outlined"
-                            buttonProps={{ onClick: handlePrevious }}
-                        >
-                            {/* {previousStepLabel} */}
-                            Back
-                        </Button>
+                        <div className="mr-auto">
+                            <Button
+                                type="outlined"
+                                buttonProps={{ onClick: handlePrevious }}
+                            >
+                                {/* {previousStepLabel} */}
+                                Back
+                            </Button>
+                        </div>
                     )}
                 </div>
-                <div className="ml-auto">
-                    <Button type="text" buttonProps={{ onClick: handleClose }}>
-                        <CrossIcon size="xs" />
-                    </Button>
+                <div className="flex justify-center font-bold text-sky-500">
+                    New task
+                </div>
+                <div className="flex">
+                    <div className="ml-auto">
+                        <Button
+                            type="text"
+                            buttonProps={{ onClick: handleClose }}
+                        >
+                            <CrossIcon size="xs" />
+                        </Button>
+                    </div>
                 </div>
             </div>
             <FormProgress />
-            <div>
-            {children}
-            </div>
+            <div>{children}</div>
 
             {nextStep && (
-                <Button type="filled" buttonProps={{ onClick: handleNext }}>
-                    {nextStepLabel}
-                </Button>
+                <div className="mt-auto">
+                    <Button type="filled" buttonProps={{ onClick: handleNext }}>
+                        {nextStepLabel}
+                    </Button>
+                </div>
             )}
-        </>
+        </div>
     );
 };
 
