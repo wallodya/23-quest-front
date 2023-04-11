@@ -21,14 +21,14 @@ const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<C
         (stepNumber === 1 && errors.title) ||
         (stepNumber === 2 && errors.text) ||
         (stepNumber === 3 && errors.priority) ||
-        (stepNumber === 4 && errors.duration) ||
+        (stepNumber === 4 && (errors.durationSeconds || errors.durationMinutes || errors.durationHours)) ||
         (stepNumber === 5 && (errors.startTime || errors.endTime)) ||
         (stepNumber === 6 && errors.repeatCount);
     const isTouched =
         (stepNumber === 1 && touchedFields.title) ||
         (stepNumber === 2 && touchedFields.text) ||
         (stepNumber === 3 && touchedFields.priority) ||
-        (stepNumber === 4 && touchedFields.duration) ||
+        (stepNumber === 4 && (errors.durationSeconds || errors.durationMinutes || errors.durationHours)) ||
         (stepNumber === 5 &&
             (touchedFields.startTime || touchedFields.endTime)) ||
         (stepNumber === 6 && touchedFields.repeatCount);
