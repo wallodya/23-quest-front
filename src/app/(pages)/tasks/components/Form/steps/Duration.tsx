@@ -3,18 +3,31 @@ import { useAppSelector } from "store";
 import { StepProps } from "@task/types";
 import InputField from "components/ui/InputField";
 import { FormField, FormControl, FormLabel } from "@radix-ui/react-form";
+import { useEffect, useState } from "react";
+import { FieldError } from "react-hook-form";
 
 export const DurationStep = ({
     formControls: {
         register,
         formState: { errors: {
-            duration: durationError
+            durationSeconds: secondsError,
+            durationMinutes: minutesError,
+            durationHours: hoursError
         }},
     },
 }: StepProps) => {
+    const [shownError, setShownError] = useState<FieldError | undefined>(
+        [hoursError, minutesError, secondsError].find((err) => err !== undefined),
+    );
+    useEffect(() => {
+        [hoursError, minutesError, secondsError].every(err => err === undefined) && setShownError(undefined)
+        hoursError && setShownError(hoursError)
+        minutesError && setShownError(minutesError)
+        secondsError && setShownError(secondsError)
+    }, [hoursError, minutesError, secondsError])
     return (
-        <div>
-            <InputField
+        <div className="">
+            {/* <InputField
                 fieldName={"duration"}
                 registerFn={register}
                 labelText={"Set duration (in minutes)"}
@@ -22,7 +35,7 @@ export const DurationStep = ({
                 min={1}
                 max={24 * 60}
                 inputError={durationError}
-            />
+            /> */}
             <div className="flex justify-between">
                 <FormField
                     name="durationHours"
@@ -30,11 +43,14 @@ export const DurationStep = ({
                 >
                     <FormControl asChild className="">
                         <input
-                            // {...register("priority")}
+                            {...register("durationHours")}
+                            // type="number"
+                            // value={"NOT_IMPORTANT"}
+                            // id="not_important"
+                            min={0}
+                            max={24}
+                            className=" w-14 bg-transparent text-sm p-1"
                             type="number"
-                            value={"NOT_IMPORTANT"}
-                            id="not_important"
-                            className=" w-14 bg-transparent"
                         />
                     </FormControl>
                     <div className="rounded-r-lg w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
@@ -47,11 +63,14 @@ export const DurationStep = ({
                 >
                     <FormControl asChild className="">
                         <input
-                            // {...register("priority")}
+                            {...register("durationMinutes")}
+                            // type="number"
+                            // value={"NOT_IMPORTANT"}
+                            // id="not_important"
+                            min={0}
+                            max={59}
+                            className="w-14 bg-transparent text-sm p-1"
                             type="number"
-                            value={"NOT_IMPORTANT"}
-                            id="not_important"
-                            className="w-14 bg-transparent"
                         />
                     </FormControl>
                     <div className="w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
@@ -64,11 +83,14 @@ export const DurationStep = ({
                 >
                     <FormControl asChild className="">
                         <input
-                            // {...register("priority")}
+                            {...register("durationSeconds")}
+                            // type="number"
+                            // value={"NOT_IMPORTANT"}
+                            // id="not_important"
+                            min={0}
+                            max={59}
+                            className="w-14 bg-transparent text-sm p-1"
                             type="number"
-                            value={"NOT_IMPORTANT"}
-                            id="not_important"
-                            className="w-14 bg-transparent"
                         />
                     </FormControl>
                     <div className="w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
@@ -76,6 +98,9 @@ export const DurationStep = ({
                     </div>
                 </FormField>
             </div>
-        </div>
+                <div className={"mt-4 text-xs font-medium text-red-600 dark:text-red-400"}>
+                    {shownError && <span>{shownError.message}</span>}
+                </div>
+        </div>  
     );
 };

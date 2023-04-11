@@ -1,65 +1,16 @@
+"use client"
+
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
-    Task,
-    TaskTimer,
     TasksState,
     isOptimisticTaskType,
     isTaskFormStep,
-    isTaskTimerType,
     isTaskType,
-    isTaskTypeType,
+    isTaskTypeType
 } from "@task/types";
-import { apiSlice } from "store/api";
 import { taskApi } from "./taskApi.slice";
 
-export const $TEST_task: Task = {
-    uuid: "1",
-    uniqueTaskId: "some-task-id",
-    text: "some task text for testing bla bla jwfbfoebiwf",
-    title: "task 1",
-    types: ["PERIODIC", "TIMER", "REPEAT"],
-    // types: ["REPEAT"],
-    // types: ["PERIODIC"],
-    // types: ["TIMER"],
-    // types: ["BASIC"],
-    isCompleted: false,
-    isFailed: false,
-    startTime: new Date("2023-03-24"),
-    endTime: new Date("2023-04-25"),
-    duration: 30 * 60 * 1000,
-    repeatCount: 4,
-    priority: "MEDIUM",
-    isInQuest: false,
-    questId: null,
-    isCurrentInQuest: false,
-    createdAt: String(new Date("20-03-2023")),
-    updatedAt: String(new Date("20-03-2023")),
-};
-
-const $TEST_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const $TEST_tasks: Task[] = $TEST_ids.map((i) => ({
-    ...$TEST_task,
-    task_id: i,
-    title: `test task ${i}`,
-}));
-const $TEST_completed_tasks: Task[] = $TEST_ids.map((i) => ({
-    ...$TEST_task,
-    task_id: i,
-    isCompleted: true,
-    title: `test completed task ${i}`,
-}));
-const $TEST_failed_tasks: Task[] = $TEST_ids.map((i) => ({
-    ...$TEST_task,
-    task_id: i,
-    isFailed: true,
-    title: `test failed task ${i}`,
-}));
-
 const initialState: TasksState = {
-    // activeTasks: $TEST_tasks,
-    // completedTasks: $TEST_completed_tasks,
-    // failedTasks: $TEST_failed_tasks,
     activeTasks: [],
     completedTasks: [],
     failedTasks: [],
@@ -88,6 +39,7 @@ const taskSlice = createSlice({
         closeTaskForm: (state) => {
             state.taskForm.isOpen = false;
             state.taskForm.currentStep = "title&type"
+            state.taskForm.types = ["BASIC"]
         },
         setCurrentStep: (state, { payload }) => {
             if (isTaskFormStep(payload)) {

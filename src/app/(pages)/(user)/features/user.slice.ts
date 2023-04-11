@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import "client-only";
 import { apiSlice } from "store/api";
 import { isUserStateType, isUserType, UserState } from "@user/types";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState: UserState = {
     refreshedAt: (new Date()).toDateString(),
@@ -23,14 +24,14 @@ const userSlice = createSlice({
                 state.dateOfBirth = payload.dateOfBirth;
                 state.createdAt = payload.createdAt;
                 state.updatedAt = payload.updatedAt;
-    
-                state.token = payload.token
-                state.refreshedAt = payload.refreshedAt
-                state.isSignedIn = payload.isSignedIn
+
+                state.token = payload.token;
+                state.refreshedAt = payload.refreshedAt;
+                state.isSignedIn = payload.isSignedIn;
             }
-        }
+        },
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder.addMatcher(
             apiSlice.endpoints.signIn.matchFulfilled,
             (state, { payload }) => {
@@ -43,9 +44,9 @@ const userSlice = createSlice({
                     state.createdAt = payload.createdAt;
                     state.updatedAt = payload.updatedAt;
 
-                    state.token = payload.token
-                    state.refreshedAt = payload.refreshedAt
-                    state.isSignedIn = payload.isSignedIn
+                    state.token = payload.token;
+                    state.refreshedAt = payload.refreshedAt;
+                    state.isSignedIn = payload.isSignedIn;
                 }
             },
         );
@@ -61,30 +62,30 @@ const userSlice = createSlice({
                     state.createdAt = payload.createdAt;
                     state.updatedAt = payload.updatedAt;
 
-                    state.token = payload.token
-                    state.refreshedAt = payload.refreshedAt
-                    state.isSignedIn = payload.isSignedIn
+                    state.token = payload.token;
+                    state.refreshedAt = payload.refreshedAt;
+                    state.isSignedIn = payload.isSignedIn;
                 }
             },
-            );
-            builder.addMatcher(
-                apiSlice.endpoints.signOut.matchFulfilled,
-                (state, { payload }) => {                    
-                    state.uuid = undefined;
-                    state.login = undefined;
-                    state.email = undefined;
-                    state.isEmailConfirmed = undefined;
-                    state.dateOfBirth = undefined;
-                    state.createdAt = undefined;
-                    state.updatedAt = undefined;
-        
-                    state.token = undefined
-                    state.refreshedAt = payload.refreshedAt 
-                    state.isSignedIn = payload.isSignedIn
-            }
-        )
-    }
-})
+        );
+        builder.addMatcher(
+            apiSlice.endpoints.signOut.matchFulfilled,
+            (state, { payload }) => {
+                state.uuid = undefined;
+                state.login = undefined;
+                state.email = undefined;
+                state.isEmailConfirmed = undefined;
+                state.dateOfBirth = undefined;
+                state.createdAt = undefined;
+                state.updatedAt = undefined;
+
+                state.token = undefined;
+                state.refreshedAt = payload.refreshedAt;
+                state.isSignedIn = payload.isSignedIn;
+            },
+        );
+    },
+});
 
 export const { initUser } = userSlice.actions
 

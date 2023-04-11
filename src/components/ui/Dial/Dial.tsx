@@ -131,7 +131,7 @@ export const SpeedDial = ({
                 <AnimatePresence>
                     {isOpen && withActions && (
                         <motion.ul
-                            className={`relative z-40 flex ${actionsPositionClasses} flex-col items-center gap-4`}
+                            className={`relative z-10 flex ${actionsPositionClasses} flex-col items-center gap-4`}
                             key="dial-actions"
                             initial={{
                                 opacity: 0,
@@ -175,7 +175,7 @@ export const SpeedDial = ({
             )}
 
             <motion.div
-                className="relative z-40 w-fit rounded-full bg-sky-600 p-4 text-sky-300 shadow-lg shadow-slate-300 transition hover:bg-sky-700 dark:bg-sky-400 dark:text-sky-100 dark:shadow-slate-900 dark:hover:bg-sky-500"
+                className="relative z-10 w-fit rounded-full bg-sky-600 p-4 text-sky-300 shadow-lg shadow-slate-300 transition hover:bg-sky-700 dark:bg-sky-400 dark:text-sky-100 dark:shadow-slate-900 dark:hover:bg-sky-500"
                 onClick={toggleDial}
                 key="dial-trigger"
                 initial={{ scale: 0 }}

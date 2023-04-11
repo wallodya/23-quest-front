@@ -1,5 +1,6 @@
 "use client";
 
+import { openQuestForm } from "@quest/features";
 import { openTaskForm } from "@task/features";
 import TasksConfig from "@task/tasks.config";
 import { useIsIncludedOnPage } from "common/hooks";
@@ -7,8 +8,6 @@ import FileIcon from "components/icons/FileIcon";
 import ReaderIcon from "components/icons/ReaderIcon";
 import useDial from "components/ui/Dial";
 import { DialAction } from "components/ui/Dial/dial.types";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
 import { useAppDispatch } from "store";
 
 
@@ -33,6 +32,7 @@ const DialMobile = () => {
             type: "link",
             href: "/quests",
             closeOnPush: true,
+            action: () => dispatch(openQuestForm())
         },
     ];
     const Dial = useDial({ withActions: true, actions: DIAL_ACTIONS, dialPosition: "bottom-right" });

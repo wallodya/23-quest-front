@@ -14,22 +14,57 @@ export const createTaskSchema = z
                 message: "Description can contain at most 140 characters",
             })
             .optional(),
-        isTimer: z.boolean(),
-        isPeriodic: z.boolean(),
-        isRepeat: z.boolean(),
-        priority: z.string(),
+        isTimer: z.boolean().default(false),
+        isPeriodic: z.boolean().default(false),
+        isRepeat: z.boolean().default(false),
+        priority: z.string().default("NOT_IMPORTANT"),
         startTime: z.string().optional(),
         endTime: z.string().optional(),
-        duration: z
+        // duration: z
+        //     .string()
+        //     .transform((value) => Number(value) * 60 * 1000)
+        //     .pipe(
+        //         z
+        //             .number()
+        //             .min(60 * 1000, {
+        //                 message: "Duration should be at least 1 minute",
+        //             }),
+        //     )
+        //     .optional(),
+        durationHours: z
             .string()
-            .transform((value) => Number(value) * 60 * 1000)
+            .transform((value) => Number(value))
             .pipe(
                 z
                     .number()
-                    .min(60 * 1000, {
-                        message: "Duration should be at least 1 minute",
-                    }),
+                    .min(0, { message: "You cannot set negative duration" })
+                    .max(24 , {message: "You cannot set more than 24 hours"})
             )
+            .default("0")
+            .optional(),
+        durationMinutes: z
+            .string()
+            .transform((value) => Number(value))
+            .pipe(
+                z
+                    .number()
+                    .min(0, { message: "You cannot set negative duration" })
+                    .max(59 , {message: "You cannot set more than 59 minutes"})
+            )
+            .default("1")
+            .optional(),
+        durationSeconds: z
+            .string()
+            // .min(0, { message: "You cannot set negative duration" })
+            // .max(59)
+            .transform((value) => Number(value))
+            .pipe(
+                z
+                    .number()
+                    .min(0, { message: "You cannot set negative duration" })
+                    .max(59 , {message: "You cannot set more than 59 seconds"})
+            )
+            .default("0")
             .optional(),
         repeatCount: z
             .string()
@@ -39,6 +74,7 @@ export const createTaskSchema = z
                     message: "You need to set at least two repetitions",
                 }),
             )
+            .default("5")
             .optional(),
     })
     .refine(
@@ -64,25 +100,29 @@ export const createTaskSchema = z
         },
     )
     .refine((data) => {
-        const { isTimer, duration } = data;
+        const { isTimer, durationHours, durationSeconds, durationMinutes } = data;
         if (!isTimer) {
             return true;
         }
-        if (duration === undefined) {
+        if (
+            [durationSeconds, durationMinutes, durationHours].every(
+                (value) => value === 0,
+            ) ||
+            (durationHours === undefined || durationMinutes === undefined || durationSeconds === undefined)
+        ) {
             return false;
         }
-        const isDurationValid = duration >= 1000 * 60 && duration % 1000 === 0;
+        const totalDurationSeconds = durationHours * 60 * 60 + durationMinutes * 60 + durationSeconds
+        const isDurationValid = totalDurationSeconds >= 30 && totalDurationSeconds <= 24 * 60 * 60;
         return isDurationValid;
     })
-    .refine(
-        data => {
-            const { isRepeat, repeatCount } = data
-            if (!isRepeat) {
-                return true
-            }
-            if (!repeatCount) {
-                return false
-            }
-            return repeatCount < 200
+    .refine((data) => {
+        const { isRepeat, repeatCount } = data;
+        if (!isRepeat) {
+            return true;
         }
-    );
+        if (!repeatCount) {
+            return false;
+        }
+        return repeatCount < 200;
+    });

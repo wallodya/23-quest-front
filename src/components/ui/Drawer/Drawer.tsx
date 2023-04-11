@@ -73,7 +73,7 @@ const Background = ({ toggleFn }: { toggleFn: () => void }) => {
         useDrawerBackgroundAnimation(drawerPosition);
     return (
         <motion.div
-            className={`absolute top-0 left-0 z-20 h-screen w-screen ${backgroundGradientClasses}`}
+            className={`absolute top-0 left-0 z-30 h-screen w-screen ${backgroundGradientClasses}`}
             onClick={toggleFn}
             initial={initial}
             animate={animate}

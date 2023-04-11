@@ -8,6 +8,38 @@ import { useEffect } from "react";
 import { UseFormWatch } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
 
+export const useSubmitTask = (isInQuest: boolean) => {
+
+    const dispatch = useAppDispatch();
+    const [createTask, { isLoading, isError, error, isSuccess }] =
+        useCreateTaskMutation();
+
+    const submitTask = (payload: TaskOptimistic) => {
+        console.log("Submited");
+        const createTaskReqBody: CreateTaskReqBody = {
+            title: payload.title,
+            text: payload.text ?? undefined,
+            priority: payload.priority,
+            types: payload.types,
+            startTime: payload.startTime
+                ? new Date(payload.startTime)
+                : undefined,
+            endTime: payload.endTime ? new Date(payload.endTime) : undefined,
+            duration: payload.duration ?? undefined,
+            repeatTimes: payload.repeatCount ?? undefined,
+        };
+        dispatch(addTask(payload));
+        if (!isInQuest) {
+            createTask(createTaskReqBody);
+        } else {
+            console.log("added task to quest: ", createTaskReqBody)
+        }
+    };
+    return {
+        submitTask
+    }
+} 
+
 export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     const dispatch = useAppDispatch();
     const [createTask, { isLoading, isError, error, isSuccess }] =

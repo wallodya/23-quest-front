@@ -14,12 +14,18 @@ import { CurrentStep } from "./steps";
 import FormProgress from "./steps/FormProgress";
 import { createTaskSchema } from "./taskForm.schema";
 
-export const NewTaskForm = ({ children }: { children: ReactNode }) => {
+export const NewTaskForm = ({
+    children,
+    submitTaskFn: saveTask,
+}: {
+    children: ReactNode;
+    submitTaskFn: (payload: TaskOptimistic) => void;
+}) => {
     const formControls = useForm<CreateTaskBody>({
         resolver: zodResolver(createTaskSchema),
         mode: "onChange",
     });
-    const { saveTaskTypes, saveTask } = useTaskFormControls(formControls.watch);
+    const { saveTaskTypes } = useTaskFormControls(formControls.watch);
     const onSubmit: SubmitHandler<CreateTaskBody> = (data) => {
         const types: TaskType = [];
         data.isPeriodic && types.push("PERIODIC");
@@ -44,7 +50,10 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
             text: data.text,
             priority: data.priority,
 
-            duration: data.duration || null,
+            duration:
+                data.durationSeconds * 1000  +
+                    data.durationMinutes  * 1000 * 60 +
+                    data.durationHours * 1000  * 60 * 60 || null,
             startTime: data.startTime || null,
             endTime: data.endTime || null,
             repeatCount: data.repeatCount || null,
@@ -74,8 +83,8 @@ export const NewTaskForm = ({ children }: { children: ReactNode }) => {
             <TaskFormContainer
                 callbacks={{ "title&type": { onNext: saveTaskTypes } }}
             >
-                <FormProgress formControls={formControls}/>
-                <div className="mt-6 h-full flex flex-col justify-center">
+                <FormProgress formControls={formControls} />
+                <div className="mt-6 flex h-full flex-col justify-center">
                     <CurrentStep formControls={formControls} />
                 </div>
             </TaskFormContainer>

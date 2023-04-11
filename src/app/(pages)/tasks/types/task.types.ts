@@ -75,10 +75,12 @@ export type CreateTaskBody = Pick<
     | "text"
     | "startTime"
     | "endTime"
-    | "duration"
     | "repeatCount"
     | "priority"
 > & {
+    durationSeconds: number,
+    durationMinutes: number,
+    durationHours: number,
     isTimer: boolean,
     isPeriodic: boolean,
     isRepeat: boolean

@@ -13,6 +13,7 @@ import InputField, { InputFieldProps } from "components/ui/InputField";
 import Submit from "components/ui/Submit";
 import Divider from "components/ui/Divider";
 import Heading from "components/ui/typography/Heading";
+import { useRouter } from "next/navigation";
 
 const SignInSchema = z.object({
     login: z
@@ -36,11 +37,16 @@ const SignIn = () => {
         resolver: zodResolver(SignInSchema),
     });
 
+    const router = useRouter()
     const {
         onSubmit,
         BottomErrorLabel,
         mutation: { isLoading: isMutationLoading, error: mutationError },
-    } = useSignIn({});
+    } = useSignIn({
+        onSuccess: () => {
+            router.replace("/tasks")
+        }
+    });
 
     const formFields: InputFieldProps[] = [
         {

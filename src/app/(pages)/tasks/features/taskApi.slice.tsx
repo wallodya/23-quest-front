@@ -1,3 +1,5 @@
+"use client"
+
 import { CreateTaskReqBody, Task, isTaskType } from "@task/types";
 import { apiSlice } from "store/api";
 import { ServerErrorResponse } from "types"

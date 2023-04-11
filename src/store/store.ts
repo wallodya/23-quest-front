@@ -9,12 +9,12 @@ import {
 } from "../app/(pages)/(user)/common/user.utils";
 import userReducer from "../app/(pages)/(user)/features/user.slice";
 import { apiSlice } from "./api/api.slice";
-import authReducer from "./auth/auth.slice";
+import { questReducer } from "@quest/features";
 
 const rootReducer = combineReducers({
     user: userReducer,
-    auth: authReducer,
     tasks: taskReducer,
+    quests: questReducer,
     taskFilters: taskFiltersReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
 });

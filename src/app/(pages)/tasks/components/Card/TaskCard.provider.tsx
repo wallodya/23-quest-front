@@ -1,11 +1,33 @@
-import { $TEST_task } from "@task/features";
-import { useTaskTypeFlags, useTaskDescriptionControls, useValidTimePeriod, useTaskActions } from "@task/hooks";
+import {
+    useTaskTypeFlags,
+    useTaskDescriptionControls,
+    useValidTimePeriod,
+    useTaskActions,
+} from "@task/hooks";
 import { Task, TaskContext, TaskOptimistic, isTaskType } from "@task/types";
 import React, { ReactNode, createContext, useContext } from "react";
 import types from "tailwindcss";
 
 const TaskContext = createContext<TaskContext>({
-    task: $TEST_task,
+    task: {
+        uuid: "string",
+        uniqueTaskId: "string",
+        isCompleted: false,
+        isFailed: false,
+        title: "string",
+        text: null,
+        types: ["BASIC"],
+        startTime: new Date(),
+        endTime: new Date(),
+        duration: null,
+        repeatCount: null,
+        priority: "MEDIUM",
+        isInQuest: false,
+        questId: null, //FIXME replace with uqid string, remove DB numbered ids (PK)
+        isCurrentInQuest: false,
+        createdAt: String(new Date()),
+        updatedAt: String(new Date()),
+    },
     isSaved: false,
     areActionsShown: false,
     isValidTimePeriod: false,
@@ -19,19 +41,19 @@ const TaskContext = createContext<TaskContext>({
             handleFn: () => {},
             isError: false,
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
         },
         fail: {
             handleFn: () => {},
             isError: false,
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
         },
         check: {
             handleFn: () => {},
             isError: false,
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
         },
         timer: {
             seconds: 0,
@@ -45,10 +67,10 @@ const TaskContext = createContext<TaskContext>({
             pause: () => {},
             restart: () => {},
             resume: () => {},
-        }
+        },
     },
 });
-export const useTask = () => useContext(TaskContext)
+export const useTask = () => useContext(TaskContext);
 
 const TaskProvider = ({
     children,
@@ -57,16 +79,18 @@ const TaskProvider = ({
     children: ReactNode;
     task: Task;
 }) => {
-    const isSaved = isTaskType(task)
-    const {isPeriodic, isTimer, isRepeat} = useTaskTypeFlags(task.types)
-    const {isExpanded: isDescriptionExpanded, toggleExpanded} = useTaskDescriptionControls()
+    const isSaved = isTaskType(task);
+    const { isPeriodic, isTimer, isRepeat } = useTaskTypeFlags(task.types);
+    const { isExpanded: isDescriptionExpanded, toggleExpanded } =
+        useTaskDescriptionControls();
     const isValidTimePeriod = useValidTimePeriod({
         isPeriodic,
         startTime: task.startTime,
         endTime: task.endTime,
     });
-    const areActionsShown = !task.isFailed && !task.isCompleted && isValidTimePeriod
-    const actions = useTaskActions(task)
+    const areActionsShown =
+        !task.isFailed && !task.isCompleted && isValidTimePeriod;
+    const actions = useTaskActions(task);
     const contextValue = {
         task,
         isSaved,
@@ -77,9 +101,13 @@ const TaskProvider = ({
         isPeriodic,
         isTimer,
         isRepeat,
-        actions
-    }
-    return <TaskContext.Provider value={contextValue}>{children}</TaskContext.Provider>;
+        actions,
+    };
+    return (
+        <TaskContext.Provider value={contextValue}>
+            {children}
+        </TaskContext.Provider>
+    );
 };
 
 export default TaskProvider;
