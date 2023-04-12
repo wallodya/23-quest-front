@@ -37,7 +37,7 @@ const Tasks = () => {
                 <Tabs.Content value="failed">
                     <FailedTasks />
                 </Tabs.Content>
-                <Tabs.TabsList className="fixed left-0 bottom-0 z-30 flex w-screen justify-around rounded-t-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
+                <Tabs.TabsList className="fixed left-0 bottom-0 z-10 flex w-screen justify-around rounded-t-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
                     <Tabs.Trigger
                         value="active"
                         className={

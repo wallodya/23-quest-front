@@ -28,7 +28,7 @@ const useDrawerOptions = () => useContext(DrawerContext)
 
 const Root = ({children, isOpen, ...options} : {children: ReactNode, isOpen: boolean} & DrawerOptions) => {
     const drawerOptions = getDrawerOptions(options)
-    const drawerDisplayClass = isOpen ? "" : "pointer-events-none";
+    const drawerDisplayClass = isOpen ? "z-50" : "pointer-events-none";
     
     const isIncludedOnPage = useIsIncludedOnPage(drawerOptions.pages, drawerOptions.excludePages)
     if (!isIncludedOnPage) {
@@ -39,7 +39,7 @@ const Root = ({children, isOpen, ...options} : {children: ReactNode, isOpen: boo
     return (
         <DrawerContext.Provider value={drawerOptions}>
             <div
-                className={`fixed ${drawerDisplayClass} top-0 left-0 z-50 ${drawerPositionClasses} h-screen w-screen`}
+                className={`fixed ${drawerDisplayClass} top-0 left-0  ${drawerPositionClasses} h-screen w-screen`}
             >
                 <AnimatePresence>
                     {isOpen && <>{children}</>}

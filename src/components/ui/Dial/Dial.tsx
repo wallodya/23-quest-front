@@ -126,7 +126,7 @@ export const SpeedDial = ({
     const isActionsOnTop = dialPosition === "bottom-left" || dialPosition === "bottom-right"
 
     return (
-        <div className={dialPositionClasses}>
+        <div className={`${dialPositionClasses} z-20`}>
             {isActionsOnTop && (
                 <AnimatePresence>
                     {isOpen && withActions && (
