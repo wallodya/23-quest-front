@@ -2,21 +2,29 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { newQuestSchema } from "../quest.schema";
-import { QuestFormFields } from "@quest/types";
+import { CreateQuestBody, QuestFormFields } from "@quest/types";
 import FormWrapper from "components/ui/FormWrapper";
 import Submit from "components/ui/Submit";
 import InputField from "components/ui/InputField";
 import QuestFormContainer from "./QuestFormContainer";
+import { useCreateQuest } from "@quest/common/hooks";
 
 const NewQuestForm = () => {
     const formControls = useForm<QuestFormFields>({
         resolver: zodResolver(newQuestSchema),
     });
-    const { register, formState: { errors }} = formControls
+    const { register, handleSubmit, formState: { errors }} = formControls
+    const { submitQuest } = useCreateQuest()
+    const onSubmit: SubmitHandler<QuestFormFields> = (createQuestBody: QuestFormFields) => {
+        console.log("create quest submit")
+        submitQuest(createQuestBody)
+    }
     return (
-        <FormWrapper>
+        <FormWrapper
+            onSubmit={handleSubmit(onSubmit)}
+        >
             <QuestFormContainer>
                 <InputField
                     fieldName="title"

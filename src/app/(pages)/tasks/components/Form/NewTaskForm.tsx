@@ -33,19 +33,13 @@ export const NewTaskForm = ({
         data.isRepeat && types.push("REPEAT");
         types.length === 0 && types.push("BASIC");
 
-        const userToken = localStorage.getItem("JWT_TOKEN"); // TODO encapsulate and use const from config
-        const uuid = userToken
-            ? jwt_decode<{ sub: User; iat: number; exp: number }>(userToken).sub
-                  .uuid
-            : "token-not-exists"; // TODO encapsulate
-
         const reqData: TaskOptimistic &
             Partial<{
                 isTimer: boolean;
                 isRepeat: boolean;
                 isPeriodic: boolean;
             }> = {
-            uuid,
+            // uuid,
             title: data.title,
             text: data.text,
             priority: data.priority,
@@ -64,7 +58,8 @@ export const NewTaskForm = ({
 
             isCurrentInQuest: false,
             isInQuest: false,
-            questId: null,
+            // questId: null,
+            uniqueQuestId: null,
             createdAt: String(new Date()),
             updatedAt: String(new Date()),
         }; // TODO encapsulate

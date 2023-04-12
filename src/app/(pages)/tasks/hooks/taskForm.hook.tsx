@@ -1,5 +1,6 @@
 "use client";
 
+import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
 import { addTask, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
@@ -8,11 +9,12 @@ import { useEffect } from "react";
 import { UseFormWatch } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
 
-export const useSubmitTask = (isInQuest: boolean) => {
+export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
 
     const dispatch = useAppDispatch();
     const [createTask, { isLoading, isError, error, isSuccess }] =
         useCreateTaskMutation();
+    const [addtaskToQuest, {}] = useAddTaskToQuestMutation()
 
     const submitTask = (payload: TaskOptimistic) => {
         console.log("Submited");
@@ -32,7 +34,8 @@ export const useSubmitTask = (isInQuest: boolean) => {
         if (!isInQuest) {
             createTask(createTaskReqBody);
         } else {
-            console.log("added task to quest: ", createTaskReqBody)
+            console.log("adding task to quest: ", createTaskReqBody)
+            addtaskToQuest({ body: createTaskReqBody, questId: questId ?? "" });
         }
     };
     return {

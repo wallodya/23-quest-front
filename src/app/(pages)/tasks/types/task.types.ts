@@ -49,7 +49,7 @@ export type TasksConfig = {
 };
 
 export type Task = {
-    uuid: string;
+    // uuid: string;
     uniqueTaskId: string;
     isCompleted: boolean;
     isFailed: boolean;
@@ -62,7 +62,8 @@ export type Task = {
     repeatCount: number | null;
     priority: TaskPriority;
     isInQuest: boolean;
-    questId: number | null; //FIXME replace with uqid string, remove DB numbered ids (PK)
+    // questId: number | null; //FIXME replace with uqid string, remove DB numbered ids (PK)
+    uniqueQuestId: string | null; //FIXME replace with uqid string, remove DB numbered ids (PK)
     isCurrentInQuest: boolean;
     createdAt: string;
     updatedAt: string;
@@ -282,8 +283,8 @@ export const isTaskType = (obj: unknown): obj is Task => {
         isTaskPriorityType(obj.priority) &&
         "isInQuest" in obj &&
         typeof obj.isInQuest === "boolean" &&
-        "questId" in obj &&
-        (typeof obj.questId === "number" || obj.questId === null) &&
+        "uniqueQuestId" in obj &&
+        (typeof obj.uniqueQuestId === "string" || obj.uniqueQuestId === null) &&
         "isCurrentInQuest" in obj &&
         typeof obj.isCurrentInQuest === "boolean" &&
         "createdAt" in obj &&

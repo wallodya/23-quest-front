@@ -23,7 +23,7 @@ const TaskContext = createContext<TaskContext>({
         repeatCount: null,
         priority: "MEDIUM",
         isInQuest: false,
-        questId: null, //FIXME replace with uqid string, remove DB numbered ids (PK)
+        uniqueQuestId: null, //FIXME replace with uqid string, remove DB numbered ids (PK)
         isCurrentInQuest: false,
         createdAt: String(new Date()),
         updatedAt: String(new Date()),

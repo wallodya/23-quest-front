@@ -11,4 +11,13 @@ export const useQuestCardControls = () => {
     }
 }
 
+export const useQuestCardActions = (questId: string) => {
+    const addTask = () => {}
+    return {
+        addTask
+    }
+}
 
+export const useQuestCardStats = (questId: string) => {
+    
+}

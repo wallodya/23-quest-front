@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from 'store'
 import NewQuestForm from './NewQuestForm'
 
 export const NewQuest = () => {
-    console.log("new quest")
     const dispatch = useAppDispatch()   
     const { isOpen } = useAppSelector(state => state.quests.questForm)
     const closeForm = () => {

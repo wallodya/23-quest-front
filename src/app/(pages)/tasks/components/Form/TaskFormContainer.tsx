@@ -65,7 +65,7 @@ const TaskFormContainer = ({
                         <div className="mr-auto h-10">
                             <Button
                                 type="outlined"
-                                buttonProps={{ onClick: handlePrevious }}
+                                buttonProps={{ onClick: handlePrevious, type: "button" }}
                             >
                                 {/* {previousStepLabel} */}
                                 Back
@@ -80,7 +80,7 @@ const TaskFormContainer = ({
                     <div className="ml-auto">
                         <Button
                             type="text"
-                            buttonProps={{ onClick: handleClose }}
+                            buttonProps={{ onClick: handleClose, type: "button"  }}
                         >
                             <CrossIcon size="xs" />
                         </Button>
@@ -91,7 +91,7 @@ const TaskFormContainer = ({
 
             {nextStep && (
                 <div className="mt-auto">
-                    <Button type="filled" buttonProps={{ onClick: handleNext }}>
+                    <Button type="filled" buttonProps={{ onClick: handleNext, type: "button"  }}>
                         {nextStepLabel}
                     </Button>
                 </div>

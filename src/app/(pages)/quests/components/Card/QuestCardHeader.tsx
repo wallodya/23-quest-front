@@ -1,6 +1,7 @@
 import CrossIcon from "components/icons/CrossIcon";
 import { AnimatePresence, motion, useMotionValue } from "framer-motion"
 import { useState } from "react";
+import { useQuest } from "./questCard.provider";
 
 const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () => void }) => {
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
@@ -11,6 +12,7 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
         setIsDescriptionExpanded(false)
         toggleCard()
     }
+    const { title, description } = useQuest()
     const inlinePaddingValue = useMotionValue(30)
     const blockPaddingValue = useMotionValue(15)
     return (
@@ -33,12 +35,12 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
                 </motion.div>
             )}
             <motion.div className="grid w-full grid-cols-6 grid-rows-2" layout>
-                <div className="col-1 col-span-4 row-span-2 flex flex-wrap justify-between gap-1">
+                <div className="col-1 col-span-4 row-span-2 flex flex-col justify-between gap-1">
                     <h2 className="max-w-xs font-bold">
-                        Quest name very very long quest name bla bla
+                        {title}
                     </h2>
                     <span className="text-sm font-bold italic text-emerald-700">
-                        6 tasks left
+                        [6 tasks left]
                     </span>
                 </div>
                 <motion.div
@@ -46,22 +48,18 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
                     layout
                 >
                     <div className="flex h-16 w-16 items-center justify-center rounded-full border-8 font-bold">
-                        56%
+                        [56%]
                     </div>
                 </motion.div>
             </motion.div>
             {/* <p className="text-sm mt-2 row-start-3 col-span-6">Some quest description...</p> */}
-            {isOpen && (
+            {isOpen && description && (
                 <>
                     <div
                         className={`mt-2 overflow-hidden ${isDescriptionExpanded ? "h-fit" : "h-0"} transition-all`}
                     >
                         <motion.p className="text-sm" layout={"position"}>
-                            You can also use variant modifiers to target media
-                            queries like responsive breakpoints, dark mode,
-                            prefers-reduced-motion, and more. For example, use
-                            md:w-full to apply the w-full utility at only medium
-                            screen sizes and above.
+                            {description}
                         </motion.p>
                     </div>
                     <div
