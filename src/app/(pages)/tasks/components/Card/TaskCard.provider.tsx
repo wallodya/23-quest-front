@@ -10,7 +10,7 @@ import types from "tailwindcss";
 
 const TaskContext = createContext<TaskContext>({
     task: {
-        uuid: "string",
+        // uuid: "string",
         uniqueTaskId: "string",
         isCompleted: false,
         isFailed: false,

@@ -8,15 +8,19 @@ import { useQuest } from "./questCard.provider";
 
 const QuestCardContent = () => {
     const { uniqueQuestId } = useQuest()
-    const tasks = useAppSelector((state) => state.quests.tasksInQuests[uniqueQuestId]);
-    // console.log("tasks for quest ", uniqueQuestId)
-    // console.log(tasks)
+    const { tasks }= useQuest()
+    console.log("tasks for quest ", uniqueQuestId)
+    console.log(tasks)
     return (
-        <motion.div className="relative h-full px-4 overflow-hidden" layout>
-            <div className="h-full  flex flex-col gap-2 overflow-y-auto">
-                {tasks && tasks.map((task, index) => (
-                    <TaskCard {...task} key={index} />
-                ))}
+        <motion.div className="relative h-full overflow-hidden px-4" layout>
+            <div className="flex  h-full flex-col gap-2 overflow-y-auto">
+                {tasks === "loading" ? (
+                    <div>loading tasks</div>
+                ) : (
+                    tasks.map((task, index) => (
+                        <TaskCard {...task} key={index} />
+                    ))
+                )}
             </div>
         </motion.div>
     );

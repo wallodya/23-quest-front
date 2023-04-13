@@ -12,7 +12,7 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
         setIsDescriptionExpanded(false)
         toggleCard()
     }
-    const { title, description } = useQuest()
+    const { title, description, stats: { activeTaskAmount, percentageDone } } = useQuest()
     const inlinePaddingValue = useMotionValue(30)
     const blockPaddingValue = useMotionValue(15)
     return (
@@ -36,11 +36,13 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
             )}
             <motion.div className="grid w-full grid-cols-6 grid-rows-2" layout>
                 <div className="col-1 col-span-4 row-span-2 flex flex-col justify-between gap-1">
-                    <h2 className="max-w-xs font-bold">
-                        {title}
-                    </h2>
+                    <h2 className="max-w-xs font-bold">{title}</h2>
                     <span className="text-sm font-bold italic text-emerald-700">
-                        [6 tasks left]
+                        {activeTaskAmount
+                            ? `${activeTaskAmount} tasks left`
+                            : activeTaskAmount === 1
+                            ? `1 task left`
+                            : "0 tasks"}
                     </span>
                 </div>
                 <motion.div
@@ -48,7 +50,7 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
                     layout
                 >
                     <div className="flex h-16 w-16 items-center justify-center rounded-full border-8 font-bold">
-                        [56%]
+                        {`${percentageDone}%`}
                     </div>
                 </motion.div>
             </motion.div>
@@ -56,7 +58,9 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
             {isOpen && description && (
                 <>
                     <div
-                        className={`mt-2 overflow-hidden ${isDescriptionExpanded ? "h-fit" : "h-0"} transition-all`}
+                        className={`mt-2 overflow-hidden ${
+                            isDescriptionExpanded ? "h-fit" : "h-0"
+                        } transition-all`}
                     >
                         <motion.p className="text-sm" layout={"position"}>
                             {description}

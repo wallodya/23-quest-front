@@ -93,8 +93,6 @@ export type CreateTaskReqBody = {
     text?: string,
     priority: TaskPriority,
     types: TaskType,
-    // startTime: string | null,
-    // endTime: string | null,
     startTime?: Date,
     endTime?: Date,
     duration?: number,
@@ -345,3 +343,4 @@ export const isTaskTimerType = (obj: unknown): obj is TaskTimer => {
         typeof obj.timerFinishTime === "number"
     );
 }
+

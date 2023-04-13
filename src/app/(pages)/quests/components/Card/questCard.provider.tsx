@@ -1,7 +1,8 @@
-import { useQuestCardActions } from "@quest/common/hooks"
+import { useQuestCardActions, useQuestCardStats } from "@quest/common/hooks"
 import { useGetTasksForQuestQuery } from "@quest/features/questApi.slice"
 import { Quest, QuestContext } from "@quest/types"
 import { ReactNode, createContext, useContext } from "react"
+import { useAppSelector } from "store"
 
 const defaultContextValue: QuestContext = {
     uniqueQuestId: "123",
@@ -19,6 +20,16 @@ const defaultContextValue: QuestContext = {
     actions: {
         addTask: () => {},
     },
+    stats: {
+        taskAmount: 0,
+        failedTaskAmount: 0,
+        completedTaskAmount: 0,
+        activeTaskAmount: 0,
+        percentageFailed: 0,
+        percentageCompleted: 0,
+        percentageActive: 0,
+        percentageDone: 0,
+    }
 }
 
 const QuestContext = createContext<QuestContext>(defaultContextValue)
@@ -29,11 +40,15 @@ export const QuestProvider = ({
     ...quest
 }: Quest & { children: ReactNode }) => {
     const actions = useQuestCardActions(quest.uniqueQuestId)
-    const { data: questTasks, isLoading } = useGetTasksForQuestQuery(quest.uniqueQuestId)
+    const { isLoading } = useGetTasksForQuestQuery(quest.uniqueQuestId)
+    const allQuestsTasks = useAppSelector(state => state.quests.tasksInQuests)
+    const questTasks = allQuestsTasks.filter(task => task.uniqueQuestId === quest.uniqueQuestId)
+    const stats = useQuestCardStats(questTasks)
     const contextValue: QuestContext = {
         ...quest,
-        tasks: isLoading ? "loading" : questTasks ? questTasks : [],
+        tasks: isLoading ? "loading" : questTasks,
         actions,
+        stats,
     };
     return (
         <QuestContext.Provider value={contextValue}>

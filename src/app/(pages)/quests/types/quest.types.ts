@@ -19,6 +19,16 @@ export type QuestContext = Quest & {
     actions: {
         addTask: () => void
     }
+    stats: {
+        taskAmount: number;
+        failedTaskAmount: number;
+        completedTaskAmount: number;
+        activeTaskAmount: number;
+        percentageFailed: number;
+        percentageCompleted: number;
+        percentageActive: number;
+        percentageDone: number;
+    }
 }
 
 export type CreateQuestBody = {
@@ -28,9 +38,7 @@ export type CreateQuestBody = {
 
 export type QuestState = {
     quests: Quest[],
-    tasksInQuests: {
-        [K in string]: Task[]
-    }
+    tasksInQuests: Task [],
     questForm: {
         isOpen: boolean
     }
