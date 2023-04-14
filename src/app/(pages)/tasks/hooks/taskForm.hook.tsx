@@ -20,15 +20,15 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
         console.log("Submited");
         const createTaskReqBody: CreateTaskReqBody = {
             title: payload.title,
-            text: payload.text ?? undefined,
+            text: payload.text ?? null,
             priority: payload.priority,
             types: payload.types,
             startTime: payload.startTime
                 ? new Date(payload.startTime)
-                : undefined,
-            endTime: payload.endTime ? new Date(payload.endTime) : undefined,
-            duration: payload.duration ?? undefined,
-            repeatTimes: payload.repeatCount ?? undefined,
+                : null,
+            endTime: payload.endTime ? new Date(payload.endTime) : null,
+            duration: payload.duration ?? null,
+            repeatTimes: payload.repeatCount ?? null,
         };
         dispatch(addTask(payload));
         if (!isInQuest) {
@@ -64,23 +64,23 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
         dispatch(setTypes(taskTypes));
     };
 
-    const saveTask = (payload: TaskOptimistic) => {
-        console.log("Submited");
-        const createTaskReqBody: CreateTaskReqBody = {
-            title: payload.title,
-            text: payload.text ?? undefined,
-            priority: payload.priority,
-            types: payload.types,
-            startTime: payload.startTime
-                ? new Date(payload.startTime)
-                : undefined,
-            endTime: payload.endTime ? new Date(payload.endTime) : undefined,
-            duration: payload.duration ?? undefined,
-            repeatTimes: payload.repeatCount ?? undefined,
-        };
-        dispatch(addTask(payload));
-        createTask(createTaskReqBody);
-    };
+    // const saveTask = (payload: TaskOptimistic) => {
+    //     console.log("Submited");
+    //     const createTaskReqBody: CreateTaskReqBody = {
+    //         title: payload.title,
+    //         text: payload.text ?? undefined,
+    //         priority: payload.priority,
+    //         types: payload.types,
+    //         startTime: payload.startTime
+    //             ? new Date(payload.startTime)
+    //             : undefined,
+    //         endTime: payload.endTime ? new Date(payload.endTime) : undefined,
+    //         duration: payload.duration ?? undefined,
+    //         repeatTimes: payload.repeatCount ?? undefined,
+    //     };
+    //     dispatch(addTask(payload));
+    //     createTask(createTaskReqBody);
+    // };
 
     useEffect(() => {
         const { unsubscribe } = watch((values) => {
@@ -125,7 +125,7 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
         // closeForm,
         // setTaskTypes,
         saveTaskTypes,
-        saveTask,
+        // saveTask,
         // setStep
     };
 };

@@ -90,13 +90,13 @@ export type CreateTaskBody = Pick<
 //TODO better naming
 export type CreateTaskReqBody = {
     title: string,
-    text?: string,
+    text: string | null,
     priority: TaskPriority,
     types: TaskType,
-    startTime?: Date,
-    endTime?: Date,
-    duration?: number,
-    repeatTimes?: number,
+    startTime: Date | null,
+    endTime: Date | null,
+    duration: number | null,
+    repeatTimes: number | null,
 };
 
 export type TaskFormSteps = "title&type" | "description" | "priority" | "timeframe" | "duration" | "repeatCount"
@@ -266,7 +266,7 @@ export const isTaskType = (obj: unknown): obj is Task => {
         "title" in obj &&
         typeof obj.title === "string" &&
         "text" in obj &&
-        typeof obj.text === "string" &&
+        (typeof obj.text === "string" || obj.text  === null) &&
         "types" in obj &&
         isTaskTypeType(obj.types) &&
         "startTime" in obj &&

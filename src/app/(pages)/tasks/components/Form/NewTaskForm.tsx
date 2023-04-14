@@ -84,10 +84,10 @@ export const NewTaskForm = ({
                 </div>
             </TaskFormContainer>
 
-            {/* <div>isValid: {String(formControls.formState.isValid)} */}
-            {/* {Object.values(formErrors).map((err, index) => <span key={index}>{err.message}</span>)}
-                {Object.keys(formErrors).map((err, index) => <span key={index}>{err}</span>)} */}
-            {/* </div> */}
+            <div>isValid: {String(formControls.formState.isValid)}
+            {Object.values(formControls.formState.errors).map((err, index) => <span key={index}>{err.message}</span>)}
+                {Object.keys(formControls.formState.errors).map((err, index) => <span key={index}>{err}</span>)}
+            </div>
 
             <Submit disabled={!formControls.formState.isValid}>Save</Submit>
         </FormWrapper>
