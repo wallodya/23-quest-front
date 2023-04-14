@@ -11,7 +11,7 @@ const QuestCardContainer = ({ children, isOpen, toggleOpen }: { children: ReactN
     //     console.log("scroll Y progress: ", scrollYProgress)
     // }, [scrollY, scrollYProgress])
     return (
-        <li className="relative h-40 w-full ">
+        <li className="relative h-fit w-full ">
             <div
                 className={
                     " pointer-events-none transition " +

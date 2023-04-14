@@ -70,18 +70,18 @@ export type Task = {
 };
 
 //TODO better naming
-export type CreateTaskBody = Pick<
+export type TaskFormFields = Pick<
     Task,
     | "title"
     | "text"
-    | "startTime"
-    | "endTime"
-    | "repeatCount"
     | "priority"
 > & {
-    durationSeconds: number,
-    durationMinutes: number,
-    durationHours: number,
+    repeatCount?: number,
+    endTime?: Date,
+    startTime?: Date,
+    durationSeconds?: number,
+    durationMinutes?: number,
+    durationHours?: number,
     isTimer: boolean,
     isPeriodic: boolean,
     isRepeat: boolean
@@ -105,7 +105,7 @@ export type TaskFormState = {
     isOpen: boolean;
     currentStep: TaskFormSteps,
     types: TaskType
-} & Partial<CreateTaskBody>;
+};
 
 export type TaskOptimistic = Omit<Task, "uniqueTaskId"> & {
     isCompleted: false,
@@ -140,9 +140,9 @@ export type TaskTypeChipProps = {
 };
 
 export type TaskFormStepsProps = {
-    formControls: UseFormReturn<CreateTaskBody, any>,
+    formControls: UseFormReturn<TaskFormFields, any>,
     callbacks?: Partial<{
-        [K in keyof CreateTaskBody]: {
+        [K in keyof TaskFormFields]: {
             onNext?: () => void,
             onPrevious?: () => void
         }   
@@ -152,7 +152,7 @@ export type TaskFormStepsProps = {
 export type StepProps = {
     // registerFn: UseFormRegister<CreateTaskBody>;
     // errors: FieldErrors<CreateTaskBody>;
-    formControls: UseFormReturn<CreateTaskBody, any>,
+    formControls: UseFormReturn<TaskFormFields, any>,
 }
 
 export type TaskActionMutation = {

@@ -96,17 +96,7 @@ const refineTimer = (data: {
     }
 };
 
-const timerTaskSchema = isTimerSchema
-    .merge(notIsTimerSchema)
-
-
-
-
-
-
-
-
-
+const timerTaskSchema = isTimerSchema.merge(notIsTimerSchema);
 
 const isPeriodicSchema = z.object({
     isPeriodic: z.literal(true),
@@ -121,13 +111,14 @@ const notIsPeriodicSchema = z.object({
 });
 
 const refinePeriodic = (data: {
-    isPeriodic: boolean,
-    startTime?: string,
-    endTime?: string,
+    isPeriodic: boolean;
+    startTime?: string;
+    endTime?: string;
 }) => {
     const { isPeriodic, startTime, endTime } = data;
     if (!isPeriodic) {
-        const hasDefinedPeriodFields = startTime !== undefined || endTime !== undefined
+        const hasDefinedPeriodFields =
+            startTime !== undefined || endTime !== undefined;
         return !hasDefinedPeriodFields;
     } else {
         if (startTime === undefined || endTime === undefined) {
@@ -141,15 +132,9 @@ const refinePeriodic = (data: {
         const isPeriodValid = endMs > startMs;
         return isStartTimeValid && isEndTimeValid && isPeriodValid;
     }
-}
+};
 
-const periodicTaskSchema = notIsPeriodicSchema
-    .merge(isPeriodicSchema)
-
-
-
-
-
+const periodicTaskSchema = notIsPeriodicSchema.merge(isPeriodicSchema);
 
 const isRepeatSchema = z.object({
     isRepeat: z.literal(true),
@@ -173,27 +158,17 @@ const notIsRepeatSchema = z.object({
     repeatCount: z.literal(undefined),
 });
 
-const refineRepeat = (data: {
-    isRepeat: boolean,
-    repeatCount?: number,
-}) => {
+const refineRepeat = (data: { isRepeat: boolean; repeatCount?: number }) => {
     const { isRepeat, repeatCount } = data;
-    const hasDefinedRepeatCount = repeatCount !== undefined
+    const hasDefinedRepeatCount = repeatCount !== undefined;
     if (!isRepeat) {
-        return !hasDefinedRepeatCount
+        return !hasDefinedRepeatCount;
     } else {
-        return hasDefinedRepeatCount
+        return hasDefinedRepeatCount;
     }
-}
+};
 
-const repeatTaskSchema = notIsRepeatSchema
-    .merge(isRepeatSchema)
-
-
-
-
-
-
+const repeatTaskSchema = notIsRepeatSchema.merge(isRepeatSchema);
 
 export const createTaskSchemaA = baseTaskSchema
     .merge(repeatTaskSchema)
@@ -201,11 +176,9 @@ export const createTaskSchemaA = baseTaskSchema
     .merge(periodicTaskSchema)
     .refine(refineRepeat)
     .refine(refinePeriodic)
-    .refine(refineTimer)
+    .refine(refineTimer);
 
-
-
-
+const preprocessEmptyString = (arg: unknown) => (arg === "" ? undefined : arg);
 
 export const createTaskSchema = z
     .object({
@@ -225,58 +198,75 @@ export const createTaskSchema = z
         isPeriodic: z.boolean().default(false),
         isRepeat: z.boolean().default(false),
         priority: z.string().default("NOT_IMPORTANT"),
-        startTime: z.string().optional(),
-        endTime: z.string().optional(),
-        durationHours: z
-            .string()
-            .transform((value) => Number(value))
-            .pipe(
-                z
-                    .number()
-                    .min(0, { message: "You cannot set negative duration" })
-                    .max(24, { message: "You cannot set more than 24 hours" }),
-            )
-            .default("0")
-            .optional(),
-        durationMinutes: z
-            .string()
-            .transform((value) => Number(value))
-            .pipe(
-                z
-                    .number()
-                    .min(0, { message: "You cannot set negative duration" })
-                    .max(59, {
-                        message: "You cannot set more than 59 minutes",
-                    }),
-            )
-            .default("1")
-            .optional(),
-        durationSeconds: z
-            .string()
-            // .min(0, { message: "You cannot set negative duration" })
-            // .max(59)
-            .transform((value) => Number(value))
-            .pipe(
-                z
-                    .number()
-                    .min(0, { message: "You cannot set negative duration" })
-                    .max(59, {
-                        message: "You cannot set more than 59 seconds",
-                    }),
-            )
-            .default("0")
-            .optional(),
-        repeatCount: z
-            .string()
-            .transform((value) => Number(value))
-            .pipe(
-                z.number().min(2, {
-                    message: "You need to set at least two repetitions",
-                }),
-            )
-            .default("5")
-            .optional(),
+        startTime: z.preprocess(preprocessEmptyString, z.string().optional()),
+        endTime: z.preprocess(preprocessEmptyString, z.string().optional()),
+        durationHours: z.preprocess(
+            preprocessEmptyString,
+            z
+                .string()
+                .transform((value) => Number(value))
+                .pipe(
+                    z
+                        .number()
+                        .min(0, { message: "You cannot set negative duration" })
+                        .max(24, {
+                            message: "You cannot set more than 24 hours",
+                        }),
+                )
+                .default("0")
+                .optional(),
+        ),
+        durationMinutes: z.preprocess(
+            preprocessEmptyString,
+            z
+                .string()
+                .transform((value) => Number(value))
+                .pipe(
+                    z
+                        .number()
+                        .min(0, { message: "You cannot set negative duration" })
+                        .max(59, {
+                            message: "You cannot set more than 59 minutes",
+                        }),
+                )
+                .default("1")
+                .optional(),
+        ),
+        durationSeconds: z.preprocess(
+            preprocessEmptyString,
+            z
+                .string()
+                // .min(0, { message: "You cannot set negative duration" })
+                // .max(59)
+                .transform((value) => Number(value))
+                .pipe(
+                    z
+                        .number()
+                        .min(0, { message: "You cannot set negative duration" })
+                        .max(59, {
+                            message: "You cannot set more than 59 seconds",
+                        }),
+                )
+                .default("0")
+                .optional(),
+        ),
+        repeatCount: z.preprocess(
+            preprocessEmptyString,
+            z
+                .string()
+                .transform((value) => Number(value))
+                .pipe(
+                    z
+                        .number()
+                        .min(2, {
+                            message: "You need to set at least two repetitions",
+                        })
+                        .max(200, "You cannot set more than 200 repititions"),
+                )
+                .default("5")
+                .optional(),
+        ),
     })
-    .refine(refineRepeat)
-    .refine(refinePeriodic)
-    .refine(refineTimer)
+    .refine(refineRepeat, { message: "You must provide number of repeats" })
+    .refine(refinePeriodic, { message: "Time period is not valid" })
+    .refine(refineTimer, { message: "Duration wasn't provided" });

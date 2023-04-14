@@ -5,6 +5,7 @@ import CrossIcon from "components/icons/CrossIcon";
 import { ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "store";
 import Button from "components/ui/Button";
+import { useFormProgress } from "@task/hooks";
 
 const TaskFormContainer = ({
     children,
@@ -22,8 +23,7 @@ const TaskFormContainer = ({
     const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
 
     const step = TasksConfig.form.steps.get(currentStep);
-    const nextStep = step?.nextStep;
-    const previousStep = step?.previousStep;
+    const { nextStep, previousStep } = useFormProgress()
 
     const closeForm = () => {
         dispatch(closeTaskForm());

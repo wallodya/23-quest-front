@@ -1,19 +1,23 @@
 "use client";
 
 import { FormControl, FormField, FormLabel } from "@radix-ui/react-form";
+import { setTypes } from "@task/features";
+import { useTaskFormControls } from "@task/hooks";
 import TasksConfig from "@task/tasks.config";
-import { StepProps } from "@task/types";
+import { StepProps, TaskType } from "@task/types";
 import PeriodIcon from "components/icons/PeriodIcon";
 import RepeatIcon from "components/icons/RepeatIcon";
 import TimerIcon from "components/icons/TimerIcon";
 import InputField from "components/ui/InputField";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "store";
 
 export const TitleAndTypeStep = ({
     formControls: {
         register,
         watch,
         getValues,
+        resetField,
         formState: {
             errors: { title: titleFieldError },
         },
@@ -23,11 +27,55 @@ export const TitleAndTypeStep = ({
     const [isPeriodic, setIsPeriodic] = useState(getValues().isPeriodic);
     const [isRepeat, setIsRepeat] = useState(getValues().isRepeat);
 
+    const { types } = useAppSelector(state => state.tasks.taskForm)
+    const dispatch = useAppDispatch()
+
+    const setTaskTypes = (payload: TaskType) => {
+        dispatch(setTypes(payload))
+    }
     useEffect(() => {
         const { unsubscribe } = watch((values) => {
             setIsTimer(values.isTimer ?? false);
             setIsPeriodic(values.isPeriodic ?? false);
             setIsRepeat(values.isRepeat ?? false);
+            
+            let taskTypes = types
+
+            
+            if (values.isRepeat) {
+                !taskTypes.includes("REPEAT") && (taskTypes = [...taskTypes, "REPEAT"]);
+            } else {
+                taskTypes = taskTypes.filter((type) => type !== "REPEAT")
+                getValues().repeatCount && resetField("repeatCount")
+            }
+
+            if (values.isPeriodic) {
+                !taskTypes.includes("PERIODIC") && (taskTypes = [...taskTypes, "PERIODIC"]);
+            } else {
+                taskTypes = taskTypes.filter((type) => type !== "PERIODIC")
+                getValues().startTime && resetField("startTime")
+                getValues().endTime && resetField("endTime")
+            }
+            
+            if (values.isTimer) {
+                !taskTypes.includes("TIMER") && (taskTypes = [...taskTypes, "TIMER"]);
+            } else {
+                taskTypes = taskTypes.filter((type) => type !== "TIMER")
+                getValues().durationSeconds && resetField("durationSeconds")
+                getValues().durationMinutes && resetField("durationMinutes")
+                getValues().durationHours && resetField("durationHours")
+            }
+            
+            if (taskTypes.length === 0) {
+                taskTypes.push("BASIC");
+            }
+            
+            if (taskTypes.length > 1 && taskTypes.includes("BASIC")) {
+                taskTypes = taskTypes.filter((type) => type !== "BASIC")
+            }
+
+            setTaskTypes(taskTypes)
+            
         });
         return () => {
             unsubscribe();

@@ -1,7 +1,7 @@
 import { setCurrentStep } from "@task/features";
 import { useFormProgress } from "@task/hooks";
 import TasksConfig from "@task/tasks.config";
-import { CreateTaskBody, TaskFormSteps } from "@task/types";
+import { TaskFormFields, TaskFormSteps } from "@task/types";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
@@ -15,7 +15,7 @@ const formStepNamesMap = new Map<TaskFormSteps, string>([
     ["repeatCount", "Repeats"],
 ]);
 
-const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<CreateTaskBody, any>) => {
+const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<TaskFormFields, any>) => {
     const { formState: { errors, touchedFields} } = formControls
     const isDirty =
         (stepNumber === 1 && errors.title) ||
@@ -61,7 +61,7 @@ const Step = ({
 }: {
     step: TaskFormSteps;
     stepNumber: number;
-    formControls: UseFormReturn<CreateTaskBody, any>
+    formControls: UseFormReturn<TaskFormFields, any>
 }) => {
     const dispatch = useAppDispatch();
     const { currentStepCount, stepsTotal, allSteps } =
@@ -72,9 +72,7 @@ const Step = ({
     const { isDirty, isTouched } = useProgressLabelState(stepNumber, formControls)
 
     const circleBorderClass = !isTouched
-        ? "border-sky-500/50"
-        : isDirty
-        ? "border-yellow-600"
+        ? "border-sky-500/40"
         : "border-sky-500";
 
     return (
@@ -88,9 +86,16 @@ const Step = ({
                     className={`${
                         currentStepCount === stepNumber &&
                         "bg-sky-500 text-slate-200"
-                    } flex h-7 w-7 items-center justify-center rounded-full border-2 ${circleBorderClass} text-sm font-bold`}
+                    } relative flex h-7 w-7 items-center justify-center rounded-full border-2 ${circleBorderClass} text-sm font-bold`}
                 >
                     {stepNumber}
+                    {
+                        isDirty &&  (
+                            <div
+                                className="absolute top-[-4px] right-[-4px] w-3 h-3 rounded-full bg-red-400"
+                            ></div>
+                        )
+                    }
                 </div>
                 <StepLabel stepName={step} />
             </div>
@@ -101,13 +106,13 @@ const Step = ({
 const FormProgress = ({
     formControls,
 }: {
-    formControls: UseFormReturn<CreateTaskBody, any>;
+    formControls: UseFormReturn<TaskFormFields, any>;
 }) => {
     // const { currentStep } = useAppSelector(state => state.tasks.taskForm)
     const { isProgressShown, allSteps } = useFormProgress();
     return (
         <div className="text-sky-500">
-            {isProgressShown && (
+            {true && (
                 <div className="grid grid-cols-11 gap-1">
                     {allSteps.map((step, index) => (
                         <Step

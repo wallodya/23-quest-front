@@ -15,10 +15,10 @@ import TaskProvider, { useTask } from "./TaskCard.provider";
 import { ReactNode } from "react";
 
 const TaskCardContainer = ({ children }: { children: ReactNode }) => {
-    const { toggleExpanded } = useTask();
+    const { toggleExpanded, task: { isInQuest } } = useTask();
     return (
         <div
-            className="flex flex-col rounded-xl bg-gray-900 px-5 py-3 shadow shadow-slate-900"
+            className={`flex flex-col rounded-xl px-5 py-3 ${isInQuest ? "bg-gray-800" : "bg-gray-900"} shadow shadow-slate-900`}
             onClick={toggleExpanded}
         >
             {children}

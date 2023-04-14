@@ -13,7 +13,7 @@ const QuestCardContent = () => {
     console.log(tasks)
     return (
         <motion.div className="relative h-full overflow-hidden px-4" layout>
-            <div className="flex  h-full flex-col gap-2 overflow-y-auto">
+            <div className="flex py-6 h-full flex-col gap-4 overflow-y-auto">
                 {tasks === "loading" ? (
                     <div>loading tasks</div>
                 ) : (

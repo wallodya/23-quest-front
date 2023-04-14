@@ -12,6 +12,7 @@ export const CurrentStep = ({
     callbacks,
 }: TaskFormStepsProps) => {
     const { currentStep } = useAppSelector((state) => state.tasks.taskForm);
+
     switch (currentStep) {
         case "title&type": {
             return <TitleAndTypeStep formControls={formControls} />;
@@ -38,3 +39,5 @@ export const CurrentStep = ({
         // }
     }
 };
+
+

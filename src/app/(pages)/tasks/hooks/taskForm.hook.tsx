@@ -4,7 +4,7 @@ import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
 import { addTask, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
-import { CreateTaskBody, CreateTaskReqBody, TaskOptimistic } from "@task/types";
+import { TaskFormFields, CreateTaskReqBody, TaskFormSteps, TaskOptimistic, TaskType } from "@task/types";
 import { useEffect } from "react";
 import { UseFormWatch } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
@@ -43,7 +43,7 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
     }
 } 
 
-export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
+export const useTaskFormControls = (watch: UseFormWatch<TaskFormFields>) => {
     const dispatch = useAppDispatch();
     const [createTask, { isLoading, isError, error, isSuccess }] =
         useCreateTaskMutation();
@@ -60,9 +60,6 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
         dispatch(openTaskForm());
     };
 
-    const saveTaskTypes = () => {
-        dispatch(setTypes(taskTypes));
-    };
 
     // const saveTask = (payload: TaskOptimistic) => {
     //     console.log("Submited");
@@ -115,6 +112,11 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
             unsubscribe();
         };
     });
+    
+    
+    const saveTaskTypes = () => {
+        dispatch(setTypes(taskTypes));
+    };
 
     return {
         isShown,
@@ -130,6 +132,15 @@ export const useTaskFormControls = (watch: UseFormWatch<CreateTaskBody>) => {
     };
 };
 
+export const useSelectedTypesFlags = (types: TaskType) => {
+    return {
+        isBasic: types.includes("BASIC"),
+        isTimer: types.includes("TIMER"),
+        isRepeat: types.includes("REPEAT"),
+        isPeriodic: types.includes("PERIODIC"),
+    }
+}
+
 export const useTaskFormNavigation = () => {
     
     return {}
@@ -139,6 +150,7 @@ export const useFormProgress = () => {
     const { currentStep, types } = useAppSelector(
         (state) => state.tasks.taskForm,
     );
+    const { isBasic, isPeriodic, isRepeat, isTimer } = useSelectedTypesFlags(types)
     const MANDATORY_STEPS_AMOUNT = 3;
 
     const isProgressShown = currentStep !== "title&type";
@@ -146,35 +158,84 @@ export const useFormProgress = () => {
         ? MANDATORY_STEPS_AMOUNT
         : MANDATORY_STEPS_AMOUNT + types.length;
     let currentStepCount: number;
+    let nextStep: TaskFormSteps | null
+    let previousStep: TaskFormSteps | null
     switch (currentStep) {
         case "title&type": {
             currentStepCount = 1;
+            previousStep = null
+            nextStep = "description"
             break;
         }
         case "description": {
             currentStepCount = 2;
+            previousStep = "title&type"
+            nextStep = "priority"
             break;
         }
         case "priority": {
             currentStepCount = 3;
+            previousStep = "description"
+
+            if (isTimer) {
+                nextStep = "duration"
+            } else if (isPeriodic) {
+                nextStep = "timeframe"
+            } else if (isRepeat) {
+                nextStep = "repeatCount"
+            } else {
+                nextStep = null
+            }
+
             break;
         }
         case "duration": {
             currentStepCount = 4;
+            previousStep = "priority"
+
+            if (isPeriodic) {
+                nextStep = "timeframe"
+            } else if (isRepeat) {
+                nextStep = "repeatCount"
+            } else {
+                nextStep = null
+            }
+
             break;
         }
         case "timeframe": {
-            currentStepCount = types.includes("TIMER") ? 5 : 4;
+            currentStepCount = isTimer ? 5 : 4;
+            if (isTimer) {
+                previousStep = "duration"
+            } else {
+                previousStep = "priority"
+            }
+
+            if (isRepeat) {
+                nextStep = "repeatCount"
+            } else {
+                nextStep = null
+            }
+
             break;
         }
         case "repeatCount": {
-            if (types.includes("TIMER") && types.includes("PERIODIC")) {
+            if (isTimer && isPeriodic) {
                 currentStepCount = 6;
-            } else if (types.includes("TIMER") || types.includes("PERIODIC")) {
+            } else if (isTimer || isPeriodic) {
                 currentStepCount = 5;
             } else {
                 currentStepCount = 4;
             }
+
+            if (isPeriodic) {
+                previousStep = "timeframe"
+            } else if (isTimer) {
+                previousStep = "duration"
+            } else {
+                previousStep = "priority"
+            }
+            nextStep = null
             break;
         }
     }
@@ -184,17 +245,19 @@ export const useFormProgress = () => {
                 stepName === "title&type" ||
                 stepName === "description" ||
                 stepName === "priority" ||
-                (stepName === "duration" && types.includes("TIMER")) ||
-                (stepName === "repeatCount" && types.includes("REPEAT")) ||
-                (stepName === "timeframe" && types.includes("PERIODIC"))
+                (stepName === "duration" && isTimer) ||
+                (stepName === "repeatCount" && isRepeat) ||
+                (stepName === "timeframe" && isPeriodic)
             );
         },
     );
-
+        // console.log("allSteps: ", allSteps)
     return {
         isProgressShown,
         stepsTotal,
         currentStepCount,
         allSteps,
+        nextStep,
+        previousStep
     };
 };
