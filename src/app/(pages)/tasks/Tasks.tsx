@@ -27,17 +27,8 @@ const Tasks = () => {
     const [isActiveSelected, isCompletedSelected, isFailedSelected] = [false, false, false]
     return (
         <div>
-            <Tabs.Root defaultValue="active" className="mt-16 mb-32">
-                <Tabs.Content value="active">
-                    <ActiveTasks />
-                </Tabs.Content>
-                <Tabs.Content value="completed">
-                    <CompletedTasks />
-                </Tabs.Content>
-                <Tabs.Content value="failed">
-                    <FailedTasks />
-                </Tabs.Content>
-                <Tabs.TabsList className="fixed left-0 bottom-0 z-10 flex w-screen justify-around rounded-t-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
+            <Tabs.Root defaultValue="active" className="mt-16 sm:mt-20 mb-32">
+                <Tabs.TabsList className="fixed left-0 bottom-0 z-10 md:static md:mb-4 flex w-screen md:w-full justify-around rounded-t-xl lg:rounded-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
                     <Tabs.Trigger
                         value="active"
                         className={
@@ -66,6 +57,15 @@ const Tasks = () => {
                         Failed
                     </Tabs.Trigger>
                 </Tabs.TabsList>
+                <Tabs.Content value="active">
+                    <ActiveTasks />
+                </Tabs.Content>
+                <Tabs.Content value="completed">
+                    <CompletedTasks />
+                </Tabs.Content>
+                <Tabs.Content value="failed">
+                    <FailedTasks />
+                </Tabs.Content>
             </Tabs.Root>
         </div>
     );

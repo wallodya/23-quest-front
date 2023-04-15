@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export const useNormilizedTimePeriod = (startTime: Date | null, endTime: Date | null) => {
     if (!startTime || !endTime) {
         return null
@@ -22,8 +24,14 @@ export const useNormilizedTimePeriod = (startTime: Date | null, endTime: Date | 
         // month: isToday ? undefined : "2-digit",
         // day: isToday ? undefined : "2-digit",
     }
-    const formatDate = new Intl.DateTimeFormat("en-us", dateTimeFormatOptions).format
-    return { from: formatDate(start), to: formatDate(end) }; // TODO use library
+
+    const startMoment = moment(startTime)
+    const endMoment = moment(endTime)
+
+    // const formatDate = new Intl.DateTimeFormat("en-us", dateTimeFormatOptions).format
+    const formatDate = {from: startMoment.format("lll") , to: endMoment.format("lll") }
+    return formatDate
+    // return { from: formatDate(start), to: formatDate(end) }; // TODO use library
 }
 
 export const useNormilizedDuration = (duration: number | null) => {

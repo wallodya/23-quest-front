@@ -4,17 +4,19 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import PersonIcon from 'components/icons/PersonIcon';
 import Link from 'next/link';
 import SettingsIcon from 'components/icons/SettingsIcon';
+import ReaderIcon from 'components/icons/ReaderIcon';
+import FileIcon from 'components/icons/FileIcon';
 
 export const DROPDOWN_LINKS: {
     name: string;
     link: string;
     Icon: () => JSX.Element;
 }[] = [
-    { name: "Profile", link: "/profile", Icon: () => <PersonIcon size="xs" /> },
+    { name: "Tasks", link: "/tasks", Icon: () => <FileIcon size="xs" /> },
     {
-        name: "Settings",
-        link: "/settings",
-        Icon: () => <SettingsIcon size="xs" />,
+        name: "Quests",
+        link: "/quests",
+        Icon: () => <ReaderIcon size="xs" />,
     },
 ];
 

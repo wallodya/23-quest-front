@@ -2,6 +2,7 @@ import { BasicTaskType, ModifiedTaskType, TaskType, TaskTypeChipProps } from "@t
 import PeriodIcon from "components/icons/PeriodIcon";
 import RepeatIcon from "components/icons/RepeatIcon";
 import TimerIcon from "components/icons/TimerIcon";
+import moment from "moment";
 import { number } from "zod";
 
 export const basicChipProps = {
@@ -73,8 +74,12 @@ export const useValidTimePeriod = ({
     if (startTime === null || endTime === null) {
         return false
     }
-    const currentTimeMs = new Date()
-    return (new Date(startTime)) <= currentTimeMs && currentTimeMs <= (new Date(endTime))
+
+    const currentTime = moment()
+
+    const isPeriodValid = moment(startTime).isBefore(currentTime) && moment(endTime).isAfter(currentTime)
+    console.log("is valid period: ", isPeriodValid)
+    return isPeriodValid
 }; // TODO better typing
 
 

@@ -6,7 +6,7 @@ import NewTask from "./Form/NewTask";
 import { useGetTasksQuery } from "@task/features/taskApi.slice";
 import { useEffect } from "react";
 import { useSubmitTask } from "@task/hooks";
-import { closeTaskForm } from "@task/features";
+import { closeTaskForm, openTaskForm } from "@task/features";
 
 export const ActiveTasks = () => {
     const { activeTasks, taskForm: { isOpen } } = useAppSelector((state) => state.tasks);
@@ -14,14 +14,21 @@ export const ActiveTasks = () => {
     const closeForm = () => {
         dispatch(closeTaskForm())
     }
+    const toggleFormModal = (open: boolean) => {
+        if (open) {
+            dispatch(openTaskForm())
+        } else {
+            dispatch(closeTaskForm())
+        }
+    }
     const { submitTask } = useSubmitTask(false);
     // TODO add optimistic updates
     return (
-        <section className="flex flex-col gap-4">
+        <section className="grid grid-cols-cards gap-4">
             {/* {addedTasks.map((task, index) => (
                 <TaskCard {...task} key={index} />
             ))} */}
-            <NewTask submitTaskFn={submitTask} isOpen={isOpen} closeFn={closeForm}/>
+            <NewTask submitTaskFn={submitTask} isOpen={isOpen} closeFn={closeForm} toggleModalFn={toggleFormModal}/>
             {activeTasks.map((task, index) => (
                 <TaskCard {...task} key={task.uniqueTaskId} />
             ))}

@@ -88,8 +88,10 @@ const TaskProvider = ({
         startTime: task.startTime,
         endTime: task.endTime,
     });
+    
     const areActionsShown =
         !task.isFailed && !task.isCompleted && isValidTimePeriod;
+
     const actions = useTaskActions(task);
     const contextValue = {
         task,

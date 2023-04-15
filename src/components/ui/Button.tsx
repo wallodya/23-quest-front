@@ -37,6 +37,7 @@ const Button = forwardRef(
         return (
             <button
                 ref={ref}
+                role="button"
                 {...buttonProps}
                 className={
                     "w-full flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition focus:outline-none focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-700 " +

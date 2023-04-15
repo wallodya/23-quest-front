@@ -15,10 +15,10 @@ import FormProgress from "./steps/FormProgress";
 import { createTaskSchema } from "./taskForm.schema";
 
 export const NewTaskForm = ({
-    children,
+    // children,
     submitTaskFn: saveTask,
 }: {
-    children: ReactNode;
+    // children: ReactNode;
     submitTaskFn: (payload: TaskOptimistic) => void;
 }) => {
     const formControls = useForm<TaskFormFields>({
