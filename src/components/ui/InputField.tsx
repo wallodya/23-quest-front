@@ -51,9 +51,9 @@ const TextField = ({inputError, fieldName, labelText, registerFn, isInline, ...i
 );
 
 const CheckBox = ({inputError, fieldName, labelText, registerFn, ...inputProps} : InputFieldProps) => (
-    <Form.Field name={fieldName} className="flex items-center">
+    <Form.Field name={fieldName} className="">
         <Form.Control asChild>
-            <Checkbox {...inputProps} {...registerFn(fieldName)} />
+            <input {...inputProps} {...registerFn(fieldName)} />
         </Form.Control>
         <CheckboxLabel text={labelText} />
         <ErrorLabel error={inputError} />

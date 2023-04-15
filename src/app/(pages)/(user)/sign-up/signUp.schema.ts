@@ -1,3 +1,4 @@
+import { spring } from "framer-motion";
 import { z } from "zod";
 
 const specialSymbols = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
@@ -32,6 +33,6 @@ export const SignUpSchema = z
     .refine((data) => data.password === data.confirmPassword, {
         path: ["confirmPassword"],
         message: "Passwords don't match",
-    });
+    })
 
 export type CreateAccountT = z.infer<typeof SignUpSchema>;

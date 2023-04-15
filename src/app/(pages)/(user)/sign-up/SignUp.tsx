@@ -90,7 +90,7 @@ const SignUp = () => {
             inputError: termsFieldError,
             registerFn: register,
             type: "checkbox",
-            required: true,
+            // required: true,
         },
     ]
   
