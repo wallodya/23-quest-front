@@ -7,6 +7,7 @@ import { z } from "zod";
  */
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  NEXT_PUBLIC_SERVER_URL: z.string().url(),
 });
 
 /**
