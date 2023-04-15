@@ -2,7 +2,7 @@ import { setCurrentStep } from "@task/features";
 import { useFormProgress } from "@task/hooks";
 import TasksConfig from "@task/tasks.config";
 import { TaskFormFields, TaskFormSteps } from "@task/types";
-import React from "react";
+import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
 
@@ -17,6 +17,8 @@ const formStepNamesMap = new Map<TaskFormSteps, string>([
 
 const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<TaskFormFields, any>) => {
     const { formState: { errors, touchedFields} } = formControls
+    // const [isDirty, setIsDirty] = useState(false)
+    // const [isTouched, setIsTouched] = useState(false)
     const isDirty =
         (stepNumber === 1 && errors.title) ||
         (stepNumber === 2 && errors.text) ||

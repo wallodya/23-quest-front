@@ -17,7 +17,6 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
     const [addtaskToQuest, {}] = useAddTaskToQuestMutation()
 
     const submitTask = (payload: TaskOptimistic) => {
-        console.log("Submited");
         const createTaskReqBody: CreateTaskReqBody = {
             title: payload.title,
             text: payload.text ?? null,
@@ -34,7 +33,6 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
         if (!isInQuest) {
             createTask(createTaskReqBody);
         } else {
-            console.log("adding task to quest: ", createTaskReqBody)
             addtaskToQuest({ body: createTaskReqBody, questId: questId ?? "" });
         }
     };

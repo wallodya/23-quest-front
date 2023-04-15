@@ -92,6 +92,7 @@ const refineTimer = (data: {
             durationHours * 60 * 60 + durationMinutes * 60 + durationSeconds;
         const isDurationValid =
             totalDurationSeconds >= 30 && totalDurationSeconds <= 24 * 60 * 60;
+            console.log('isDurationValid', isDurationValid)
         return isDurationValid;
     }
 };
@@ -269,4 +270,4 @@ export const createTaskSchema = z
     })
     .refine(refineRepeat, { message: "You must provide number of repeats" })
     .refine(refinePeriodic, { message: "Time period is not valid" })
-    .refine(refineTimer, { message: "Duration wasn't provided" });
+    .refine(refineTimer, "Duration wasn't provided");
