@@ -32,6 +32,7 @@ export const NewTaskForm = ({
         data.isTimer && types.push("TIMER");
         data.isRepeat && types.push("REPEAT");
         types.length === 0 && types.push("BASIC");
+        console.log("add tas to quest body: ", data)
 
         const reqData: TaskOptimistic &
             Partial<{
@@ -45,10 +46,10 @@ export const NewTaskForm = ({
             priority: data.priority,
 
             duration:
-                (data.durationHours && data.durationMinutes && data.durationSeconds) ?
-                data.durationSeconds * 1000  +
-                    data.durationMinutes  * 1000 * 60 +
-                    data.durationHours * 1000  * 60 * 60 : null,
+                (data.durationHours || data.durationMinutes || data.durationSeconds) ?
+                Number(data.durationSeconds) * 1000  +
+                    Number(data.durationMinutes)  * 1000 * 60 +
+                    Number(data.durationHours) * 1000  * 60 * 60 : null,
             startTime: data.startTime || null,
             endTime: data.endTime || null,
             repeatCount: data.repeatCount || null,

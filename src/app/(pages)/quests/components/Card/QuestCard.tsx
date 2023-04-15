@@ -11,21 +11,23 @@ import { useSubmitTask } from "@task/hooks";
 import { useAppDispatch, useAppSelector } from "store";
 import { closeTaskForm, openTaskForm } from "@task/features";
 
-export const QuestCard = ({...quest}: Quest) => {
-    const { isOpen: isQuestOpened, toggleOpen } = useQuestCardControls()
-    const { submitTask } = useSubmitTask(true, quest.uniqueQuestId)
-    const dispatch = useAppDispatch()
-    const { isOpen: isTaskFormOpened } = useAppSelector(state => state.tasks.taskForm)
+export const QuestCard = ({ ...quest }: Quest) => {
+    const { isOpen: isQuestOpened, toggleOpen } = useQuestCardControls();
+    const { submitTask } = useSubmitTask(true, quest.uniqueQuestId);
+    const dispatch = useAppDispatch();
+    const { isOpen: isTaskFormOpened } = useAppSelector(
+        (state) => state.tasks.taskForm,
+    );
     const closeForm = () => {
-        dispatch(closeTaskForm())
-    }
+        dispatch(closeTaskForm());
+    };
     const toggleModal = (open: boolean) => {
         if (open) {
-            dispatch(openTaskForm())
+            dispatch(openTaskForm());
         } else {
-            dispatch(closeTaskForm())
+            dispatch(closeTaskForm());
         }
-    }
+    };
 
     return (
         <QuestProvider {...quest}>
@@ -34,7 +36,13 @@ export const QuestCard = ({...quest}: Quest) => {
                 {isQuestOpened && (
                     <>
                         <QuestCardContent /> <QuestCardControls />
-                        <NewTask submitTaskFn={submitTask} closeFn={closeForm} isOpen={isTaskFormOpened} toggleModalFn={toggleModal}/>
+                        <NewTask
+                            submitTaskFn={submitTask}
+                            closeFn={closeForm}
+                            isOpen={isTaskFormOpened}
+                            toggleModalFn={toggleModal}
+                            isInQuest
+                        />
                     </>
                 )}
             </QuestCardContainer>

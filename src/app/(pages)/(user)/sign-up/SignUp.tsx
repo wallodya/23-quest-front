@@ -8,10 +8,12 @@ import InputField, { InputFieldProps } from "components/ui/InputField";
 import Submit from "components/ui/Submit";
 import Heading from "components/ui/typography/Heading";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { CreateAccountT, SignUpSchema } from "./signUp.schema";
 import { useSignUp } from "./useSignUp.hook";
+import { useAppSelector } from "store";
+import { useEffect } from "react";
 
 const SignUp = () => {
     const {
@@ -30,12 +32,24 @@ const SignUp = () => {
         resolver: zodResolver(SignUpSchema),
     });
 
+    const { isSignedIn } = useAppSelector(state => state.user)
+    const router = useRouter()
+
+    useEffect(() => {
+        if (isSignedIn) {
+            router.replace("/tasks")
+        }
+    })
+
     const {
         onSubmit,
         BottomErrorLabel,
         mutation: { isLoading: isMutationLoading, isError: isMutationError },
     } = useSignUp({
         termsFieldError,
+        onSuccess: () => {
+            router.replace("/tasks")
+        }
     });
 
     const formFields: InputFieldProps[] = [
@@ -81,9 +95,9 @@ const SignUp = () => {
     ]
   
     return (
-        <div className="flex justify-center">
+        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center">
             <FormWrapper
-                className="flex w-64 flex-col gap-4 transition-all"
+                className="h-fit flex w-64 flex-col gap-4 transition-all"
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
             >

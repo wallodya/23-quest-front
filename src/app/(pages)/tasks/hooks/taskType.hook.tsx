@@ -78,7 +78,6 @@ export const useValidTimePeriod = ({
     const currentTime = moment()
 
     const isPeriodValid = moment(startTime).isBefore(currentTime) && moment(endTime).isAfter(currentTime)
-    console.log("is valid period: ", isPeriodValid)
     return isPeriodValid
 }; // TODO better typing
 

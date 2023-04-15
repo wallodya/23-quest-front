@@ -38,7 +38,7 @@ export const PriorityStep = ({
             <div
                 className={`relative mt-4 grid grid-cols-[5fr,3fr,3fr] justify-items-center py-2`}
             >
-                <div className="pointer-events-none z-[-10] absolute inset-0 grid h-full w-full grid-cols-[5fr,3fr,3fr] items-center">
+                <div className="pointer-events-none  absolute inset-0 grid h-full w-full grid-cols-[5fr,3fr,3fr] items-center">
                     <div
                         className={`h-full col-start-1 ${
                             priority === "MEDIUM"

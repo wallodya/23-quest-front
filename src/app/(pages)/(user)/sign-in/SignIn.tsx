@@ -14,6 +14,8 @@ import Submit from "components/ui/Submit";
 import Divider from "components/ui/Divider";
 import Heading from "components/ui/typography/Heading";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "store";
+import { useEffect } from "react";
 
 const SignInSchema = z.object({
     login: z
@@ -38,6 +40,14 @@ const SignIn = () => {
     });
 
     const router = useRouter()
+    const { isSignedIn } = useAppSelector(state => state.user)
+
+    useEffect(() => {
+        if (isSignedIn) [
+            router.replace("/tasks")
+        ]
+    },[isSignedIn])
+
     const {
         onSubmit,
         BottomErrorLabel,
@@ -45,7 +55,7 @@ const SignIn = () => {
     } = useSignIn({
         onSuccess: () => {
             router.replace("/tasks")
-        }
+        }   
     });
 
     const formFields: InputFieldProps[] = [

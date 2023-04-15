@@ -6,10 +6,20 @@ import NewTask from "@task/components/Form/NewTask";
 import { useSubmitTask } from "@task/hooks";
 import { useAppSelector } from "store";
 import { useGetQuestsQuery } from "./features/questApi.slice";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Quests = () => {
     const { quests } = useAppSelector(state => state.quests)
+    const { isSignedIn } = useAppSelector(state => state.user)
+    const router = useRouter()
+    useEffect(() => {
+        if (!isSignedIn) {
+            router.replace("/sign-in")
+        }
+    }, [ isSignedIn])
     useGetQuestsQuery(null)
+
     return (
         <div className="my-16 sm:mt-20">
             {/* <NewTask submitTaskFn={submitTask}/> */}

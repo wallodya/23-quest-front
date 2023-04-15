@@ -28,7 +28,7 @@ const Tasks = () => {
     return (
         <div>
             <Tabs.Root defaultValue="active" className="mt-16 sm:mt-20 mb-32">
-                <Tabs.TabsList className="fixed left-0 bottom-0 z-10 md:static md:mb-4 flex w-screen md:w-full justify-around rounded-t-xl lg:rounded-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
+                <Tabs.TabsList className="fixed left-0 bottom-0 z-10 md:static md:mb-4 flex w-screen md:w-full justify-around rounded-t-xl md:rounded-xl bg-slate-100 py-4 font-bold shadow shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
                     <Tabs.Trigger
                         value="active"
                         className={
