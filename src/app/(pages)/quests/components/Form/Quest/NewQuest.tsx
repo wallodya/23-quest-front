@@ -14,52 +14,72 @@ export const NewQuest = () => {
     const dispatch = useAppDispatch();
     const { isOpen } = useAppSelector((state) => state.quests.questForm);
     const toggleModal = (open: boolean) => {
-        console.log("modal: ", open)
+        console.log("modal: ", open);
         if (open) {
-            dispatch(openQuestForm())
+            dispatch(openQuestForm());
         } else {
-            dispatch(closeQuestForm())
+            dispatch(closeQuestForm());
         }
-    }
+    };
     const closeForm = () => {
         dispatch(closeQuestForm());
     };
-    const modalPortal = useRef(null)
-
-    return (
-        <>
+    const modalPortal = useRef(null);
+    const TW_MD_WIDTH = 768;
+    if (typeof window === "undefined") {
+        return (
+            <Drawer.Root isOpen={isOpen} drawerPosition="bottom">
+                <Drawer.Content>
+                    <NewQuestForm />
+                </Drawer.Content>
+                <Drawer.Background toggleFn={closeForm} />
+            </Drawer.Root>
+        );
+    } else if (window.innerWidth >= TW_MD_WIDTH) {
+        return (
             <Dialog.Root open={isOpen} onOpenChange={toggleModal} modal>
                 <Dialog.Trigger asChild>
                     <button
                         role="button"
                         onClick={() => toggleModal(true)}
-                        className="hidden md:flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border-4 border-dashed border-gray-400/40 text-gray-400/40"
+                        className="hidden h-full w-full flex-col items-center justify-center gap-2 rounded-xl border-4 border-dashed border-gray-400/40 text-gray-400/40 md:flex"
                     >
                         <PencilIcon size="sm" />
                         <span className="font-bold">New Quest</span>
-                        <div className="z-50 fixed top-0 left-0 hidden md:block" ref={modalPortal}/>
+                        <div
+                            className="fixed top-0 left-0 z-50 hidden md:block"
+                            ref={modalPortal}
+                        />
                     </button>
                 </Dialog.Trigger>
                 <Dialog.Portal container={modalPortal.current}>
-                    <Dialog.Overlay className="hidden md:block absolute z-50 top-0 left-0 h-screen w-screen bg-gray-900/70" />
+                    <Dialog.Overlay className="absolute top-0 left-0 z-50 hidden h-screen w-screen bg-gray-900/70 md:block" />
                     <Dialog.Title>New quest</Dialog.Title>
-                    <Dialog.Description>Create new quest form</Dialog.Description>
-                    <div className="hidden md:absolute top-0 left-0 h-screen w-screen md:flex justify-center items-center">
-                        <Dialog.Content className="z-50 rounded-xl px-2 bg-slate-700">
+                    <Dialog.Description>
+                        Create new quest form
+                    </Dialog.Description>
+                    <div className="top-0 left-0 hidden h-screen w-screen items-center justify-center md:absolute md:flex">
+                        <Dialog.Content
+                            className="z-50 rounded-xl bg-slate-700 px-2"
+                            onKeyUpCapture={(event) =>
+                                event.key === " " ? event.preventDefault() : {}
+                            }
+                        >
                             <NewQuestForm />
                             <Dialog.Close />
                         </Dialog.Content>
                     </div>
                 </Dialog.Portal>
             </Dialog.Root>
-            <div className="md:hidden">
-                <Drawer.Root isOpen={isOpen} drawerPosition="bottom">
-                    <Drawer.Content>
-                        <NewQuestForm />
-                    </Drawer.Content>
-                    <Drawer.Background toggleFn={closeForm} />
-                </Drawer.Root>
-            </div>
-        </>
-    );
+        );
+    } else {
+        return (
+            <Drawer.Root isOpen={isOpen} drawerPosition="bottom">
+                <Drawer.Content>
+                    <NewQuestForm />
+                </Drawer.Content>
+                <Drawer.Background toggleFn={closeForm} />
+            </Drawer.Root>
+        );
+    }
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
-import { addTask, openTaskForm, setTypes } from "@task/features";
+import { addTask, closeTaskForm, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
 import { TaskFormFields, CreateTaskReqBody, TaskFormSteps, TaskOptimistic, TaskType } from "@task/types";
@@ -35,6 +35,7 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
         } else {
             addtaskToQuest({ body: createTaskReqBody, questId: questId ?? "" });
         }
+        dispatch(closeTaskForm())
     };
     return {
         submitTask

@@ -45,6 +45,8 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
                             : "0 tasks"}
                     </span>
                 </div>
+                {
+                    percentageDone !== null &&
                 <motion.div
                     className="col-span-2 col-start-5 row-span-2 flex items-center justify-end"
                     layout
@@ -53,6 +55,7 @@ const QuestHeader = ({ isOpen,toggleCard }: { isOpen: boolean, toggleCard: () =>
                         {`${percentageDone}%`}
                     </div>
                 </motion.div>
+                }
             </motion.div>
             {/* <p className="text-sm mt-2 row-start-3 col-span-6">Some quest description...</p> */}
             {isOpen && description && (
