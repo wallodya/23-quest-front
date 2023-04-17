@@ -69,7 +69,7 @@ const taskSlice = createSlice({
                 );
                 state.failedTasks = [
                     { ...payload, isFailed: true },
-                    ...state.completedTasks,
+                    ...state.failedTasks,
                 ];
             }
         },
