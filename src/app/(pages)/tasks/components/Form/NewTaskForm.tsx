@@ -74,7 +74,7 @@ export const NewTaskForm = ({
     };
     return (
         <FormWrapper
-            className="flex h-[50vh] flex-col justify-between gap-2 px-4 py-3"
+            className="flex h-[50vh] md:h-fit flex-col justify-between gap-2 px-4 py-3"
             onSubmit={formControls.handleSubmit(onSubmit)}
         >
             <TaskFormContainer>
