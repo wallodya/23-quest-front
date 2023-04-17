@@ -29,9 +29,7 @@ const questSlice = createSlice({
         builder.addMatcher(
             questApi.endpoints.createQuest.matchFulfilled,
             (state, { payload }) => {
-                console.log("adding quest to state");
                 if (isQuestType(payload)) {
-                    console.log("updating state...");
                     state.quests = [payload, ...state.quests];
                 }
             },
@@ -58,41 +56,29 @@ const questSlice = createSlice({
                             ...payload,
                             ...state.tasksInQuests,
                         ];
-                        console.log("updated tasks in quests");
                     }
                 },
             ),
             builder.addMatcher(
                 questApi.endpoints.addTaskToQuest.matchFulfilled,
                 (state, { payload }) => {
-                    console.log("payload:", payload);
                     if (
                         isTaskType(payload) &&
                         payload.uniqueQuestId &&
                         payload.isInQuest
                     ) {
                         state.tasksInQuests = [payload, ...state.tasksInQuests];
-                        console.log("updated state:", current(state));
                     }
                 },
             ),
             builder.addMatcher(
                 taskApi.endpoints.chekTask.matchFulfilled,
                 (state, { payload }) => {
-                    // console.log("check payload: ", payload);
-                    // console.log("isTaskType(payload)", isTaskType(payload));
-                    // console.log("payload.isInQuest", payload.isInQuest);
-                    // console.log("payload.uniqueQuestId", payload.uniqueQuestId);
-                    // console.log(
-                    //     "state.tasksInQuest",
-                    //     state.tasksInQuests
-                    // );
                     if (
                         isTaskType(payload) &&
                         payload.isInQuest &&
                         payload.uniqueQuestId
                     ) {
-                        console.log("updating state...");
                         state.tasksInQuests = [
                             payload,
                             ...state.tasksInQuests.filter(
@@ -106,20 +92,11 @@ const questSlice = createSlice({
             builder.addMatcher(
                 taskApi.endpoints.failTask.matchFulfilled,
                 (state, { payload }) => {
-                    // console.log("fail payload: ", payload);
-                    // console.log("isTaskType(payload)", isTaskType(payload));
-                    // console.log("payload.isInQuest", payload.isInQuest);
-                    // console.log("payload.uniqueQuestId", payload.uniqueQuestId);
-                    // console.log(
-                    //     "state.tasksInQuest",
-                    //     state.tasksInQuests
-                    // );
                     if (
                         isTaskType(payload) &&
                         payload.isInQuest &&
                         payload.uniqueQuestId
                     ) {
-                        console.log("updating state...");
                         state.tasksInQuests = [
                             ...state.tasksInQuests.filter(
                                 (task) =>
@@ -133,20 +110,11 @@ const questSlice = createSlice({
             builder.addMatcher(
                 taskApi.endpoints.completeTask.matchFulfilled,
                 (state, { payload }) => {
-                    // console.log("complete payload: ", payload);
-                    // console.log("isTaskType(payload)", isTaskType(payload));
-                    // console.log("payload.isInQuest", payload.isInQuest);
-                    // console.log("payload.uniqueQuestId", payload.uniqueQuestId);
-                    // console.log(
-                    //     "state.tasksInQuest",
-                    //     state.tasksInQuests
-                    // );
                     if (
                         isTaskType(payload) &&
                         payload.isInQuest &&
                         payload.uniqueQuestId
                     ) {
-                        console.log("updating state...");
                         state.tasksInQuests = [
                             ...state.tasksInQuests.filter(
                                 (task) =>

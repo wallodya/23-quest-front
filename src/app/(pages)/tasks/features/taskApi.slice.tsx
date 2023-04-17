@@ -16,7 +16,6 @@ export const taskApi = apiSlice.injectEndpoints({
             },
             transformResponse: (res) => {
                 if (Array.isArray(res)) {
-                    console.log("tasks: ", res);
                     const dateSortingFn = (taskA: Task, taskB: Task) => {
                         const dateA = new Date(taskA.createdAt);
                         const dateB = new Date(taskB.createdAt);
@@ -32,7 +31,6 @@ export const taskApi = apiSlice.injectEndpoints({
         }),
         createTask: builder.mutation({
             query: (task: CreateTaskReqBody) => {
-                console.log("create task req body: ", task);
                 return {
                     url: "/task",
                     method: "POST",
@@ -40,7 +38,6 @@ export const taskApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res: Task & { repeatTimes: number }) => {
-                console.log("create task res: ", res);
                 return { ...res, repeatCount: res.repeatTimes };
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
@@ -58,7 +55,6 @@ export const taskApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res: Task) => {
-                console.log("task completed res: ", res);
                 return res;
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
@@ -93,7 +89,6 @@ export const taskApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res: Task & { repeatTimes: number }) => {
-                console.log("task failed res: ", res);
                 return { ...res, repeatCount: res.repeatTimes };
             },
             transformErrorResponse: (err: ServerErrorResponse) => {

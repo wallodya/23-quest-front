@@ -23,7 +23,6 @@ export const questApi = apiSlice.injectEndpoints({
         }),
         getTasksForQuest: builder.query({
             query: (questId: string) => {
-                // console.log("Getting tasks for quest: ", questId);
                 return {
                     url: "/task/q",
                     method: "GET",
@@ -33,8 +32,6 @@ export const questApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res) => {
-                // console.log("Tasks for quest response");
-                // console.log(res);
                 if (Array.isArray(res) && res.every((i) => isTaskType(i))) {
                     const dateSortingFn = (taskA: Task, taskB: Task) => {
                         const dateA = new Date(taskA.createdAt);
@@ -53,8 +50,6 @@ export const questApi = apiSlice.injectEndpoints({
         }),
         createQuest: builder.mutation({
             query: (createQuestBody: CreateQuestBody) => {
-                // console.log("create quest body:");
-                // console.log(createQuestBody);
                 return {
                     url: "/quest",
                     method: "POST",
@@ -62,8 +57,6 @@ export const questApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res) => {
-                // console.log("create quest response: ");
-                // console.log(res);
                 return res;
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
@@ -79,7 +72,6 @@ export const questApi = apiSlice.injectEndpoints({
                 body: CreateTaskReqBody;
                 questId: string;
             }) => {
-                // console.log("Creating task for quest: ", questId)
                 return {
                     url: "/task/q",
                     method: "POST",
@@ -90,8 +82,6 @@ export const questApi = apiSlice.injectEndpoints({
                 };
             },
             transformResponse: (res: Task & { repeatTimes: number }) => {
-                // console.log("add task to quest res: ");
-                // console.log(res);   
                 return {...res, repeatCount: res.repeatTimes};
             },
             transformErrorResponse: (err: ServerErrorResponse) => {

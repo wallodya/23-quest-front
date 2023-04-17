@@ -100,7 +100,6 @@ const taskSlice = createSlice({
         builder.addMatcher(
             taskApi.endpoints.createTask.matchFulfilled,
             (state, { payload }) => {
-                console.log("create task match")
                 if (isTaskType(payload)) {
                     state.activeTasks = [payload, ...state.activeTasks]
                     state.addedTasks = state.addedTasks.filter(task => task.title !== payload.title)

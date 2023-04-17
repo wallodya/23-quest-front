@@ -14,7 +14,6 @@ export const NewQuest = () => {
     const dispatch = useAppDispatch();
     const { isOpen } = useAppSelector((state) => state.quests.questForm);
     const toggleModal = (open: boolean) => {
-        console.log("modal: ", open);
         if (open) {
             dispatch(openQuestForm());
         } else {
