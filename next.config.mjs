@@ -15,8 +15,6 @@ const config = {
     },
 };
 
-// export default bundleAnalyzer.default({
-//     enabled: process.env.ANALYZE === "true"
-// })(config)
-
-export default config
+export default bundleAnalyzer.default({
+    enabled: process.env.ANALYZE === "true"
+})(config)
