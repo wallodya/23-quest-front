@@ -24,10 +24,10 @@ export type QuestContext = Quest & {
         failedTaskAmount: number;
         completedTaskAmount: number;
         activeTaskAmount: number;
-        percentageFailed: number;
-        percentageCompleted: number;
-        percentageActive: number;
-        percentageDone: number;
+        percentageFailed: number | null;
+        percentageCompleted: number | null;
+        percentageActive: number | null;
+        percentageDone: number | null;
     }
 }
 
