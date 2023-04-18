@@ -39,7 +39,7 @@ const SignUp = () => {
         if (isSignedIn) {
             router.replace("/tasks")
         }
-    })
+    }, [isSignedIn])
 
     const {
         onSubmit,
@@ -48,7 +48,13 @@ const SignUp = () => {
     } = useSignUp({
         termsFieldError,
         onSuccess: () => {
-            router.replace("/tasks")
+            // console.log("sign up success")
+            // setTimeout(() => {
+            //     console.log("redirecting...")
+            //     console.log("isSignedIn (form):",isSignedIn)
+            //     router.replace("/tasks")
+            // }, 500)
+            
         }
     });
 

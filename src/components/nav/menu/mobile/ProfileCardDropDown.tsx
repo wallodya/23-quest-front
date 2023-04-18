@@ -12,7 +12,6 @@ const ProfileStatsCards = () => {
         ),
     ).length;
     const allActiveTasks = [...tasksInQuests, ...activeTasks];
-    console.log("All active tasks length: ", allActiveTasks.length)
     const tasksLeftTodayAmount: number = allActiveTasks.filter(
         (task) => {
             const { isCompleted, isFailed } = task
@@ -49,6 +48,7 @@ const ProfileStatsCards = () => {
     );
 }
 
+//TODO move  this to utils file
 type FindMaxDateOverload = {
     (arr: (Date | string | number | null)[]): Date | null;
     <T=any>(arr: (T | null)[], extractFn: (arg: T | null) => Date | string | number | null): Date | null;

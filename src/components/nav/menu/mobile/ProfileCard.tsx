@@ -20,9 +20,9 @@ const ProfileCard = ({ children }: { children: ReactNode }) => {
                 <span className="col-span-2 col-start-2 font-bold">
                     {login}
                 </span>
-                <span className="col-span-2 col-start-2 row-start-2 flex items-end text-xs italic text-gray-400">
+                {/* <span className="col-span-2 col-start-2 row-start-2 flex items-end text-xs italic text-gray-400">
                     owner
-                </span>
+                </span> */}
                 <div className="col-span-3 row-start-3 px-2">
                     <div className="w-full border-b border-gray-700"></div>
                 </div>

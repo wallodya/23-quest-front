@@ -35,7 +35,7 @@ const userSlice = createSlice({
         builder.addMatcher(
             apiSlice.endpoints.signIn.matchFulfilled,
             (state, { payload }) => {
-                if (isUserType(payload)) {
+                if (isUserStateType(payload)) {
                     state.uuid = payload.uuid;
                     state.login = payload.login;
                     state.email = payload.email;
@@ -53,7 +53,7 @@ const userSlice = createSlice({
         builder.addMatcher(
             apiSlice.endpoints.signUp.matchFulfilled,
             (state, { payload }) => {
-                if (isUserType(payload)) {
+                if (isUserStateType(payload)) {
                     state.uuid = payload.uuid;
                     state.login = payload.login;
                     state.email = payload.email;
