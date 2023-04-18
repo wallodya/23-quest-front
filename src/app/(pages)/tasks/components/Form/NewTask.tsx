@@ -8,6 +8,8 @@ import {
     useRef
 } from "react";
 
+const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
+
 //TODO encapsulate drawer and dialog in separate components
 const NewTask = ({
     submitTaskFn,
@@ -25,7 +27,7 @@ const NewTask = ({
     const modalPortal = useRef(null);
     const TW_MD_WIDTH = 768;
 
-    if (typeof window === undefined) {
+    if (!IS_BROWSER) {
         return (
             <Drawer.Root isOpen={isShown} drawerPosition="bottom">
                 <Drawer.Content>
@@ -38,7 +40,7 @@ const NewTask = ({
                 <Drawer.Background toggleFn={closeForm} />
             </Drawer.Root>
         );
-    } else if (typeof window !== undefined && window.innerWidth >= TW_MD_WIDTH) {
+    } else if (IS_BROWSER && window.innerWidth >= TW_MD_WIDTH) {
         return (
             <Dialog.Root open={isShown} onOpenChange={toggleModal}>
                 {isInQuest ? (
