@@ -89,6 +89,8 @@ const findMaxDate: FindMaxDateOverload = (
     return maxDate;
 };
 
+
+//TODO encapsulate
 const ProfileStats = () => {
     const { quests, tasksInQuests } = useAppSelector(state => state.quests)
     const { completedTasks, activeTasks, failedTasks } = useAppSelector(state => state.tasks)
@@ -128,34 +130,38 @@ const ProfileStats = () => {
     return (
         <>
             <ProfileStatsCards />
-            {(lastCompletedTaskTime || lastCompletedTaskInQuestTime) && (
-                <div className="wrap col-span-3 row-span-1 row-start-4 flex items-center justify-start gap-2 text-gray-400">
-                    <span className="col-span-3 row-start-3 text-xs">
-                        Last completed:
-                    </span>
-                    <span className="col-span-3 row-start-4 text-xs italic">
-                        {lastCompletedTaskTime.isBefore(
-                            lastCompletedTaskInQuestTime,
-                        )
-                            ? lastCompletedTaskInQuestTime.fromNow()
-                            : lastCompletedTaskTime.fromNow()}
-                    </span>
-                </div>
-            )}
-            {(lastCreatedTaskTime || lastCreatedTaskInQuestTime) && (
-                <div className="wrap col-span-3 row-span-1 row-start-5 flex items-center justify-start gap-2 text-gray-400">
-                    <span className="col-span-3 row-start-3 text-xs">
-                        Last created:
-                    </span>
-                    <span className="col-span-3 row-start-4 text-xs italic">
-                        {lastCreatedTaskTime.isBefore(
-                            lastCreatedTaskInQuestTime,
-                        )
-                            ? lastCreatedTaskInQuestTime.fromNow()
-                            : lastCreatedTaskTime.fromNow()}
-                    </span>
-                </div>
-            )}
+            {completedTasks.length > 0 &&
+                (lastCompletedTaskTime || lastCompletedTaskInQuestTime) && (
+                    <div className="wrap col-span-3 row-span-1 row-start-4 flex items-center justify-start gap-2 text-gray-400">
+                        <span className="col-span-3 row-start-3 text-xs">
+                            Last completed:
+                        </span>
+                        <span className="col-span-3 row-start-4 text-xs italic">
+                            {lastCompletedTaskTime.isBefore(
+                                lastCompletedTaskInQuestTime,
+                            )
+                                ? lastCompletedTaskInQuestTime.fromNow()
+                                : lastCompletedTaskTime.fromNow()}
+                        </span>
+                    </div>
+                )}
+            {(activeTasks.length > 0 ||
+                completedTasks.length > 0 ||
+                failedTasks.length > 0) &&
+                (lastCreatedTaskTime || lastCreatedTaskInQuestTime) && (
+                    <div className="wrap col-span-3 row-span-1 row-start-5 flex items-center justify-start gap-2 text-gray-400">
+                        <span className="col-span-3 row-start-3 text-xs">
+                            Last created:
+                        </span>
+                        <span className="col-span-3 row-start-4 text-xs italic">
+                            {lastCreatedTaskTime.isBefore(
+                                lastCreatedTaskInQuestTime,
+                            )
+                                ? lastCreatedTaskInQuestTime.fromNow()
+                                : lastCreatedTaskTime.fromNow()}
+                        </span>
+                    </div>
+                )}
             <div className="wrap col-span-3 row-span-1 row-start-5 flex items-center justify-start gap-2 text-gray-400">
                 <span className="col-span-3 row-start-3 text-xs">
                     Active quests:
