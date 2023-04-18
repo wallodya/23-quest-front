@@ -1,3 +1,5 @@
+"use client"
+
 import * as Dialog from "@radix-ui/react-dialog";
 import { NewTaskForm } from "@task/components/Form/NewTaskForm";
 import { TaskOptimistic } from "@task/types";
