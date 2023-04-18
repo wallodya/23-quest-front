@@ -32,8 +32,7 @@ const Tasks = () => {
                     <Tabs.Trigger
                         value="active"
                         className={
-                            "transition hover:text-sky-500" +
-                            (isActiveSelected ? " text-sky-500" : "")
+                            "transition hover:text-sky-400 flex justify-center items-center data-[state=active]:text-sky-500 before:block before:relative before:mr-1 before:rounded-full before:w-2 before:h-2 data-[state=active]:before:bg-sky-500"
                         }
                     >
                         Active
@@ -41,8 +40,7 @@ const Tasks = () => {
                     <Tabs.Trigger
                         value="completed"
                         className={
-                            "transition hover:text-sky-500" +
-                            (isCompletedSelected ? " text-sky-500" : "")
+                            "transition hover:text-sky-400 flex justify-center items-center data-[state=active]:text-sky-500 before:block before:relative before:mr-1 before:rounded-full before:w-2 before:h-2 data-[state=active]:before:bg-sky-500"
                         }
                     >
                         Completed
@@ -50,8 +48,7 @@ const Tasks = () => {
                     <Tabs.Trigger
                         value="failed"
                         className={
-                            "transition hover:text-sky-500" +
-                            (isFailedSelected ? " text-sky-500" : "")
+                            "transition hover:text-sky-400 flex justify-center items-center data-[state=active]:text-sky-500 before:block before:relative before:mr-1 before:rounded-full before:w-2 before:h-2 data-[state=active]:before:bg-sky-500"
                         }
                     >
                         Failed
