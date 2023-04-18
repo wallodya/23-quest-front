@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SettingsIcon from 'components/icons/SettingsIcon';
 import ReaderIcon from 'components/icons/ReaderIcon';
 import FileIcon from 'components/icons/FileIcon';
+import ProfileCard from '../mobile/ProfileCard';
 
 export const DROPDOWN_LINKS: {
     name: string;
@@ -42,7 +43,12 @@ export const UserMenuDropdownTrigger = () => {
 
 
 export const UserMenuDropdownContent = () => (
-    <>
+    <>  
+        <div className="mb-2">
+            <ProfileCard>
+
+            </ProfileCard>
+        </div>
         {DROPDOWN_LINKS.map(({ name, link, Icon }, index) => (
             <DropdownMenu.Item
                 key={index}

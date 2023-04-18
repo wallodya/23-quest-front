@@ -49,7 +49,7 @@ const NavBarDesktop = () => {
                     <UserMenuDropdownTrigger />
 
                     <DropdownMenu.Portal>
-                        <DropdownMenu.Content className="z-40 mt-4 w-48 rounded-lg bg-slate-200 py-3 px-4 shadow-sm shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
+                        <DropdownMenu.Content className="relative z-40 mt-4 w-72 rounded-lg bg-slate-200 py-3 px-4 shadow-sm shadow-slate-300 dark:bg-slate-700 dark:shadow-slate-900">
                             <UserMenuDropdownContent />
                             <DropdownMenu.Separator className="mt-3 mb-2 border-t border-slate-600" />
                             <DropdownMenu.Item className="">

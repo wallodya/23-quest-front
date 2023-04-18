@@ -11,7 +11,7 @@ const ProfileCard = ({ children }: { children: ReactNode }) => {
         setIsExpanded(!isExpanded);
     };
     return (
-        <div className="rounded-b-3xl bg-gradient-to-br from-gray-900 to-gray-800 px-5 pt-3 pb-2">
+        <div className="rounded-b-3xl md:rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 px-5 pt-3 pb-2">
             {children}
             <div className="my-2 grid grid-cols-3 grid-rows-3 items-center">
                 <span className="col-start-1 row-span-2 w-fit justify-self-center overflow-hidden rounded-full border-2 border-inherit">
