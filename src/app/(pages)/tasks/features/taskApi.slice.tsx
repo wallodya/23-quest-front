@@ -26,7 +26,7 @@ export const taskApi = apiSlice.injectEndpoints({
                 return null;
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("Error while getting tasks", err?.data.message);
+                console.log("Error while getting tasks", err?.data?.message);
             },
         }),
         createTask: builder.mutation({
@@ -41,7 +41,7 @@ export const taskApi = apiSlice.injectEndpoints({
                 return { ...res, repeatCount: res.repeatTimes };
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("Error while creating task", err?.data.message);
+                console.log("Error while creating task", err?.data?.message);
             },
         }),
         completeTask: builder.mutation({
@@ -75,7 +75,7 @@ export const taskApi = apiSlice.injectEndpoints({
                 return { ...res, repeatCount: res.repeatTimes };
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("Error while checking task", err?.data.message);
+                console.log("Error while checking task", err?.data?.message);
             },
         }),
         failTask: builder.mutation({
@@ -92,7 +92,7 @@ export const taskApi = apiSlice.injectEndpoints({
                 return { ...res, repeatCount: res.repeatTimes };
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("Error while failing task", err?.data.message);
+                console.log("Error while failing task", err?.data?.message);
             },
         }),
     }),
