@@ -5,7 +5,7 @@ const TopBar = ({ children, isMobile }: { children: ReactNode, isMobile: boolean
         <div
             className={`${
                 isMobile ? "grid sm:hidden" : "hidden sm:grid"
-        } fixed w-full z-10 grid-cols-main bg-slate-100 bg-none py-4 text-slate-800 shadow-sm shadow-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:shadow-slate-900`}
+        } fixed w-full z-[11] grid-cols-main bg-slate-100 bg-none py-4 text-slate-800 shadow-sm shadow-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:shadow-slate-900`}
         >
             {children}
         </div>
