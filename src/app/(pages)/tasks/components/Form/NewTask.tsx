@@ -31,16 +31,30 @@ const NewTask = ({
 
     if (!IS_BROWSER) {
         return (
-            <Drawer.Root isOpen={isShown} drawerPosition="bottom">
-                <Drawer.Content>
-                    <AnimatePresence
-                        onExitComplete={() => console.log("step exit complete")}
+            <>
+                {!isInQuest && (
+                    <button
+                        role="button"
+                        onClick={() => toggleModal(true)}
+                        className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border-4 border-dashed border-gray-400/40 py-2 text-gray-400/40"
                     >
-                        <NewTaskForm submitTaskFn={submitTaskFn} />
-                    </AnimatePresence>
-                </Drawer.Content>
-                <Drawer.Background toggleFn={closeForm} />
-            </Drawer.Root>
+                        <FileIcon size="sm" />
+                        <span className="font-bold">New Task</span>
+                    </button>
+                )}
+                <Drawer.Root isOpen={isShown} drawerPosition="bottom">
+                    <Drawer.Content>
+                        <AnimatePresence
+                            onExitComplete={() =>
+                                console.log("step exit complete")
+                            }
+                        >
+                            <NewTaskForm submitTaskFn={submitTaskFn} />
+                        </AnimatePresence>
+                    </Drawer.Content>
+                    <Drawer.Background toggleFn={closeForm} />
+                </Drawer.Root>
+            </>
         );
     } else if (IS_BROWSER && window.innerWidth >= TW_MD_WIDTH) {
         return (

@@ -14,15 +14,16 @@ export const decodedUserToken = (token: string) => {
 
 export const saveUserMiddleware: Middleware<{}, RootState> = ({ getState }) => next => action => {
     if (
-        action.meta?.arg?.endpointName === "signIn" &&
+        (action.meta?.arg?.endpointName === "signIn" ||
+            action.meta?.arg?.endpointName === "signUp") &&
         action?.meta?.requestStatus === "fulfilled" &&
         IS_BROWSER
     ) {
         const accessToken = action.payload.token.split(" ")[1];
-        const decodedToken = decodedUserToken(accessToken)?.sub
+        const decodedToken = decodedUserToken(accessToken)?.sub;
         if (accessToken) {
-            action.payload = { ...action.payload, ...decodedToken}
-            localStorage.setItem("JWT_TOKEN", accessToken) //TODO make util func's for getting and setting user in LS + make config with token name
+            action.payload = { ...action.payload, ...decodedToken };
+            localStorage.setItem("JWT_TOKEN", accessToken); //TODO make util func's for getting and setting user in LS + make config with token name
         }
     }
     return next(action)

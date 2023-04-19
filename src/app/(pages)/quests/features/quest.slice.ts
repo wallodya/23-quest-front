@@ -25,6 +25,7 @@ const questSlice = createSlice({
             state.questForm.isOpen = false
         },
         resetQuestState: (state) => {
+            console.log("reseting quest state")
             state = initialState
         },
     },

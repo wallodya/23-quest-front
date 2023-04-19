@@ -48,6 +48,7 @@ const SignUp = () => {
     } = useSignUp({
         termsFieldError,
         onSuccess: () => {
+            console.log("refreshing the page")
             router.refresh()
         }
     });

@@ -11,6 +11,10 @@ import {
 } from "./NavBarDesktopDropDown";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "store";
+import { resetQuestState } from "@quest/features";
+import { resetTaskState } from "@task/features";
+import { removeUser } from "@user/features";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
     { name: "Home", link: "/home" },
@@ -38,10 +42,17 @@ const NavLinks = () => (
 const NavBarDesktop = () => {
     const [signOut, {}] = useSignOutMutation();
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const handleSignOut = () => {
         signOut()
             .unwrap()
-            .then(() => router.refresh())
+            .then(() => {
+                dispatch(resetQuestState())
+                dispatch(resetTaskState())
+                const currentTime = String(new Date())
+                dispatch(removeUser({ refreshedAt: currentTime }));
+                router.push("/sign-in")
+            })
             .catch((err) => console.log(err));
     };
 

@@ -11,6 +11,9 @@ import ProfileCard from "./ProfileCard"
 import { useAppDispatch } from "store"
 import { useSignOutMutation } from "store/api"
 import { useRouter } from "next/navigation"
+import { resetQuestState } from "@quest/features"
+import { resetTaskState } from "@task/features"
+import { removeUser } from "@user/features"
 
 const PAGE_LINKS: DrawerPageLink[] = [
     {
@@ -44,17 +47,19 @@ export const MenuMobile = ({
 }) => {
     const [signOut, { isLoading, isSuccess }] = useSignOutMutation()
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const handleSignOut = () => {
         signOut()
             .unwrap()
-            .catch(err => console.log(" Signn out error: ", err))
+            .then(() => {
+                dispatch(resetQuestState())
+                dispatch(resetTaskState())
+                const currentTime = String(new Date())
+                dispatch(removeUser({ refreshedAt: currentTime }));
+                router.push("/sign-in")
+            })
+            .catch(err => console.log(" Sign out error: ", err))
     }
-    useEffect(() => {
-        if (isSuccess) {
-            router.replace("/sign-in")
-            router.refresh()
-        }
-    },[isSuccess])
     return (
         <div className="flex flex-col justify-between gap-8">
             <ProfileCard>{children}</ProfileCard>

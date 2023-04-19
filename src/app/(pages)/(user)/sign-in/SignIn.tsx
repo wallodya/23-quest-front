@@ -54,8 +54,9 @@ const SignIn = () => {
         mutation: { isLoading: isMutationLoading, error: mutationError },
     } = useSignIn({
         onSuccess: () => {
-            router.replace("/tasks")
             router.refresh()
+            router.replace("/tasks")
+            console.log("refreshing the page")
         }   
     });
 

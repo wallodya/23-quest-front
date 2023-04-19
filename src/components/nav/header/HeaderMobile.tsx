@@ -37,7 +37,6 @@ export const MobileHeader = () => {
     const { isSignedIn } = useAppSelector((state) => state.user);
     const isIncludedOnPage = useIsIncludedOnPage(null, ["sign-up", "sign-in"])
     const { isOpen, toggleDrawer } = useDrawerControls()
-    
     if (!isIncludedOnPage) {
         return null
     }

@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import * as Tabs from "@radix-ui/react-tabs";
 import ActiveTasks from "@task/components/ActiveTasks";
 import FailedTasks from "@task/components/FailedTasks";
-import * as Tabs from "@radix-ui/react-tabs";
-import Button from "components/ui/Button";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useAppSelector } from "store";
 import CompletedTasks from "./components/CompletedTasks";
 import { useGetTasksQuery } from "./features/taskApi.slice";
-import { useAppSelector } from "store";
-import NewTask from "./components/Form/NewTask";
-import { useRouter } from "next/navigation";
 
 const Tasks = () => {
     const { isSignedIn } = useAppSelector(state => state.user)
@@ -21,6 +19,7 @@ const Tasks = () => {
         }
     }, [isSignedIn])
 
+    console.log("query?")
     useGetTasksQuery(null);
     
     // TODO make selected tab trigger highlighted
