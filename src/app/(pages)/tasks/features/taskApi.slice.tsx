@@ -14,6 +14,7 @@ export const taskApi = apiSlice.injectEndpoints({
                     method: "GET",
                 };
             },
+            providesTags: ["tasks"],
             transformResponse: (res) => {
                 if (Array.isArray(res)) {
                     const dateSortingFn = (taskA: Task, taskB: Task) => {

@@ -12,6 +12,7 @@ export const questApi = apiSlice.injectEndpoints({
                     method: "GET",
                 };
             },
+            providesTags: ["quests"],
             transformResponse: (res) => {
                 return res;
             },
@@ -31,6 +32,7 @@ export const questApi = apiSlice.injectEndpoints({
                     },
                 };
             },
+            providesTags: ["quest-tasks"],
             transformResponse: (res) => {
                 if (Array.isArray(res) && res.every((i) => isTaskType(i))) {
                     const dateSortingFn = (taskA: Task, taskB: Task) => {

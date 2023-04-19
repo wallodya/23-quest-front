@@ -27,7 +27,7 @@ export const apiSlice = createApi({
     //         return action.payload[reducerPath];
     //     }
     // },
-    tagTypes: ["user"],
+    tagTypes: ["user", "tasks", "quests", "quest-tasks"],
     endpoints: (builder) => ({
         signIn: builder.mutation<UserState | null, SignInBody>({
             query: (signInBody) => ({
@@ -35,6 +35,7 @@ export const apiSlice = createApi({
                 method: "POST",
                 body: signInBody,
             }),
+            invalidatesTags: ["user", "tasks", "quests", "quest-tasks"],
             transformErrorResponse: (res) => res.data,
             transformResponse: (res: User, meta) => {
                 if (!meta?.response) {
@@ -59,6 +60,7 @@ export const apiSlice = createApi({
                 url: "/auth/logout",
                 method: "POST",
             }),
+            invalidatesTags: ["user", "tasks", "quests", "quest-tasks"],
             transformResponse: () => {
                 return {
                     isSignedIn: false,
@@ -76,6 +78,7 @@ export const apiSlice = createApi({
                     password,
                 },
             }),
+            invalidatesTags: ["user", "tasks", "quests", "quest-tasks"],
             transformErrorResponse: (res) =>
                 isStandartServerError(res) ? res.data : res,
             transformResponse: (res: User, meta) => {
