@@ -27,6 +27,9 @@ const taskSlice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
+        resetTaskState: (state) => {
+            state = initialState
+        },
         addTask: (state, { payload }) => {
             if (isOptimisticTaskType(payload)) {
                 state.addedTasks = [...state.addedTasks, payload];
@@ -124,6 +127,6 @@ export const {
     completeTask,
     failTask,
     checkTask,
-
+    resetTaskState,
 } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;

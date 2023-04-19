@@ -23,7 +23,10 @@ const questSlice = createSlice({
         },
         closeQuestForm: (state) => {
             state.questForm.isOpen = false
-        }
+        },
+        resetQuestState: (state) => {
+            state = initialState
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -129,6 +132,6 @@ const questSlice = createSlice({
 })
 
 
-export const { openQuestForm, closeQuestForm } = questSlice.actions
+export const { openQuestForm, closeQuestForm, resetQuestState } = questSlice.actions
 
 export const  questReducer = questSlice.reducer

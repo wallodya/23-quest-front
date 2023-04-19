@@ -3,6 +3,8 @@ import { User } from "@user/types";
 import { RootState } from "store"
 import jwt_decode from "jwt-decode";
 import { removeUser } from "@user/features";
+import { resetTaskState } from "@task/features";
+import { resetQuestState } from "@quest/features";
 
 const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
 
@@ -66,6 +68,8 @@ export const catchAuthExceptionsMiddleware: Middleware<{}, RootState> = ({ getSt
             const currentTime = String(new Date())
             localStorage.removeItem("JWT_TOKEN");
             dispatch(removeUser({ refreshedAt: currentTime }));
+            dispatch(resetTaskState())
+            dispatch(resetQuestState())
         }
     }
     return next(action)

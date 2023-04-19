@@ -52,6 +52,7 @@ export const MenuMobile = ({
     useEffect(() => {
         if (isSuccess) {
             router.replace("/sign-in")
+            router.refresh()
         }
     },[isSuccess])
     return (
