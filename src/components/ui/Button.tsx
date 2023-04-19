@@ -1,9 +1,13 @@
+"use client"
+
 import React, {
     ButtonHTMLAttributes,
     forwardRef,
     LegacyRef,
     ReactNode,
     RefAttributes,
+    useEffect,
+    useState,
 } from "react";
 import * as Form from "@radix-ui/react-form";
 
@@ -34,14 +38,23 @@ const Button = forwardRef(
         ref: LegacyRef<HTMLButtonElement> | undefined,
     ) => {
         const buttonTypeClassNames = useButtonClassNames(type, buttonProps?.disabled);
+        const [loadingStateClassNames, setLoadingStateClassNames] = useState<
+            "" | " pointer-events-none"
+        >("");
+        useEffect(() => {
+            if (isLoading) {
+                setLoadingStateClassNames(" pointer-events-none")
+            } else {
+                setLoadingStateClassNames("")
+            }
+        }, [isLoading])
         return (
             <button
                 ref={ref}
                 role="button"
                 {...buttonProps}
                 className={
-                    "w-full flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition focus:outline-none focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-700 " +
-                    buttonTypeClassNames
+                    `w-full flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition focus:outline-none focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-700 ${buttonTypeClassNames}${loadingStateClassNames}`
                 }
             >
                 {isLoading ? "Loading..." : children}
