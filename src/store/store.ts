@@ -3,11 +3,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { taskFiltersReducer, taskReducer } from "@task/features";
 import {
+    catchAuthExceptionsMiddleware,
     refreshUserMiddleware,
     removeUserMiddleware,
     saveUserMiddleware,
-} from "../app/(pages)/(user)/common/user.utils";
-import userReducer from "../app/(pages)/(user)/features/user.slice";
+} from "@user/common";
+import userReducer from "@user/features/user.slice";
 import { apiSlice } from "./api/api.slice";
 import { questReducer } from "@quest/features";
 
@@ -28,6 +29,7 @@ export const store = configureStore({
             saveUserMiddleware,
             removeUserMiddleware,
             refreshUserMiddleware,
+            catchAuthExceptionsMiddleware
         ),
 });
 

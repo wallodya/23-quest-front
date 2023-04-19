@@ -30,6 +30,19 @@ const userSlice = createSlice({
                 state.isSignedIn = payload.isSignedIn;
             }
         },
+        removeUser: (state, { payload }) => {
+            state.uuid = undefined;
+            state.login = undefined;
+            state.email = undefined;
+            state.isEmailConfirmed = undefined;
+            state.dateOfBirth = undefined;
+            state.createdAt = undefined;
+            state.updatedAt = undefined;
+
+            state.token = undefined;
+            state.refreshedAt = payload.refreshedAt;
+            state.isSignedIn = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -87,6 +100,6 @@ const userSlice = createSlice({
     },
 });
 
-export const { initUser } = userSlice.actions
+export const { initUser, removeUser } = userSlice.actions
 
 export default userSlice.reducer

@@ -2,11 +2,13 @@ import { Middleware } from "@reduxjs/toolkit"
 import { User } from "@user/types";
 import { RootState } from "store"
 import jwt_decode from "jwt-decode";
+import { removeUser } from "@user/features";
 
-export const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
-const decodedUserToken = (token: string) => {
-    return jwt_decode<{sub: User, iat: number, exp: number}>(token)
-}
+const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
+
+export const decodedUserToken = (token: string) => {
+    return jwt_decode<{ sub: User; iat: number; exp: number }>(token);
+};
 
 export const saveUserMiddleware: Middleware<{}, RootState> = ({ getState }) => next => action => {
     if (
@@ -51,5 +53,19 @@ export const refreshUserMiddleware: Middleware<{}, RootState> = ({ getState }) =
         );
     }
 
+    return next(action)
+}
+
+export const catchAuthExceptionsMiddleware: Middleware<{}, RootState> = ({ getState, dispatch }) => next => action => {
+    if (
+        IS_BROWSER &&
+        action?.meta?.requestStatus === "rejected"
+    ) {
+        const errStatus = action?.meta?.baseQueryMeta?.response?.status
+        if (Number(errStatus) === 403) {
+            const currentTime = String(new Date())
+            dispatch(removeUser({ refreshedAt: currentTime }));
+        }
+    }
     return next(action)
 }
