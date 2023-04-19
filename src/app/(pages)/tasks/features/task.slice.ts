@@ -103,7 +103,6 @@ const taskSlice = createSlice({
                 if (isTaskType(payload)) {
                     state.activeTasks = [payload, ...state.activeTasks]
                     state.addedTasks = state.addedTasks.filter(task => task.title !== payload.title)
-                    console.log(current(state))
                 }
             },
         ),
