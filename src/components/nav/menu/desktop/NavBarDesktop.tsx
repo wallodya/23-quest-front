@@ -9,6 +9,8 @@ import {
     UserMenuDropdownContent,
     UserMenuDropdownTrigger,
 } from "./NavBarDesktopDropDown";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
     { name: "Home", link: "/home" },
@@ -35,9 +37,11 @@ const NavLinks = () => (
 
 const NavBarDesktop = () => {
     const [signOut, {}] = useSignOutMutation();
+    const router = useRouter()
     const handleSignOut = () => {
         signOut()
             .unwrap()
+            .then(() => router.refresh())
             .catch((err) => console.log(err));
     };
 

@@ -43,9 +43,9 @@ const SignIn = () => {
     const { isSignedIn } = useAppSelector(state => state.user)
 
     useEffect(() => {
-        if (isSignedIn) [
+        if (isSignedIn) {
             router.replace("/tasks")
-        ]
+        }
     },[isSignedIn])
 
     const {
@@ -55,6 +55,7 @@ const SignIn = () => {
     } = useSignIn({
         onSuccess: () => {
             router.replace("/tasks")
+            router.refresh()
         }   
     });
 
@@ -70,6 +71,7 @@ const SignIn = () => {
             labelText: "Password",
             fieldName: "password",
             registerFn: register,
+            type: "password",
             inputError: passwordFieldError,
             required: true
         },
