@@ -31,6 +31,7 @@ const userSlice = createSlice({
             }
         },
         removeUser: (state, { payload }) => {
+            console.log("removing  user from state")
             state.uuid = undefined;
             state.login = undefined;
             state.email = undefined;
