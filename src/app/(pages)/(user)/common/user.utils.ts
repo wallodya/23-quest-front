@@ -64,6 +64,7 @@ export const catchAuthExceptionsMiddleware: Middleware<{}, RootState> = ({ getSt
         const errStatus = action?.meta?.baseQueryMeta?.response?.status
         if (Number(errStatus) === 403) {
             const currentTime = String(new Date())
+            localStorage.removeItem("JWT_TOKEN");
             dispatch(removeUser({ refreshedAt: currentTime }));
         }
     }
