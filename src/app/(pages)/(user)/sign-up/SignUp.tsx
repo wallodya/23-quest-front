@@ -48,13 +48,7 @@ const SignUp = () => {
     } = useSignUp({
         termsFieldError,
         onSuccess: () => {
-            // console.log("sign up success")
-            // setTimeout(() => {
-            //     console.log("redirecting...")
-            //     console.log("isSignedIn (form):",isSignedIn)
-            //     router.replace("/tasks")
-            // }, 500)
-            
+            router.refresh()
         }
     });
 
