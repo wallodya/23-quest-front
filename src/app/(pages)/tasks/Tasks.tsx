@@ -19,7 +19,6 @@ const Tasks = () => {
         }
     }, [isSignedIn])
 
-    console.log("query?")
     useGetTasksQuery(null);
     
     // TODO make selected tab trigger highlighted

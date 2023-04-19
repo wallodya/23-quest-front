@@ -17,9 +17,7 @@ export const questApi = apiSlice.injectEndpoints({
                 return res;
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("get quests error:");
-                console.log(err);
-                // return err
+                return err
             },
         }),
         getTasksForQuest: builder.query({
@@ -45,8 +43,6 @@ export const questApi = apiSlice.injectEndpoints({
                 return [] as Task[];
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("error while getting tasks for quest:");
-                console.log(err);
                 return err;
             },
         }),
@@ -62,8 +58,7 @@ export const questApi = apiSlice.injectEndpoints({
                 return res;
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("create quest error:");
-                console.log(err);
+                return err
             },
         }),
         addTaskToQuest: builder.mutation({
@@ -87,8 +82,6 @@ export const questApi = apiSlice.injectEndpoints({
                 return {...res, repeatCount: res.repeatTimes};
             },
             transformErrorResponse: (err: ServerErrorResponse) => {
-                console.log("Error while adding task to quest")
-                console.log(err)
                 return err
             }
         }),

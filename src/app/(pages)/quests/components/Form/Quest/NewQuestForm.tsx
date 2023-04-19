@@ -18,7 +18,6 @@ const NewQuestForm = () => {
     const { register, handleSubmit, formState: { errors }} = formControls
     const { submitQuest } = useCreateQuest()
     const onSubmit: SubmitHandler<QuestFormFields> = (createQuestBody: QuestFormFields) => {
-        console.log("create quest submit")
         submitQuest(createQuestBody)
     }
     return (

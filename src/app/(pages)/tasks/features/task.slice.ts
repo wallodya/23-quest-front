@@ -28,7 +28,6 @@ const taskSlice = createSlice({
     initialState,
     reducers: {
         resetTaskState: (state) => {
-            console.log("reseting task slice")
             state = initialState
         },
         addTask: (state, { payload }) => {
