@@ -1,13 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTaskFormControls } from "@task/hooks";
 import { TaskFormFields, TaskOptimistic, TaskType } from "@task/types";
-import { User } from "@user/types";
 import FormWrapper from "components/ui/FormWrapper";
 import Submit from "components/ui/Submit";
-import jwt_decode from "jwt-decode";
-import { ReactNode } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import TaskFormContainer from "./TaskFormContainer";
 import { CurrentStep } from "./steps";
@@ -73,7 +69,7 @@ export const NewTaskForm = ({
     };
     return (
         <FormWrapper
-            className="flex h-[50vh] md:h-fit flex-col justify-between gap-2 px-4 py-3"
+            className="flex h-[60vh] w-[min(100vw,30rem)] flex-col justify-between gap-2 px-4 py-3"
             onSubmit={formControls.handleSubmit(onSubmit)}
         >
             <TaskFormContainer>

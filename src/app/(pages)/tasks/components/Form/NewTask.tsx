@@ -85,7 +85,7 @@ const NewTask = ({
                     <div className="absolute top-0 left-0 flex h-screen w-screen items-center justify-center">
                         <Dialog.Content
                             onKeyUpCapture={(event) => event.key === " " ? event.preventDefault() : {}}
-                            className="rounded-xl bg-slate-700 px-2"
+                            className="h-fit rounded-xl bg-slate-700 px-2"
                         >
                             <NewTaskForm submitTaskFn={submitTaskFn} />
                         </Dialog.Content>

@@ -12,7 +12,7 @@ const QuestFormContainer = ({children}: {children: ReactNode}) => {
         dispatch(closeQuestForm())
     }
     return (
-        <div className='p-4 flex flex-col gap-4 h-full'>
+        <div className='p-4 flex flex-col gap-4 h-96'>
             <div className="grid h-10 grid-cols-3">
                 <div className="col-start-2 flex items-center justify-center font-bold text-sky-500">
                     New quest
@@ -25,7 +25,7 @@ const QuestFormContainer = ({children}: {children: ReactNode}) => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-6">{children}</div>
+            <div className="h-full flex flex-col gap-6 justify-evenly">{children}</div>
         </div>
     );
 }

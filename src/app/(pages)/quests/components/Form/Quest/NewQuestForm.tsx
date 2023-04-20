@@ -14,6 +14,7 @@ import { useCreateQuest } from "@quest/common/hooks";
 const NewQuestForm = () => {
     const formControls = useForm<QuestFormFields>({
         resolver: zodResolver(newQuestSchema),
+        mode: "onChange"
     });
     const { register, handleSubmit, formState: { errors }} = formControls
     const { submitQuest } = useCreateQuest()
@@ -38,7 +39,7 @@ const NewQuestForm = () => {
                     inputError={errors.description}
                 />
                 
-                <Submit>Save quest</Submit>
+                <Submit disabled={!formControls.formState.isValid}>Save quest</Submit>
             </QuestFormContainer>
         </FormWrapper>
     );
