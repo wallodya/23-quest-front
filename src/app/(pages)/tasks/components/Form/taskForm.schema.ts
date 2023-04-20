@@ -189,12 +189,15 @@ export const createTaskSchema = z
             .max(20, {
                 message: "Title should contain from 1 to 20 characters",
             }),
-        text: z
-            .string()
-            .max(140, {
-                message: "Description can contain at most 140 characters",
-            })
-            .optional(),
+        text: z.preprocess(
+            preprocessEmptyString,
+            z
+                .string()
+                .max(140, {
+                    message: "Description can contain at most 140 characters",
+                })
+                .optional(),
+        ),
         isTimer: z.boolean().default(false),
         isPeriodic: z.boolean().default(false),
         isRepeat: z.boolean().default(false),

@@ -87,7 +87,7 @@ const TaskFormContainer = ({
                     </div>
                 </div>
             </div>
-            <div className="my-2 flex flex-col justify-between">{children}</div>
+            <div className=" my-2 flex flex-col justify-between">{children}</div>
 
             {nextStep && (
                 <div className="mt-auto">

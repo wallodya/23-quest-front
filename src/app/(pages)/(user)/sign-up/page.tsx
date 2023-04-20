@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import SignUp from "./SignUp";
 
 export const metadata: Metadata = {
-    title: "Create account"
+    title: "Sign up",
+    description: "Sign up form"
 }
 
 export default SignUp

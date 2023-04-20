@@ -20,7 +20,7 @@ export const NewTaskForm = ({
     const formControls = useForm<TaskFormFields>({
         resolver: zodResolver(createTaskSchema),
         mode: "onChange",
-        reValidateMode: "onBlur",
+        // reValidateMode: "onChange",
     });
     const onSubmit: SubmitHandler<TaskFormFields> = (data) => {
         const types: TaskType = [];
