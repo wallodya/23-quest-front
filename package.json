@@ -35,6 +35,7 @@
     "react-hook-form": "^7.43.2",
     "react-redux": "^8.0.5",
     "react-timer-hook": "^3.0.5",
+    "react-toastify": "^9.1.2",
     "server-only": "^0.0.1",
     "zod": "^3.20.6"
   },

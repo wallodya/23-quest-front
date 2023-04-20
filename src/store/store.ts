@@ -11,6 +11,8 @@ import {
 import userReducer from "@user/features/user.slice";
 import { apiSlice } from "./api/api.slice";
 import { questReducer } from "@quest/features";
+import { catchQuestNameConflictMiddleware } from "@quest/common/utils";
+import { catchTaskNameConflictMiddleware } from "@task/utils";
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -29,7 +31,9 @@ export const store = configureStore({
             saveUserMiddleware,
             removeUserMiddleware,
             refreshUserMiddleware,
-            catchAuthExceptionsMiddleware
+            catchAuthExceptionsMiddleware,
+            catchQuestNameConflictMiddleware,
+            catchTaskNameConflictMiddleware,
         ),
 });
 
