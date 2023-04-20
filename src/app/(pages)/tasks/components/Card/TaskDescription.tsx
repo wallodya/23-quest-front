@@ -10,7 +10,7 @@ export const TaskDescription = () => {
     }
 
     return (
-        <div className="text-sm text-gray-400 overflow-hidden transition-all" style={taskDescriptionStyles}>{text}</div>
+        <div className="text-sm text-gray-400 break-words overflow-hidden transition-all" style={taskDescriptionStyles}>{text}</div>
     )
 }
 
