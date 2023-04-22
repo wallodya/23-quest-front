@@ -8,19 +8,24 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { useAppSelector } from "store/hooks";
 import { useIsIncludedOnPage } from "common/hooks";
+import Button from "components/ui/Button";
 
 const HeaderGuest = () => {
     return (
         <TopBar isMobile={true}>
             <div className="col-start-2 flex">
-                <Link href="sign-in" className="ml-auto flex">
-                    <span className="font-bold text-slate-800 dark:text-slate-100">
-                        Sign in
-                    </span>
-                </Link>
+                <div className="ml-auto flex">
+                    <Button type="filled">
+                        <Link href="sign-in" className="">
+                            <span className="font-bold text-slate-800 dark:text-slate-100">
+                                Sign in
+                            </span>
+                        </Link>
+                    </Button>
+                </div>
             </div>
         </TopBar>
-  )
+    );
 }
 
 const HeaderUser = ({children}:{children: ReactNode}) => {

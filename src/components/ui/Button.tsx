@@ -11,7 +11,7 @@ import React, {
 } from "react";
 import * as Form from "@radix-ui/react-form";
 
-type ButtonTypes = "filled" | "text" | "outlined";
+export type ButtonTypes = "filled" | "text" | "outlined";
 
 interface ButtonProps {
     type: ButtonTypes;

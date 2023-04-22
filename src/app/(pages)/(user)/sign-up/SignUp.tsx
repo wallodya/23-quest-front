@@ -14,6 +14,8 @@ import { CreateAccountT, SignUpSchema } from "./signUp.schema";
 import { useSignUp } from "./useSignUp.hook";
 import { useAppSelector } from "store";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useSignUpErrorToast } from "./SignUpErrorLabel";
 
 const SignUp = () => {
     const {
@@ -41,15 +43,20 @@ const SignUp = () => {
         }
     }, [isSignedIn])
 
+    const signOutErrorToast = useSignUpErrorToast()
+
+
     const {
         onSubmit,
-        BottomErrorLabel,
         mutation: { isLoading: isMutationLoading, isError: isMutationError },
     } = useSignUp({
         termsFieldError,
         onSuccess: () => {
-            console.log("refreshing the page")
+            toast.success("Account created")
             router.refresh()
+        },
+        onError: (err) => {
+            signOutErrorToast({ error: err, termsFieldError });
         }
     });
 
@@ -96,7 +103,7 @@ const SignUp = () => {
     ]
   
     return (
-        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center">
+        <div className="absolute top-0 left-0 w-screen min-h-screen py-12 flex justify-center items-center">
             <FormWrapper
                 className="h-fit flex w-64 flex-col gap-4 transition-all"
                 autoComplete="off"
@@ -116,7 +123,6 @@ const SignUp = () => {
                 <Button type="text">
                     <Link href={"/sign-in"}>I already have an account</Link>
                 </Button>
-                <BottomErrorLabel />
             </FormWrapper>
         </div>
     );

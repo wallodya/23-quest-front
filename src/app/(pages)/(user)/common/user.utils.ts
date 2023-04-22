@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { removeUser } from "@user/features";
 import { resetTaskState } from "@task/features";
 import { resetQuestState } from "@quest/features";
+import { toast } from "react-toastify";
 
 const IS_BROWSER = typeof window === "object" && "[object Window]" === window.toString.call(window);
 
@@ -71,6 +72,7 @@ export const catchAuthExceptionsMiddleware: Middleware<{}, RootState> = ({ getSt
             dispatch(removeUser({ refreshedAt: currentTime }));
             dispatch(resetTaskState())
             dispatch(resetQuestState())
+            toast.warn("You not authorized to so this action")
         }
     }
     return next(action)

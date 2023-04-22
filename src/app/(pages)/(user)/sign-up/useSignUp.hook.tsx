@@ -10,11 +10,13 @@ import { CreateAccountT } from "./signUp.schema";
 import SignUpErrorLabel from "./SignUpErrorLabel";
 
 type UseSignUpArgsType = {
-    onSuccess?: <T = unknown>(res?: T) => MaybePromise<void>,
-    onError?: <T = any>(err?: T) => MaybePromise<void>,
-    onLoading?: () => MaybePromise<void>,
-    termsFieldError: FieldError | undefined
-}
+    onSuccess?: <T = unknown>(res?: T) => MaybePromise<void>;
+    onError?: (
+        err?: FetchBaseQueryError | SerializedError | undefined,
+    ) => MaybePromise<void>;
+    onLoading?: () => MaybePromise<void>;
+    termsFieldError: FieldError | undefined;
+};
 type UseSignUpType = (args: UseSignUpArgsType) => {
     onSubmit: SubmitHandler<CreateAccountT>,
     BottomErrorLabel: FC

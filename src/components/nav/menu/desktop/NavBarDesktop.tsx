@@ -1,20 +1,11 @@
-"use client";
-
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { withUnbreakableSpaces }from "common/utils";
-import Button from "components/ui/Button";
+import { SignOutButton } from "@user/components/SignOutButton";
+import { withUnbreakableSpaces } from "common/utils";
 import Link from "next/link";
-import { useSignOutMutation } from "store/api/api.slice";
 import {
     UserMenuDropdownContent,
     UserMenuDropdownTrigger,
 } from "./NavBarDesktopDropDown";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAppDispatch } from "store";
-import { resetQuestState } from "@quest/features";
-import { resetTaskState } from "@task/features";
-import { removeUser } from "@user/features";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
     { name: "Home", link: "/home" },
@@ -40,22 +31,6 @@ const NavLinks = () => (
 );
 
 const NavBarDesktop = () => {
-    const [signOut, {}] = useSignOutMutation();
-    const router = useRouter()
-    const dispatch = useAppDispatch()
-    const handleSignOut = () => {
-        signOut()
-            .unwrap()
-            .then(() => {
-                dispatch(resetQuestState())
-                dispatch(resetTaskState())
-                const currentTime = String(new Date())
-                dispatch(removeUser({ refreshedAt: currentTime }));
-                router.push("/sign-in")
-            })
-            .catch((err) => console.log(err));
-    };
-
     return (
         <nav className="col-start-3 flex justify-between text-sm font-semibold">
             <NavLinks />
@@ -68,12 +43,7 @@ const NavBarDesktop = () => {
                             <UserMenuDropdownContent />
                             <DropdownMenu.Separator className="mt-3 mb-2 border-t border-slate-600" />
                             <DropdownMenu.Item className="">
-                                <Button
-                                    type="text"
-                                    buttonProps={{ onClick: handleSignOut }}
-                                >
-                                    Sign out
-                                </Button>
+                                <SignOutButton type={"text"}/>
                             </DropdownMenu.Item>
                         </DropdownMenu.Content>
                     </DropdownMenu.Portal>

@@ -1,12 +1,13 @@
 import { useTaskTypeFlags } from "@task/hooks";
 import { TaskType, isTaskType } from "@task/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTask } from "./TaskCard.provider";
 import StopIcon from "components/icons/StopIcon";
 import CheckIcon from "components/icons/CheckIcon";
 import CrossIcon from "components/icons/CrossIcon";
 import PauseIcon from "components/icons/PauseIcon";
 import PlayIcon from "components/icons/PlayIcon";
+import { toast } from "react-toastify";
 
 const FailButton = () => {
     const {
@@ -22,7 +23,24 @@ const FailButton = () => {
 };
 
 const CompleteButton = () => {
-    const {actions: {complete: {handleFn: handleComplete, isLoading}}} = useTask()
+    const {
+        actions: {
+            complete: {
+                handleFn: handleComplete,
+                isLoading,
+                isError,
+                isSuccess,
+            },
+        },
+    } = useTask();
+    // useEffect(() => {
+    //     if (isError) {
+    //         toast.error("Error while copletnig the task")
+    //     }
+    //     if (isSuccess) {
+    //         toast.success("Task completed")
+    //     }
+    // }, [isError, isSuccess])
     return (
         <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleComplete}>
             {isLoading ? "..." : <CheckIcon size="xs"/>}

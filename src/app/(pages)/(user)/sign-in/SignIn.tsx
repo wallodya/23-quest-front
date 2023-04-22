@@ -16,6 +16,7 @@ import Heading from "components/ui/typography/Heading";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "store";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const SignInSchema = z.object({
     login: z
@@ -56,7 +57,7 @@ const SignIn = () => {
         onSuccess: () => {
             router.refresh()
             router.replace("/tasks")
-            console.log("refreshing the page")
+            toast.success("Log in success")
         }   
     });
 

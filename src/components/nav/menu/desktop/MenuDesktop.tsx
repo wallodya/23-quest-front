@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useAppSelector } from "store/hooks";
 import NavBarDesktop from "./NavBarDesktop";
 import NavBarDesktopGuest from "./NavBarDesktopGuest";
+import Link from "next/link";
 
 export const MenuDesktop = () => {
     const { isSignedIn } = useAppSelector((state) => state.user);
@@ -32,9 +33,9 @@ export const MenuDesktop = () => {
     return (
         <div className="col-start-2 grid grid-cols-3 items-stretch">
             <div className="flex gap-4">
-                <div className="flex flex-col justify-center">
-                    <LogoTemporary/>
-                </div>
+                <Link href="/" className="flex flex-col justify-center">
+                    <LogoTemporary />
+                </Link>
                 {/* <span onClick={toggleTheme} className="cursor-pointer">{themeLabel}</span> */}
             </div>
             {isSignedIn ? <NavBarDesktop /> : <NavBarDesktopGuest />}

@@ -1,10 +1,10 @@
+import { Landing } from "./(pages)/(landing)/Landing"
 import type { Metadata } from "next"
-import Landing from "./(landing)/landing"
 
 export const metadata: Metadata = {
     title: {
         template: '%s | Todo',
-        default: "Todo",
+        default: "Todo"
     },
     description: "Application for managing your daily activities",
     themeColor: "#0f172a",

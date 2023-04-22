@@ -7,6 +7,7 @@ import TasksConfig from "@task/tasks.config";
 import { TaskFormFields, CreateTaskReqBody, TaskFormSteps, TaskOptimistic, TaskType } from "@task/types";
 import { useEffect } from "react";
 import { UseFormWatch } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "store";
 
 export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
@@ -15,6 +16,15 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
     const [createTask, { isLoading, isError, error, isSuccess }] =
         useCreateTaskMutation();
     const [addtaskToQuest, {}] = useAddTaskToQuestMutation()
+
+    useEffect(() => {
+        if (isError) {
+            toast.error("Error while creating a task");
+        }
+        if (isSuccess) {
+            toast.success("Task created");
+        }
+    }, [isError, isSuccess]);
 
     const submitTask = (payload: TaskOptimistic) => {
         const createTaskReqBody: CreateTaskReqBody = {

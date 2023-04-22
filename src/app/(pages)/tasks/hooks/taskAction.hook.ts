@@ -1,11 +1,11 @@
 import { checkTask, completeTask, failTask } from "@task/features";
 import { useChekTaskMutation, useCompleteTaskMutation, useFailTaskMutation } from "@task/features/taskApi.slice";
 import { Task, TaskContext, TaskOptimistic, TaskTimer, isTaskType } from "@task/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "store";
 
-// TODO add mutations
 export const useTaskComplete = (task: Task) => {
     const [completeTaskReq, { isLoading, isError, error, isSuccess }] =
         useCompleteTaskMutation();
@@ -13,6 +13,9 @@ export const useTaskComplete = (task: Task) => {
     const handleFn = () => {
         dispatch(completeTask(task))
         completeTaskReq(task.uniqueTaskId)
+            .unwrap()
+            .then(() => toast.success("Task completed"))
+            .catch(() => toast.error("Error while compliting the task"))
     }
     return {
         handleFn,
@@ -23,13 +26,15 @@ export const useTaskComplete = (task: Task) => {
     }
 }
 
-//TODO add mutations
 export const useTaskFail = (task: Task) => {
     const [failTaskReq, {isLoading, isError, error, isSuccess }] = useFailTaskMutation()
     const dispatch=  useAppDispatch()
     const handleFn = () => {
         dispatch(failTask(task))
         failTaskReq(task.uniqueTaskId)
+            .unwrap()
+            .then(() => toast.info("Task failed"))
+            .catch(() => toast.error("Error while failing the task"));
     }
     return {
         handleFn,
@@ -40,13 +45,15 @@ export const useTaskFail = (task: Task) => {
     };
 }
 
-//TODO add mutations
 export const useTaskCheck = (task: Task) => {
     const [checkTaskReq, {isLoading, isError, error, isSuccess}] = useChekTaskMutation()
     const dispatch=  useAppDispatch()
     const handleFn = () => {
         dispatch(checkTask(task))
         checkTaskReq(task.uniqueTaskId)
+            .unwrap()
+            .then(() => toast.success("Task checked"))
+            .catch(() => toast.error("Error while checking the task"));
     }
     return {
         handleFn,
@@ -57,7 +64,6 @@ export const useTaskCheck = (task: Task) => {
     };
 }
 
-//TODO combine all task action into this hook
 export const useTaskActions = (task: Task): TaskContext["actions"] => {
     if (!isTaskType(task)) {
         return {

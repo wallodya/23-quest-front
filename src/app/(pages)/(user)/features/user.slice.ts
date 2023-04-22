@@ -67,7 +67,6 @@ const userSlice = createSlice({
             apiSlice.endpoints.signUp.matchFulfilled,
             (state, { payload }) => {
                 if (isUserStateType(payload)) {
-                    console.log("updating user state")
                     state.uuid = payload.uuid;
                     state.login = payload.login;
                     state.email = payload.email;

@@ -10,7 +10,7 @@ const QuestCardControls = () => {
     }
   return (
       <div className="flex gap-2 py-6 px-6">
-          <Button type="outlined">More actions</Button>
+          {/* <Button type="outlined">More actions</Button> */}
           <Button type="filled" buttonProps={{ onClick: handleAddTask }}>
               Add task
           </Button>

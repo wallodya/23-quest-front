@@ -28,8 +28,9 @@
             "@task/*": ["app/(pages)/tasks/*"],
             "@quest/*": ["app/(pages)/quests/*"],
             "@profile/*": ["app/(pages)/profile/*"],
-            "@home/*": ["app/(pages)/home/*"],
-            "@user/*": ["app/(pages)/(user)/*"]
+            "@home/*": ["app/(pages)/(home)/*"],
+            "@user/*": ["app/(pages)/(user)/*"],
+            "@landing/*": ["app/(pages)/(landing)/*"]
         }
     },
     "include": [

@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation"
 import { resetQuestState } from "@quest/features"
 import { resetTaskState } from "@task/features"
 import { removeUser } from "@user/features"
+import { SignOutButton } from "@user/components/SignOutButton"
 
 const PAGE_LINKS: DrawerPageLink[] = [
     {
@@ -48,26 +49,27 @@ export const MenuMobile = ({
     const [signOut, { isLoading, isSuccess }] = useSignOutMutation()
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const handleSignOut = () => {
-        signOut()
-            .unwrap()
-            .then(() => {
-                dispatch(resetQuestState())
-                dispatch(resetTaskState())
-                const currentTime = String(new Date())
-                dispatch(removeUser({ refreshedAt: currentTime }));
-                router.push("/sign-in")
-            })
-            .catch(err => console.log(" Sign out error: ", err))
-    }
+    // const handleSignOut = () => {
+    //     signOut()
+    //         .unwrap()
+    //         .then(() => {
+    //             dispatch(resetQuestState())
+    //             dispatch(resetTaskState())
+    //             const currentTime = String(new Date())
+    //             dispatch(removeUser({ refreshedAt: currentTime }));
+    //             router.push("/sign-in")
+    //         })
+    //         .catch(err => console.log(" Sign out error: ", err))
+    // }
     return (
         <div className="flex flex-col justify-between gap-8">
             <ProfileCard>{children}</ProfileCard>
             <NavLinks links={PAGE_LINKS} toggleFn={toggleFn} />
             <div className="px-4">
-                <Button type="filled" buttonProps={{ onClick: handleSignOut }}>
+                {/* <Button type="filled" buttonProps={{ onClick: handleSignOut }}>
                     Sign out
-                </Button>
+                </Button> */}
+                <SignOutButton/>
             </div>
         </div>
     );

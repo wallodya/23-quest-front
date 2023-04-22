@@ -1,10 +1,31 @@
-"use client"
+"use client";
 
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/fetchBaseQuery";
 import { FC, useEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
 import { isServerErrorData } from "../../../../types/error.types";
+import { toast } from "react-toastify";
+
+export const useSignUpErrorToast = () => ({
+    error,
+    termsFieldError,
+}: {
+    error: FetchBaseQueryError | SerializedError | undefined;
+    termsFieldError: FieldError | undefined;
+}) => {
+    if (!error && !termsFieldError) {
+        return;
+    }
+
+    if (termsFieldError?.message) {
+        toast.error(termsFieldError.message);
+    } else if (error) {
+        isServerErrorData(error)
+            ? toast.error(error.message)
+            : toast.error("Internal error");
+    }
+};
 
 const useErrorMessage = ({
     error,
@@ -32,7 +53,7 @@ const useErrorMessage = ({
         }
     }, [isError, termsFieldError]);
 
-    return errorField; 
+    return errorField;
 };
 
 const SignUpErrorLabel: FC<{
@@ -43,13 +64,9 @@ const SignUpErrorLabel: FC<{
     const errorField = useErrorMessage({ error, isError, termsFieldError });
 
     if (isError || termsFieldError?.message) {
-        return (
-            <span>
-                {errorField}
-            </span>
-        );
+        return <span>{errorField}</span>;
     } else {
-        return <></>
+        return <></>;
     }
 };
 
