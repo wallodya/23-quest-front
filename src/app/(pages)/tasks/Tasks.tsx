@@ -23,8 +23,6 @@ const Tasks = () => {
 
     useGetTasksQuery(null);
     
-    // TODO make selected tab trigger highlighted
-    const [isActiveSelected, isCompletedSelected, isFailedSelected] = [false, false, false]
     return (
         <div>
             <Tabs.Root defaultValue="active" className="mt-16 mb-32 sm:mt-20">
