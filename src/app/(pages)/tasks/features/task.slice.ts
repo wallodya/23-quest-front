@@ -9,6 +9,7 @@ import {
     isTaskTypeType
 } from "@task/types";
 import { taskApi } from "./taskApi.slice";
+import { RootState } from "store";
 
 const initialState: TasksState = {
     activeTasks: [],
@@ -107,12 +108,6 @@ const taskSlice = createSlice({
                     state.activeTasks = [payload, ...state.activeTasks]
                     state.addedTasks = state.addedTasks.filter(task => task.title !== payload.title)
                 }
-            },
-        ),
-        builder.addMatcher(
-            taskApi.endpoints.createTask.matchRejected,
-            (state, {payload}) => {
-            
             }
         )
     }
@@ -129,4 +124,5 @@ export const {
     checkTask,
     resetTaskState,
 } = taskSlice.actions;
+
 export const taskReducer = taskSlice.reducer;
