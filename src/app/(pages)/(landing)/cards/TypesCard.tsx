@@ -27,7 +27,7 @@ export const chips = [
 
 export const TypesCard = () => {
     return (
-        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-gray-800 md:p-12">
+        <div className="flex flex-col items-start mb-8 rounded-lg border border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-gray-800 md:p-12">
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 Select types for each task
             </h1>
@@ -44,7 +44,7 @@ export const TypesCard = () => {
             </div>
             <Link
                 href="/sign-up"
-                className="inline-flex items-center justify-center rounded-lg bg-sky-400 py-2.5 px-5 text-center text-base font-medium text-slate-100 hover:bg-sky-500 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-900"
+                className="mt-auto inline-flex items-center justify-center rounded-lg bg-sky-400 py-2.5 px-5 text-center text-base font-medium text-slate-100 hover:bg-sky-500 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-900"
             >
                 Try it
                 <svg

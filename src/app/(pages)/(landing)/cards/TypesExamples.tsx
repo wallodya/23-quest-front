@@ -22,7 +22,7 @@ const TimerChip = () => {
         </div>
     );
 }
-const PeriodicChip = () => {
+export const PeriodicChip = () => {
     const { label, Icon, textColor, outlineColor } = chips[0]
     return (
         <div

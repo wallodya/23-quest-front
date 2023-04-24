@@ -14,11 +14,33 @@ import TaskCardActions from "./TaskCardActions";
 import TaskProvider, { useTask } from "./TaskCard.provider";
 import { ReactNode } from "react";
 
+const useTaskCardBackgroundClasses = ( isInQuest?: boolean, isFailed?: boolean, isCompleted?:boolean): string => {
+    isInQuest ??= false
+    isFailed ??= false
+    isCompleted ??= false
+
+    if (isInQuest) {
+        if (isCompleted || isFailed) {
+            return "bg-gray-800 opacity-50"
+        }
+
+        return `bg-gray-800`
+    }
+
+    if (isCompleted || isFailed) {
+        return "bg-gray-900 opacity-50";
+    }
+
+    return "bg-gray-900"
+}
+
 const TaskCardContainer = ({ children }: { children: ReactNode }) => {
-    const { toggleExpanded, task: { isInQuest } } = useTask();
+    const { toggleExpanded, task: { isInQuest, isCompleted, isFailed } } = useTask();
+    const bgClasses = useTaskCardBackgroundClasses(isInQuest, isFailed, isCompleted)
     return (
         <div
-            className={`flex flex-col rounded-xl px-5 py-3 ${isInQuest ? "bg-gray-800" : "bg-gray-900"} shadow shadow-slate-900`}
+            // className={`flex flex-col rounded-xl px-6 py-5 ${isInQuest ? "bg-gray-800" : "bg-gray-900"} shadow shadow-slate-900`}
+            className={`flex flex-col rounded-xl px-6 py-5 ${bgClasses} shadow shadow-slate-900`}
             onClick={toggleExpanded}
         >
             {children}
