@@ -14,7 +14,7 @@ const ThumbnailWarpper = ({ children }: { children: ReactNode }) => {
                 paddingInline: inlinePaddingValue,
                 paddingBottom: blockPaddingValue,
             }}
-            layout
+            layout={"preserve-aspect"}
         >
             {children}
         </motion.div>
@@ -23,13 +23,12 @@ const ThumbnailWarpper = ({ children }: { children: ReactNode }) => {
 
 const CloseButton = ({togglefn}:{togglefn: () => void}) => {
     return (
-        <motion.div
+        <div
             className="w-full flex justify-end"
             onClick={togglefn}
-            layout
         >
             <CrossIcon size="xs" />
-        </motion.div>
+        </div>
     );
 }
 
@@ -78,9 +77,9 @@ const QuestDescription = ({
                     isDescriptionExpanded ? "h-fit" : "h-0"
                 } transition-all`}
             >
-                <motion.p className="text-sm" layout={"position"}>
+                <p className="text-sm">
                     {text}
-                </motion.p>
+                </p>
             </div>
             <div
                 className="flex justify-center pt-2 text-sm font-bold"
@@ -101,19 +100,18 @@ export const QuestThumbnail = ({ isOpen, toggleCard }: { isOpen: boolean, toggle
     return (
         <ThumbnailWarpper>
             {/* {isOpen && <CloseButton togglefn={toggleOpen} />} */}
-            <motion.div className="grid w-full grid-cols-6 grid-rows-2" layout>
+            <div className="grid w-full grid-cols-6 grid-rows-2">
                 <div className="col-1 col-span-4 row-span-2 flex flex-col justify-between gap-1">
                     <h2 className="max-w-xs font-bold">{title}</h2>
                     <ActiveTasksCount />
                 </div>
-                <motion.div
+                <div
                     className="col-span-2 col-start-5 row-span-2 flex flex-col items-end justify-end text-xl"
-                    layout
                 >
                     {isOpen && <CloseButton togglefn={toggleOpen} />}
                     <TasksDonePercentage />
-                </motion.div>
-            </motion.div>
+                </div>
+            </div>
             {isOpen && <QuestDescription text={description} />}
         </ThumbnailWarpper>
     );

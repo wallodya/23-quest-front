@@ -1,6 +1,6 @@
-"use client";
+// "use client";
 
-import { Inter, Rakkas } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ReactNode } from "react";
 import GlobalLayout from "../components/layouts/global.layout";
 import MainProvider from "../context/MainProvider";
@@ -16,7 +16,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     return (
         <html
             lang="en"
-            className={`${inter.variable} dark`}
+            className={`${inter.variable} font-sans dark`}
         >
             <body className="bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100">
                 <MainProvider>
