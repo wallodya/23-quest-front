@@ -208,3 +208,27 @@ export const SpeedDial = ({
     );
 };
 
+
+export const Dial = ({ options }: { options?: DialOptions }) => {
+    const isAnimated = options?.isAnimated ?? true;
+    const isStyled = options?.isStyled ?? true;
+    const dialPosition = options?.dialPosition ?? "bottom-right";
+    const pages = options?.pages || null;
+    const Icon = options?.Icon ?? (() => <PencilIcon size="md" />);
+    const withActions = options?.withActions ?? false;
+    const actions = options?.actions ?? [];
+    const handler = options?.handler ?? (() => {});
+    const dialOptions = {
+        isAnimated,
+        isStyled,
+        dialPosition,
+        pages,
+        Icon,
+        withActions,
+        actions,
+        handler,
+    };
+
+    return <SpeedDial options={dialOptions} />;
+};
+

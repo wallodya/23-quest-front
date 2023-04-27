@@ -6,8 +6,8 @@ import TasksConfig from "@task/tasks.config";
 import { useIsIncludedOnPage } from "common/hooks";
 import FileIcon from "components/icons/FileIcon";
 import ReaderIcon from "components/icons/ReaderIcon";
-import useDial from "components/ui/Dial";
-import { DialAction } from "components/ui/Dial/dial.types";
+import { Dial } from "components/ui/Dial";
+import { DialAction, DialOptions } from "components/ui/Dial/dial.types";
 import { useAppDispatch } from "store";
 
 
@@ -35,13 +35,17 @@ const DialMobile = () => {
             action: () => dispatch(openQuestForm())
         },
     ];
-    const Dial = useDial({ withActions: true, actions: DIAL_ACTIONS, dialPosition: "bottom-right" });
+    const dialOptions: DialOptions = {
+        withActions: true,
+        actions: DIAL_ACTIONS,
+        dialPosition: "bottom-right",
+    };
     const isIncludedOnPage = useIsIncludedOnPage(null, PAGES_WO_DIAL)
     if (!isIncludedOnPage) {
         return null
     }
     return (
-        <Dial />
+        <Dial options={dialOptions}/>
     );
 };
 

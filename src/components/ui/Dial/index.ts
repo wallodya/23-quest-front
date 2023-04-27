@@ -1,3 +1,1 @@
-import { useDial } from "./dial.hooks";
-
-export default useDial
+export { Dial } from "./Dial"
