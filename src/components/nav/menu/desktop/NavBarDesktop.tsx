@@ -8,7 +8,7 @@ import {
 } from "./NavBarDesktopDropDown";
 
 const PAGE_LINKS: { name: string; link: string }[] = [
-    { name: "Home", link: "/home" },
+    { name: "Home", link: "/" },
     { name: "Quests", link: "/quests" },
     { name: "Tasks", link: "/tasks" },
 ];

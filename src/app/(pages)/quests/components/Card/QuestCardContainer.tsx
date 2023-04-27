@@ -1,6 +1,5 @@
-import { useQuestCardControls } from "@quest/common/hooks";
-import { motion, useMotionValue, useScroll } from "framer-motion";
-import React, { ReactNode, useEffect, useState } from "react";
+import { motion, useMotionValue } from "framer-motion";
+import { ReactNode } from "react";
 
 const QuestCardContainer = ({ children, isOpen, toggleOpen }: { children: ReactNode, isOpen: boolean, toggleOpen: () => void }) => {
     // const { isOpen, toggleOpen } = useQuestCardControls()

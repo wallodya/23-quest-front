@@ -6,10 +6,10 @@ import NewTask from "./Form/NewTask";
 import { useGetTasksQuery } from "@task/features/taskApi.slice";
 import { useEffect } from "react";
 import { useSubmitTask } from "@task/hooks";
-import { closeTaskForm, openTaskForm } from "@task/features";
+import { closeTaskForm, openTaskForm, selectTasksSlice } from "@task/features";
 
 export const ActiveTasks = () => {
-    const { activeTasks, taskForm: { isOpen } } = useAppSelector((state) => state.tasks);
+    const { activeTasks, taskForm: { isOpen } } = useAppSelector(selectTasksSlice());
     const dispatch = useAppDispatch()
     const closeForm = () => {
         dispatch(closeTaskForm())

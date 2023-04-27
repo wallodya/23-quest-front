@@ -10,7 +10,6 @@ export const useCreateQuest = () => {
         useCreateQuestMutation();
     const dispatch = useAppDispatch()
     useEffect(() => {
-        console.log("submit quest: ", isError,isSuccess)
         if (isError) {
             toast.error("Error while creating quest")
         }
