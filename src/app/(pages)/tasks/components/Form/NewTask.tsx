@@ -1,6 +1,6 @@
 "use client"
 
-import { TaskOptimistic } from "@task/types";
+import { TaskFormFields, TaskOptimistic } from "@task/types";
 import {
     createContext,
     useContext,
@@ -9,9 +9,10 @@ import {
 } from "react";
 import TaskFormDialog from "./TaskFormDialog";
 import TaskFormDrawer from "./TaskFormDrawer";
+import { SubmitHandler } from "react-hook-form";
 
 type TaskFormContextType = {
-    submitTaskFn: (payload: TaskOptimistic) => void;
+    submitTaskFn: SubmitHandler<TaskFormFields>;
     closeFn: () => void;
     toggleModalFn: (open: boolean) => void;
     isOpen: boolean;

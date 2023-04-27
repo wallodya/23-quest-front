@@ -1,14 +1,41 @@
 "use client";
 
 import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
-import { addTask, closeTaskForm, openTaskForm, setTypes } from "@task/features";
+import { closeTaskForm, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
-import { TaskFormFields, CreateTaskReqBody, TaskFormSteps, TaskOptimistic, TaskType } from "@task/types";
+import { CreateTaskReqBody, TaskFormFields, TaskFormSteps, TaskType } from "@task/types";
 import { useEffect } from "react";
-import { UseFormWatch } from "react-hook-form";
+import { SubmitHandler, UseFormWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "store";
+
+const getTaskReqBody = (data: TaskFormFields) => {
+    const types: TaskType = [];
+    data.isPeriodic && types.push("PERIODIC");
+    data.isTimer && types.push("TIMER");
+    data.isRepeat && types.push("REPEAT");
+    types.length === 0 && types.push("BASIC");
+
+    const reqBody: CreateTaskReqBody = {
+        title: data.title,
+        text: data.text,
+        priority: data.priority,
+
+        duration:
+            data.durationHours || data.durationMinutes || data.durationSeconds
+                ? Number(data.durationSeconds) * 1000 +
+                  Number(data.durationMinutes) * 1000 * 60 +
+                  Number(data.durationHours) * 1000 * 60 * 60
+                : null,
+        startTime: data.startTime || null,
+        endTime: data.endTime || null,
+        repeatTimes: data.repeatCount || null,
+
+        types,
+    };
+    return reqBody
+}
 
 export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
 
@@ -26,20 +53,11 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
         }
     }, [isError, isSuccess]);
 
-    const submitTask = (payload: TaskOptimistic) => {
-        const createTaskReqBody: CreateTaskReqBody = {
-            title: payload.title,
-            text: payload.text ?? null,
-            priority: payload.priority,
-            types: payload.types,
-            startTime: payload.startTime
-                ? new Date(payload.startTime)
-                : null,
-            endTime: payload.endTime ? new Date(payload.endTime) : null,
-            duration: payload.duration ?? null,
-            repeatTimes: payload.repeatCount ?? null,
-        };
-        dispatch(addTask(payload));
+
+
+    const submitTask: SubmitHandler<TaskFormFields> = (payload) => {
+
+        const createTaskReqBody = getTaskReqBody(payload)
         if (!isInQuest) {
             createTask(createTaskReqBody);
         } else {
@@ -47,6 +65,9 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
         }
         dispatch(closeTaskForm())
     };
+
+
+
     return {
         submitTask
     }
