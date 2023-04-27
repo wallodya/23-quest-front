@@ -69,16 +69,18 @@ export const NewTaskForm = ({
     };
     return (
         <FormWrapper
-            className="flex h-[60vh] w-[min(100vw,30rem)] flex-col justify-between gap-2 px-4 py-3"
+            // className="flex h-[60vh] w-[min(100vw,30rem)] flex-col justify-between items-center gap-2 px-4 py-3"
+            className=" h-[60vh] w-full px-4 py-3 flex justify-center"
             onSubmit={formControls.handleSubmit(onSubmit)}
         >
-            <TaskFormContainer>
-                <FormProgress formControls={formControls} />
-                <div className="mt-6 flex h-full flex-col justify-center">
-                    <CurrentStep formControls={formControls} />
-                </div>
-            </TaskFormContainer>
-{/* 
+            <div className="h-full w-[min(100vw,30rem)] flex flex-col items-center justify-between gap-2">
+                <TaskFormContainer>
+                    <FormProgress formControls={formControls} />
+                    <div className="mt-6 flex h-full flex-col justify-center">
+                        <CurrentStep formControls={formControls} />
+                    </div>
+                </TaskFormContainer>
+                {/* 
             <div>
                 isValid: {String(formControls.formState.isValid)}
                 {Object.values(formControls.formState.errors).map(
@@ -93,7 +95,8 @@ export const NewTaskForm = ({
                 )}
             </div> */}
 
-            <Submit disabled={!formControls.formState.isValid}>Save</Submit>
+                <Submit disabled={!formControls.formState.isValid}>Save</Submit>
+            </div>
         </FormWrapper>
     );
 };

@@ -58,14 +58,17 @@ const TaskFormContainer = ({
         closeForm();
     };
     return (
-        <div className="flex h-full flex-col gap-2">
+        <div className="flex h-full flex-col  gap-2 ">
             <div className="grid h-10 grid-cols-3 ">
                 <div className="flex">
                     {previousStep && (
                         <div className="mr-auto h-10">
                             <Button
                                 type="outlined"
-                                buttonProps={{ onClick: handlePrevious, type: "button" }}
+                                buttonProps={{
+                                    onClick: handlePrevious,
+                                    type: "button",
+                                }}
                             >
                                 {/* {previousStepLabel} */}
                                 Back
@@ -73,25 +76,33 @@ const TaskFormContainer = ({
                         </div>
                     )}
                 </div>
-                <div className="flex justify-center items-center font-bold text-sky-500">
+                <div className="flex items-center justify-center font-bold text-sky-500">
                     New task
                 </div>
-                <div className="h-full flex justify-center items-center">
+                <div className="flex h-full items-center justify-center">
                     <div className="ml-auto">
                         <Button
                             type="text"
-                            buttonProps={{ onClick: handleClose, type: "button"  }}
+                            buttonProps={{
+                                onClick: handleClose,
+                                type: "button",
+                            }}
                         >
                             <CrossIcon size="xs" />
                         </Button>
                     </div>
                 </div>
             </div>
-            <div className=" my-2 flex flex-col justify-between">{children}</div>
+            <div className=" my-2 flex flex-col justify-between">
+                {children}
+            </div>
 
             {nextStep && (
                 <div className="mt-auto">
-                    <Button type="filled" buttonProps={{ onClick: handleNext, type: "button"  }}>
+                    <Button
+                        type="filled"
+                        buttonProps={{ onClick: handleNext, type: "button" }}
+                    >
                         {nextStepLabel}
                     </Button>
                 </div>

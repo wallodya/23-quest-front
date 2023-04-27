@@ -39,7 +39,7 @@ const TaskCardContainer = ({ children }: { children: ReactNode }) => {
     const bgClasses = useTaskCardBackgroundClasses(isInQuest, isFailed, isCompleted)
     return (
         <div
-            className={`flex flex-col rounded-xl px-6 py-5 ${bgClasses} shadow shadow-slate-900`}
+            className={`flex h-full flex-col justify-between rounded-xl px-6 py-5 ${bgClasses} shadow shadow-slate-900`}
             onClick={toggleExpanded}
         >
             {children}

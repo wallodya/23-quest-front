@@ -16,8 +16,11 @@ const FailButton = () => {
         },
     } = useTask();
     return (
-        <button className="rounded-lg px-3 py-1 text-sm font-bold text-red-500/70 border-2 border-red-500/70" onClick={handleFail}>
-            {isLoading? "..." : <CrossIcon size="xs"/>}
+        <button
+            className="border-gray-950 bg-gray-950 hover:bg-red-950 rounded-lg border-2 px-3 py-1 text-sm font-bold text-red-800  transition hover:border-red-900 hover:text-red-600"
+            onClick={handleFail}
+        >
+            {isLoading ? "..." : <CrossIcon size="xs" />}
         </button>
     );
 };
@@ -33,17 +36,12 @@ const CompleteButton = () => {
             },
         },
     } = useTask();
-    // useEffect(() => {
-    //     if (isError) {
-    //         toast.error("Error while copletnig the task")
-    //     }
-    //     if (isSuccess) {
-    //         toast.success("Task completed")
-    //     }
-    // }, [isError, isSuccess])
     return (
-        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleComplete}>
-            {isLoading ? "..." : <CheckIcon size="xs"/>}
+        <button
+            className="border-gray-950 bg-gray-950 hover:bg-sky-950 rounded-lg border-2 px-3 py-1 text-sm font-bold text-sky-500 transition hover:border-sky-900 hover:text-sky-600"
+            onClick={handleComplete}
+        >
+            {isLoading ? "..." : <CheckIcon size="xs" />}
         </button>
     );
 };
@@ -55,11 +53,14 @@ const CheckButton = () => {
         },
     } = useTask();
     return (
-        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleCheck}>
-            {isLoading ? "..." : <CheckIcon size="xs"/>}
+        <button
+            className="border-gray-950 bg-gray-950 hover:bg-sky-950 rounded-lg border-2 px-3 py-1 text-sm font-bold text-sky-500 transition hover:border-sky-900 hover:text-sky-600"
+            onClick={handleCheck}
+        >
+            {isLoading ? "..." : <CheckIcon size="xs" />}
         </button>
-    )
-}
+    );
+};
 
 const StartButton = () => {
     const {
@@ -70,28 +71,31 @@ const StartButton = () => {
                 resume,
                 isRunning,
                 isStarted,
-                setIsStarted
-            }
+                setIsStarted,
+            },
         },
-        task
-    } = useTask()
+        task,
+    } = useTask();
     // const [isStarted, setIsStarted] = useState<boolean>(false)
     const handleClick = () => {
         if (isRunning) {
-            pause()
+            pause();
         } else {
-                resume()
+            resume();
         }
         if (!isStarted) {
-            setIsStarted(true)
+            setIsStarted(true);
         }
-    }
+    };
     return (
-        <button className="rounded-lg border-2 border-sky-500 bg-sky-500 px-3 py-1 text-sm font-bold" onClick={handleClick}>
-            {isRunning ? <PauseIcon size="xs"/> : <PlayIcon size="xs"/>}
+        <button
+            className="border-gray-950 bg-gray-950 hover:bg-sky-950 rounded-lg border-2 px-3 py-1 text-sm font-bold text-sky-500 transition hover:border-sky-900 hover:text-sky-600"
+            onClick={handleClick}
+        >
+            {isRunning ? <PauseIcon size="xs" /> : <PlayIcon size="xs" />}
         </button>
-    )
-}
+    );
+};
 
 const StopButton = () => {
     const {
@@ -101,20 +105,22 @@ const StopButton = () => {
         },
     } = useTask();
     const handleClick = () => {
-        const expiresTime = new Date()
-        expiresTime.setMilliseconds(expiresTime.getMilliseconds() + (duration ?? 1000))
-        restart(expiresTime, false)
-        setIsStarted(false)
-    }
+        const expiresTime = new Date();
+        expiresTime.setMilliseconds(
+            expiresTime.getMilliseconds() + (duration ?? 1000),
+        );
+        restart(expiresTime, false);
+        setIsStarted(false);
+    };
     return (
         <button
-            className="rounded-lg border-2 border-sky-500 px-3 py-1 text-sm font-bold"
+            className="border-gray-950 bg-gray-950 rounded-lg border-2 px-3 py-1 text-sm font-bold text-orange-500 transition hover:border-orange-900 hover:bg-orange-950 hover:text-orange-600"
             onClick={handleClick}
         >
-            <StopIcon size="xs"/>
+            <StopIcon size="xs" />
         </button>
     );
-}
+};
 
 const TaskCardActions = () => {
     const {
@@ -134,7 +140,7 @@ const TaskCardActions = () => {
             // TODO start button (timer starts), completes after timeout + fail button always
             return isStarted ? (
                 <>
-                    <StopButton/>
+                    <StopButton />
                     <StartButton />
                 </>
             ) : (
@@ -143,22 +149,23 @@ const TaskCardActions = () => {
         }
 
         // TODO if one repetition left: complete, otherwise: check + fail button for each rep
-        const isCheckButton = isRepeat && repeatCount !== null && repeatCount > 1 
+        const isCheckButton =
+            isRepeat && repeatCount !== null && repeatCount > 1;
         if (isCheckButton) {
-            
-            return <CheckButton/>
+            return <CheckButton />;
         }
-        return <CompleteButton/>
-    }
+        return <CompleteButton />;
+    };
     return (
-        <div className={"ml-auto flex justify-end gap-4"}>
+        <div
+            className={"ml-auto flex justify-end gap-4"}
+            onClick={(event) => event.stopPropagation()}
+        >
             <FailButton />
-            <MainActionButton/>
+            <MainActionButton />
         </div>
     );
 };
 
 export default TaskCardActions;
 
-// TODO make appropriate buttons
-//TODO add actual handlers to buttons
