@@ -55,6 +55,7 @@ export const PriorityStep = ({
                             // name="priority"
                             {...register("priority")}
                             type="radio"
+                            defaultChecked
                             value={"NOT_IMPORTANT"}
                             id="not_important"
                             className="hidden"

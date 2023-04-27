@@ -1,4 +1,3 @@
-import { spring } from "framer-motion";
 import { z } from "zod";
 
 const specialSymbols = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"

@@ -1,5 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { CreateTaskSchemaT } from "@task/components/Form/taskForm.schema";
 import { SetStateAction, Dispatch } from "react";
 import { FieldErrors, UseFormGetValues, UseFormRegister, UseFormReturn } from "react-hook-form";
 import { TimerResult } from "react-timer-hook";
@@ -70,22 +71,22 @@ export type Task = {
 };
 
 //TODO better naming
-export type TaskFormFields = Pick<
-    Task,
-    | "title"
-    | "text"
-    | "priority"
-> & {
-    repeatCount?: number,
-    endTime?: Date,
-    startTime?: Date,
-    durationSeconds?: number,
-    durationMinutes?: number,
-    durationHours?: number,
-    isTimer: boolean,
-    isPeriodic: boolean,
-    isRepeat: boolean
-};
+// export type TaskFormFields = Pick<
+//     Task,
+//     | "title"
+//     | "text"
+//     | "priority"
+// > & {
+//     repeatCount?: number,
+//     endTime?: Date,
+//     startTime?: Date,
+//     durationSeconds?: number,
+//     durationMinutes?: number,
+//     durationHours?: number,
+//     isTimer: boolean,
+//     isPeriodic: boolean,
+//     isRepeat: boolean
+// };
 
 //TODO better naming
 export type CreateTaskReqBody = {
@@ -140,9 +141,9 @@ export type TaskTypeChipProps = {
 };
 
 export type TaskFormStepsProps = {
-    formControls: UseFormReturn<TaskFormFields, any>,
+    formControls: UseFormReturn<CreateTaskSchemaT, any>,
     callbacks?: Partial<{
-        [K in keyof TaskFormFields]: {
+        [K in keyof CreateTaskSchemaT]: {
             onNext?: () => void,
             onPrevious?: () => void
         }   
@@ -152,7 +153,7 @@ export type TaskFormStepsProps = {
 export type StepProps = {
     // registerFn: UseFormRegister<CreateTaskBody>;
     // errors: FieldErrors<CreateTaskBody>;
-    formControls: UseFormReturn<TaskFormFields, any>,
+    formControls: UseFormReturn<CreateTaskSchemaT, any>,
 }
 
 export type TaskActionMutation = {

@@ -1,21 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TaskFormFields, TaskOptimistic, TaskType } from "@task/types";
 import FormWrapper from "components/ui/FormWrapper";
 import Submit from "components/ui/Submit";
 import { SubmitHandler, useForm } from "react-hook-form";
 import TaskFormContainer from "./TaskFormContainer";
 import { CurrentStep } from "./steps";
 import FormProgress from "./steps/FormProgress";
-import { createTaskSchema } from "./taskForm.schema";
+import { CreateTaskSchemaT, createTaskSchema } from "./taskForm.schema";
 
 export const NewTaskForm = ({
     submitTaskFn: saveTask,
 }: {
-    submitTaskFn: SubmitHandler<TaskFormFields>;
+    submitTaskFn: SubmitHandler<CreateTaskSchemaT>;
 }) => {
-    const formControls = useForm<TaskFormFields>({
+    const formControls = useForm<CreateTaskSchemaT>({
         resolver: zodResolver(createTaskSchema),
         mode: "onChange",
         // reValidateMode: "onChange",

@@ -1,16 +1,17 @@
 "use client";
 
 import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
+import { CreateTaskSchemaT } from "@task/components/Form/taskForm.schema";
 import { closeTaskForm, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
-import { CreateTaskReqBody, TaskFormFields, TaskFormSteps, TaskType } from "@task/types";
+import { CreateTaskReqBody, TaskFormSteps, TaskType } from "@task/types";
 import { useEffect } from "react";
 import { SubmitHandler, UseFormWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "store";
 
-const getTaskReqBody = (data: TaskFormFields) => {
+const getTaskReqBody = (data: CreateTaskSchemaT) => {
     const types: TaskType = [];
     data.isPeriodic && types.push("PERIODIC");
     data.isTimer && types.push("TIMER");
@@ -19,7 +20,7 @@ const getTaskReqBody = (data: TaskFormFields) => {
 
     const reqBody: CreateTaskReqBody = {
         title: data.title,
-        text: data.text,
+        text: data.text ?? null,
         priority: data.priority,
 
         duration:
@@ -28,8 +29,8 @@ const getTaskReqBody = (data: TaskFormFields) => {
                   Number(data.durationMinutes) * 1000 * 60 +
                   Number(data.durationHours) * 1000 * 60 * 60
                 : null,
-        startTime: data.startTime || null,
-        endTime: data.endTime || null,
+        startTime: data.startTime ? new Date(data.startTime)  : null,
+        endTime: data.endTime ? new Date(data.endTime) : null,
         repeatTimes: data.repeatCount || null,
 
         types,
@@ -55,7 +56,7 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
 
 
 
-    const submitTask: SubmitHandler<TaskFormFields> = (payload) => {
+    const submitTask: SubmitHandler<CreateTaskSchemaT> = (payload) => {
 
         const createTaskReqBody = getTaskReqBody(payload)
         if (!isInQuest) {
@@ -73,7 +74,7 @@ export const useSubmitTask = (isInQuest: boolean, questId?: string) => {
     }
 } 
 
-export const useTaskFormControls = (watch: UseFormWatch<TaskFormFields>) => {
+export const useTaskFormControls = (watch: UseFormWatch<CreateTaskSchemaT>) => {
     const dispatch = useAppDispatch();
     const [createTask, { isLoading, isError, error, isSuccess }] =
         useCreateTaskMutation();
