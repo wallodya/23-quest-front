@@ -1,10 +1,11 @@
 import { setCurrentStep } from "@task/features";
 import { useFormProgress } from "@task/hooks";
 import TasksConfig from "@task/tasks.config";
-import { TaskFormFields, TaskFormSteps } from "@task/types";
+import { TaskFormSteps } from "@task/types";
 import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "store";
+import { CreateTaskSchemaT } from "../createTask.schema";
 
 const formStepNamesMap = new Map<TaskFormSteps, string>([
     ["title&type", "Name"],
@@ -15,7 +16,7 @@ const formStepNamesMap = new Map<TaskFormSteps, string>([
     ["repeatCount", "Repeats"],
 ]);
 
-const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<TaskFormFields, any>) => {
+const useProgressLabelState = (stepNumber: number, formControls: UseFormReturn<CreateTaskSchemaT, any>) => {
     const { formState: { errors, touchedFields} } = formControls
     // const [isDirty, setIsDirty] = useState(false)
     // const [isTouched, setIsTouched] = useState(false)
@@ -63,7 +64,7 @@ const Step = ({
 }: {
     step: TaskFormSteps;
     stepNumber: number;
-    formControls: UseFormReturn<TaskFormFields, any>
+    formControls: UseFormReturn<CreateTaskSchemaT, any>
 }) => {
     const dispatch = useAppDispatch();
     const { currentStepCount, stepsTotal, allSteps } =
@@ -108,7 +109,7 @@ const Step = ({
 const FormProgress = ({
     formControls,
 }: {
-    formControls: UseFormReturn<TaskFormFields, any>;
+    formControls: UseFormReturn<CreateTaskSchemaT, any>;
 }) => {
     // const { currentStep } = useAppSelector(state => state.tasks.taskForm)
     const { isProgressShown, allSteps } = useFormProgress();
