@@ -5,6 +5,7 @@ import InputField from "components/ui/InputField";
 import { FormField, FormControl, FormLabel } from "@radix-ui/react-form";
 import { useEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
+import { ScrollLoop } from "components/ui/ScrollLoop";
 
 export const DurationStep = ({
     formControls: {
@@ -27,15 +28,6 @@ export const DurationStep = ({
     }, [hoursError, minutesError, secondsError])
     return (
         <div className="">
-            {/* <InputField
-                fieldName={"duration"}
-                registerFn={register}
-                labelText={"Set duration (in minutes)"}
-                type="number"
-                min={1}
-                max={24 * 60}
-                inputError={durationError}
-            /> */}
             <div className="flex justify-between">
                 <FormField
                     name="durationHours"
@@ -44,42 +36,36 @@ export const DurationStep = ({
                     <FormControl asChild className="">
                         <input
                             {...register("durationHours")}
-                            // type="number"
-                            // value={"NOT_IMPORTANT"}
-                            // id="not_important"
                             min={0}
                             max={24}
-                            className=" w-14 bg-transparent text-sm p-1"
+                            className=" w-14 bg-transparent p-1 text-sm"
                             type="number"
                         />
                     </FormControl>
-                    <div className="rounded-r-lg w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
+                    <div className="flex w-14 items-center justify-center rounded-r-lg bg-slate-600 p-2.5 text-sm text-slate-400">
                         hours
                     </div>
                 </FormField>
                 <FormField
                     name="durationMinutes"
-                    className="flex w-fit rounded-lg overflow-hidden border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
+                    className="flex w-fit overflow-hidden rounded-lg border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
                 >
                     <FormControl asChild className="">
                         <input
                             {...register("durationMinutes")}
-                            // type="number"
-                            // value={"NOT_IMPORTANT"}
-                            // id="not_important"
                             min={0}
                             max={59}
-                            className="w-14 bg-transparent text-sm p-1"
+                            className="w-14 bg-transparent p-1 text-sm"
                             type="number"
                         />
                     </FormControl>
-                    <div className="w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
+                    <div className="flex w-14 items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
                         min
                     </div>
                 </FormField>
                 <FormField
                     name="durationSeconds"
-                    className="flex w-fit rounded-lg overflow-hidden border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
+                    className="flex w-fit overflow-hidden rounded-lg border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
                 >
                     <FormControl asChild className="">
                         <input
@@ -89,18 +75,31 @@ export const DurationStep = ({
                             // id="not_important"
                             min={0}
                             max={59}
-                            className="w-14 bg-transparent text-sm p-1"
+                            className="w-14 bg-transparent p-1 text-sm"
                             type="number"
                         />
                     </FormControl>
-                    <div className="w-14 flex items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
+                    <div className="flex w-14 items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
                         sec
                     </div>
                 </FormField>
             </div>
-                <div className={"mt-4 text-xs font-medium text-red-600 dark:text-red-400"}>
-                    {shownError && <span>{shownError.message}</span>}
-                </div>
-        </div>  
+            <div
+                className={
+                    "mt-4 text-xs font-medium text-red-600 dark:text-red-400"
+                }
+            >
+                {shownError && <span>{shownError.message}</span>}
+            </div>
+            {/* <div className="h-[10rem] text-slate-700">
+                <ScrollLoop
+                    steps={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+                        value: num,
+                        Component: () => <p className="text-slate-100 px-2 py-1 font-bold text-lg">{num}</p>,
+                    }))}
+                    scrollAxis="y"
+                />
+            </div> */}
+        </div>
     );
 };
