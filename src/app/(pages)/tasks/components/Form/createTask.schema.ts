@@ -7,6 +7,7 @@ const refineTimer = (data: {
     durationSeconds?: number;
 }) => {
     const { isTimer, durationHours, durationSeconds, durationMinutes } = data;
+    // console.log("refine timer")
     if (!isTimer) {
         const hasDefinedDurationFields = [
             durationSeconds,
@@ -15,6 +16,9 @@ const refineTimer = (data: {
         ].some((value) => value !== undefined);
         return !hasDefinedDurationFields;
     } else {
+        // console.log("dh: ", durationHours)
+        // console.log("dm: ", durationMinutes)
+        // console.log("ds: ", durationSeconds)
         if (
             durationHours === undefined ||
             durationMinutes === undefined ||
@@ -29,7 +33,7 @@ const refineTimer = (data: {
             durationHours * 60 * 60 + durationMinutes * 60 + durationSeconds;
         const isDurationValid =
             totalDurationSeconds >= 30 && totalDurationSeconds <= 24 * 60 * 60;
-            console.log('isDurationValid', isDurationValid)
+            // console.log('isDurationValid', isDurationValid)
         return isDurationValid;
     }
 };
@@ -94,52 +98,33 @@ export const createTaskSchema = z
         endTime: z.preprocess(preprocessEmptyString, z.string().optional()),
         durationHours: z.preprocess(
             preprocessEmptyString,
-            z
-                .string()
-                .transform((value) => Number(value))
-                .pipe(
-                    z
-                        .number()
-                        .min(0, { message: "You cannot set negative duration" })
-                        .max(24, {
-                            message: "You cannot set more than 24 hours",
-                        }),
-                )
-                .default("0")
+            z.coerce
+                .number()
+                .min(0, { message: "You cannot set negative duration" })
+                .max(24, {
+                    message: "You cannot set more than 24 hours",
+                })
                 .optional(),
         ),
         durationMinutes: z.preprocess(
             preprocessEmptyString,
-            z
-                .string()
-                .transform((value) => Number(value))
-                .pipe(
-                    z
-                        .number()
-                        .min(0, { message: "You cannot set negative duration" })
-                        .max(59, {
-                            message: "You cannot set more than 59 minutes",
-                        }),
-                )
-                .default("1")
+            z.coerce
+                .number()
+                .min(0, { message: "You cannot set negative duration" })
+                .max(59, {
+                    message: "You cannot set more than 59 minutes",
+                })
                 .optional(),
         ),
         durationSeconds: z.preprocess(
             preprocessEmptyString,
-            z
-                .string()
-                // .min(0, { message: "You cannot set negative duration" })
-                // .max(59)
-                .transform((value) => Number(value))
-                .pipe(
-                    z
-                        .number()
-                        .min(0, { message: "You cannot set negative duration" })
-                        .max(59, {
-                            message: "You cannot set more than 59 seconds",
-                        }),
-                )
-                .default("0")
+            z.coerce
+                .number()
+
+                .min(0, { message: "You cannot set negative duration" })
+                .max(59, {
+                    message: "You cannot set more than 59 seconds",
+                })
                 .optional(),
         ),
         repeatCount: z.preprocess(

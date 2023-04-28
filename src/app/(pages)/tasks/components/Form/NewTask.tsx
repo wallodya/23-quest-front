@@ -10,7 +10,7 @@ import {
 import TaskFormDialog from "./TaskFormDialog";
 import TaskFormDrawer from "./TaskFormDrawer";
 import { SubmitHandler } from "react-hook-form";
-import { CreateTaskSchemaT } from "./taskForm.schema";
+import { CreateTaskSchemaT } from "./createTask.schema";
 
 type TaskFormContextType = {
     submitTaskFn: SubmitHandler<CreateTaskSchemaT>;

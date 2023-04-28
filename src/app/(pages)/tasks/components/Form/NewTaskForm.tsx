@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import TaskFormContainer from "./TaskFormContainer";
 import { CurrentStep } from "./steps";
 import FormProgress from "./steps/FormProgress";
-import { CreateTaskSchemaT, createTaskSchema } from "./taskForm.schema";
+import { CreateTaskSchemaT, createTaskSchema } from "./createTask.schema";
 
 export const NewTaskForm = ({
     submitTaskFn: saveTask,
@@ -16,8 +16,8 @@ export const NewTaskForm = ({
 }) => {
     const formControls = useForm<CreateTaskSchemaT>({
         resolver: zodResolver(createTaskSchema),
-        mode: "onChange",
-        // reValidateMode: "onChange",
+        mode: "onBlur",
+        reValidateMode: "onChange",
     });
 
     return (

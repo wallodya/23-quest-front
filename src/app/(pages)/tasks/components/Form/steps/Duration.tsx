@@ -3,41 +3,17 @@ import { useAppSelector } from "store";
 import { StepProps } from "@task/types";
 import InputField from "components/ui/InputField";
 import { FormField, FormControl, FormLabel } from "@radix-ui/react-form";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
 import { ScrollLoop, ScrollLoopStep } from "components/ui/ScrollLoop";
 import DurationScrollInput from "./DurationScrollInput";
 
-const ScrollStep = ({ value }: { value: number }) => {
-    return (
-        <p className="text-slate-100 px-2 py-1 font-bold text-lg">{value}</p>
-    )
-};
-
-const HOUR_STEPS: ScrollLoopStep[] = Array(24 + 1)
-    .fill(null)
-    .map((_, index) => ({
-        value: index,
-        Component: () => <ScrollStep value={index} />,
-    }));
-
-const MINUTE_STEPS: ScrollLoopStep[] = Array(59 + 1)
-    .fill(null)
-    .map((_, index) => ({
-        value: index,
-        Component: () => <ScrollStep value={index} />,
-    }));
-
-const SECOND_STEPS: ScrollLoopStep[] = Array(59 + 1)
-    .fill(null)
-    .map((_, index) => ({
-        value: index,
-        Component: () => <ScrollStep value={index} />,
-    }));
-
 export const DurationStep = ({
     formControls: {
         register,
+        setFocus,
+        setValue,
+        trigger,
         formState: { errors: {
             durationSeconds: secondsError,
             durationMinutes: minutesError,
@@ -54,9 +30,19 @@ export const DurationStep = ({
         minutesError && setShownError(minutesError)
         secondsError && setShownError(secondsError)
     }, [hoursError, minutesError, secondsError])
+
+    useLayoutEffect(() => {
+        console.log("input mounted")
+        const focusTimeout = setTimeout(() => {
+            console.log("timeout")
+            setFocus("durationHours")
+            setFocus("durationMinutes")
+        }, 2000)
+        return () => clearTimeout(focusTimeout)
+    },[])
     return (
         <div className="">
-            <div className="flex justify-between">
+            <div className="h-0 justify-between overflow-hidden pointer-events-none">
                 <FormField
                     name="durationHours"
                     className="flex w-fit  overflow-hidden border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
@@ -114,12 +100,12 @@ export const DurationStep = ({
             </div>
             <div
                 className={
-                    "mt-4 text-xs font-medium text-red-600 dark:text-red-400"
+                    "hiddenn mt-4 text-xs font-medium text-red-600 dark:text-red-400"
                 }
             >
                 {shownError && <span>{shownError.message}</span>}
             </div>
-            <DurationScrollInput/>
+            <DurationScrollInput setValue={setValue}/>
         </div>
     );
 };

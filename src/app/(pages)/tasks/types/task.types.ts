@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { CreateTaskSchemaT } from "@task/components/Form/taskForm.schema";
+import { CreateTaskSchemaT } from "@task/components/Form/createTask.schema";
 import { SetStateAction, Dispatch } from "react";
 import { FieldErrors, UseFormGetValues, UseFormRegister, UseFormReturn } from "react-hook-form";
 import { TimerResult } from "react-timer-hook";

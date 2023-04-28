@@ -1,7 +1,7 @@
 "use client";
 
 import { useAddTaskToQuestMutation } from "@quest/features/questApi.slice";
-import { CreateTaskSchemaT } from "@task/components/Form/taskForm.schema";
+import { CreateTaskSchemaT } from "@task/components/Form/createTask.schema";
 import { closeTaskForm, openTaskForm, setTypes } from "@task/features";
 import { useCreateTaskMutation } from "@task/features/taskApi.slice";
 import TasksConfig from "@task/tasks.config";
