@@ -1,24 +1,41 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import styles from "./scrollbar.module.css";
+
+export type ScrollLoopStep = {
+    value: any;
+    Component: () => JSX.Element;
+    onSelect?: () => void;
+};
 
 type ScrollLoopProps = {
-    steps: {
-        value: any;
-        Component: () => JSX.Element;
-        onSelect?: () => void;
-    }[];
+    steps: ScrollLoopStep[];
     setCurrentValue?: () => void;
     scrollAxis: "y" | "x";
+    backup?: number
 };
 
 const useScrollContainerClassNames = (axis: "x" | "y") => {
     if (axis === "x") {
-        return "overflow-x-scroll snap-x";
+        return "overflow-x-scroll items-center snap-x";
     } else {
-        return "flex-col overflow-y-scroll snap-y";
+        return "flex-col items-center overflow-y-scroll snap-y";
     }
 };
 
+const ScrollContent = ({ steps }: { steps: ScrollLoopStep[] }) => {
+    return (
+        <>
+            {steps.map(({ Component }, index) => (
+                <div className="snap-center" key={index}>
+                    <Component />
+                </div>
+            ))}
+        </>
+    );
+};
+
 export const ScrollLoop = ({
+    backup,
     steps,
     setCurrentValue,
     scrollAxis,
@@ -28,7 +45,7 @@ export const ScrollLoop = ({
     const axisClasses = useScrollContainerClassNames(scrollAxis);
     const [height, setHeight] = useState<number>(0);
 
-    const backup = 4;
+    backup ??= 4;
     const backupHeight = backup * height;
 
     const handleScroll = useCallback(() => {
@@ -48,45 +65,35 @@ export const ScrollLoop = ({
             }
         }
     });
+
     return (
-        <div className={`relative h-full w-fit`}>
-            <div className="absolute top-0 h-1/6 w-full bg-gradient-to-b from-current to-transparent" />
-            <div className="absolute bottom-0 h-1/6 w-full bg-gradient-to-t from-current to-transparent" />
+        <div className={`relative h-full w-full flex items-center justify-center overflow-hidden`}>
+            <div className="absolute top-0 h-1/4 w-full bg-gradient-to-b from-current to-transparent" />
             <div
-                className={`h-full ${axisClasses}`}
+                className={`flex h-full ${axisClasses} ${styles["scroll-content"]} snap-mandatory`}
                 ref={scrollRef}
+                style={{ height }}
                 onScroll={handleScroll}
             >
                 {Array(backup)
                     .fill("")
-                    .map(() => (
-                        <div>
-                            {steps.map(({ Component }, index) => (
-                                <div className="snap-center" key={index}>
-                                    <Component />
-                                </div>
-                            ))}
+                    .map((_, index) => (
+                        <div key={index}>
+                            <ScrollContent steps={steps} />
                         </div>
                     ))}
                 <div ref={contentRef}>
-                    {steps.map(({ Component }, index) => (
-                        <div className="snap-center" key={index}>
-                            <Component />
-                        </div>
-                    ))}
+                    <ScrollContent steps={steps} />
                 </div>
                 {Array(backup)
                     .fill("")
-                    .map(() => (
-                        <div>
-                            {steps.map(({ Component }, index) => (
-                                <div className="snap-center" key={index}>
-                                    <Component />
-                                </div>
-                            ))}
+                    .map((_, index) => (
+                        <div key={index}>
+                            <ScrollContent steps={steps} />
                         </div>
                     ))}
             </div>
+            <div className="absolute bottom-0 h-1/4 w-full bg-gradient-to-t from-current to-transparent" />
         </div>
     );
 };

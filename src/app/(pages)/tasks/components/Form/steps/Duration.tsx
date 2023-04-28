@@ -5,7 +5,35 @@ import InputField from "components/ui/InputField";
 import { FormField, FormControl, FormLabel } from "@radix-ui/react-form";
 import { useEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
-import { ScrollLoop } from "components/ui/ScrollLoop";
+import { ScrollLoop, ScrollLoopStep } from "components/ui/ScrollLoop";
+import DurationScrollInput from "./DurationScrollInput";
+
+const ScrollStep = ({ value }: { value: number }) => {
+    return (
+        <p className="text-slate-100 px-2 py-1 font-bold text-lg">{value}</p>
+    )
+};
+
+const HOUR_STEPS: ScrollLoopStep[] = Array(24 + 1)
+    .fill(null)
+    .map((_, index) => ({
+        value: index,
+        Component: () => <ScrollStep value={index} />,
+    }));
+
+const MINUTE_STEPS: ScrollLoopStep[] = Array(59 + 1)
+    .fill(null)
+    .map((_, index) => ({
+        value: index,
+        Component: () => <ScrollStep value={index} />,
+    }));
+
+const SECOND_STEPS: ScrollLoopStep[] = Array(59 + 1)
+    .fill(null)
+    .map((_, index) => ({
+        value: index,
+        Component: () => <ScrollStep value={index} />,
+    }));
 
 export const DurationStep = ({
     formControls: {
@@ -91,15 +119,7 @@ export const DurationStep = ({
             >
                 {shownError && <span>{shownError.message}</span>}
             </div>
-            {/* <div className="h-[10rem] text-slate-700">
-                <ScrollLoop
-                    steps={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
-                        value: num,
-                        Component: () => <p className="text-slate-100 px-2 py-1 font-bold text-lg">{num}</p>,
-                    }))}
-                    scrollAxis="y"
-                />
-            </div> */}
+            <DurationScrollInput/>
         </div>
     );
 };

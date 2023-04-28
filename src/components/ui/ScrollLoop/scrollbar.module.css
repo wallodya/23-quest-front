@@ -1,0 +1,13 @@
+/* ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+} */
+
+.scroll-content {
+    scrollbar-width: none;
+}
+
+.scroll-content::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
