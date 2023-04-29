@@ -24,7 +24,7 @@ const ToastPortal = () => {
         <ToastContainer
         position="bottom-right"
         className={
-            "left-auto right-2 bottom-4 flex w-72 flex-col gap-2 text-slate-100"
+            " right-2 bottom-8 flex max-w-72 flex-col gap-2 text-slate-100"
         }
         toastClassName={(opt) =>
             toastClasses[opt?.type || "default"] +

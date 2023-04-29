@@ -72,7 +72,7 @@ export const catchAuthExceptionsMiddleware: Middleware<{}, RootState> = ({ getSt
             dispatch(removeUser({ refreshedAt: currentTime }));
             dispatch(resetTaskState())
             dispatch(resetQuestState())
-            toast.warn("You not authorized to so this action")
+            toast.warn("Not authorized")
         }
     }
     return next(action)
