@@ -11,7 +11,7 @@ const inter = Inter({
 const PageWrapper = ({children}:{children: ReactNode}) => {
     return (
         <html lang="en" className={`${inter.variable} dark font-sans`}>
-            <body className="bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100">
+            <body className="bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 w-screen">
                 {children}
             </body>
         </html>

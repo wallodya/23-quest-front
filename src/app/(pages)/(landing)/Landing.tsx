@@ -8,7 +8,7 @@ import { Cards } from './cards';
 
 const Backdrop = () => {
     return (
-        <div className="absolute top-0 left-0 z-0 h-full w-full bg-gradient-to-b from-sky-500 to-transparent dark:from-sky-800/70 scale-x-150"/>
+        <div className="absolute top-0 left-0 z-0 h-full w-full bg-gradient-to-b from-sky-500 to-transparent dark:from-sky-800/70"/>
     );
 }
 
@@ -52,7 +52,7 @@ export const Landing = () => {
                         Manage your daily tasks
                     </h1>
                     <p className="mb-8 text-lg font-normal text-gray-500 dark:text-gray-200 sm:px-16 lg:px-48 lg:text-xl">
-                        Simple todo app, that lets you create tasks of different
+                        Simple todo app, that lets you create tasks of different types
                     </p>
                 </div>
             </section>
