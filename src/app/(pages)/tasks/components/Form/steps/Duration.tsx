@@ -3,6 +3,7 @@ import { StepProps } from "@task/types";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
 import DurationScrollInput from "./DurationScrollInput";
+import { useMobileScreenSize } from "common/hooks";
 
 export const DurationStep = ({
     formControls: {
@@ -27,19 +28,30 @@ export const DurationStep = ({
         secondsError && setShownError(secondsError)
     }, [hoursError, minutesError, secondsError])
 
+    const isMobile = useMobileScreenSize()
+
     useLayoutEffect(() => {
         const focusTimeout = setTimeout(() => {
-            setFocus("durationHours")
-            setFocus("durationMinutes")
+            if (isMobile) {
+                setFocus("durationHours")
+                setFocus("durationMinutes")
+            }
         }, 2000)
         return () => clearTimeout(focusTimeout)
-    },[])
+    },[isMobile])
     return (
-        <div className="">
-            <div className="h-fit flex justify-between overflow-hidden pointer-events-none">
+        <div className="flex flex-col items-center ">
+            <div className="w-full mb-2 text-sm font-medium text-slate-100">
+                Set task duration
+            </div>
+            <div
+                className={`${
+                    isMobile ? "h-0" : "h-fit"
+                } pointer-events-none flex justify-between gap-2 overflow-hidden`}
+            >
                 <FormField
                     name="durationHours"
-                    className="flex w-fit  overflow-hidden border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
+                    className="flex w-fit  overflow-hidden rounded-lg border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
                 >
                     <FormControl asChild className="">
                         <input
@@ -65,7 +77,11 @@ export const DurationStep = ({
                             max={59}
                             className="w-14 bg-transparent p-1 text-sm"
                             type="number"
-                            onFocus={(event) => event.target.blur()}
+                            onFocus={(event) => {
+                                if (isMobile) {
+                                    event.target.blur();
+                                }
+                            }}
                         />
                     </FormControl>
                     <div className="flex w-14 items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
@@ -95,12 +111,12 @@ export const DurationStep = ({
             </div>
             <div
                 className={
-                    "hidden mt-4 text-xs font-medium text-red-600 dark:text-red-400"
+                    "mt-4 hidden text-xs font-medium text-red-600 dark:text-red-400"
                 }
             >
                 {shownError && <span>{shownError.message}</span>}
             </div>
-            <DurationScrollInput setValue={setValue}/>
+            {isMobile && <DurationScrollInput setValue={setValue} />}
         </div>
     );
 };

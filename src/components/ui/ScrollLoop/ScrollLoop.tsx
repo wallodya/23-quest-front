@@ -108,7 +108,7 @@ export const ScrollLoop = <TValue=unknown>({
 
     return (
         <div className={`relative h-full w-full flex items-center justify-center overflow-hidden`}>
-            <div className="absolute top-0 h-1/4 w-full bg-gradient-to-b from-current to-transparent" />
+            <div className="absolute top-0 h-1/4 w-full bg-gradient-to-b from-current to-transparent pointer-events-none" />
             <div
                 className={`flex h-full ${axisClasses} ${styles["scroll-content"]} snap-mandatory`}
                 ref={scrollRef}
@@ -133,7 +133,7 @@ export const ScrollLoop = <TValue=unknown>({
                         </div>
                     ))}
             </div>
-            <div className="absolute bottom-0 h-1/4 w-full bg-gradient-to-t from-current to-transparent" />
+            <div className="absolute bottom-0 h-1/4 w-full bg-gradient-to-t from-current to-transparent pointer-events-none" />
         </div>
     );
 };

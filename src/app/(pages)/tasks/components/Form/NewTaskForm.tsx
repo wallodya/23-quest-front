@@ -33,9 +33,7 @@ export const NewTaskForm = ({
                         <CurrentStep formControls={formControls} />
                     </div>
                 </TaskFormContainer>
-                    <Submit disabled={!formControls.formState.isValid}>
-                        Save
-                    </Submit>
+                <Submit disabled={!formControls.formState.isValid}>Save</Submit>
                 {/* 
             <div>
                 isValid: {String(formControls.formState.isValid)}

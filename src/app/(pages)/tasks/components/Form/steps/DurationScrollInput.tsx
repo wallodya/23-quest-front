@@ -5,21 +5,21 @@ import { CreateTaskSchemaT } from "../createTask.schema";
 
 const SecondScrollStep = ({ value }: { value: number }) => {
     return (
-        <p className="flex items-center justify-center p-2.5 py-3 text-lg font-bold text-slate-100">
+        <p className="flex items-center justify-center p-2.5 py-3 mr-14 text-lg font-bold text-slate-100">
             {value}
         </p>
     );
 };
 const MinuteScrollStep = ({ value }: { value: number }) => {
     return (
-        <p className="flex items-center justify-center p-2.5 py-3 text-lg font-bold text-slate-100">
+        <p className="flex items-center justify-center p-2.5 py-3 mr-14 text-lg font-bold text-slate-100">
             {value}
         </p>
     );
 };
 const HourScrollStep = ({ value }: { value: number }) => {
     return (
-        <p className="flex items-center justify-center px-2.5 py-3 text-lg font-bold text-slate-100 ">
+        <p className="flex items-center justify-center px-2.5 py-3 mr-14 text-lg font-bold text-slate-100 ">
             {value}
         </p>
     );
@@ -33,7 +33,7 @@ const LabelFrame = () => {
 
 const Label = ({ text }: { text: string }) => {
     return (
-        <span className="relative  flex w-14 items-center justify-center rounded-r-lg bg-slate-600 px-2.5 py-3 text-sm text-gray-400">
+        <span className="relative flex w-14 items-center justify-center rounded-r-lg bg-slate-600 px-2.5 py-3 text-sm text-gray-400">
             {text}
             <LabelFrame />
         </span>
@@ -94,9 +94,9 @@ const DurationScrollInput = ({setValue}:{setValue: UseFormSetValue<CreateTaskSch
         useScrollDurationInputSteps(setValue);
 
     return (
-        <div className="flex h-[10rem] justify-between text-slate-700">
-            <div className="col-start-1 flex h-full">
-                <div className="w-14">
+        <div className="flex h-[10rem] w-full justify-between text-slate-700">
+            <div className="relative col-start-1 flex h-full w-fit">
+                <div className="w-28">
                     <ScrollLoop<number>
                         steps={HOUR_STEPS}
                         scrollAxis="y"
@@ -105,12 +105,12 @@ const DurationScrollInput = ({setValue}:{setValue: UseFormSetValue<CreateTaskSch
                     />
                 </div>
 
-                <div className="flex h-full flex-col justify-center">
+                <div className="absolute right-0 z-[-10] flex h-full flex-col justify-center">
                     <Label text={"hours"} />
                 </div>
             </div>
-            <div className="col-start-2 flex h-full">
-                <div className="w-14">
+            <div className="relative col-start-2 flex h-full">
+                <div className="w-28">
                     <ScrollLoop<number>
                         steps={MINUTE_STEPS}
                         scrollAxis="y"
@@ -118,12 +118,12 @@ const DurationScrollInput = ({setValue}:{setValue: UseFormSetValue<CreateTaskSch
                         initialValue={5}
                     />
                 </div>
-                <div className="flex h-full flex-col justify-center">
+                <div className="absolute right-0 z-[-10] flex h-full flex-col justify-center">
                     <Label text={"min"} />
                 </div>
             </div>
-            <div className="col-start-3 flex h-full">
-                <div className="w-14">
+            <div className="relative col-start-3 flex h-full">
+                <div className="w-28">
                     <ScrollLoop<number>
                         steps={SECOND_STEPS}
                         scrollAxis="y"
@@ -132,7 +132,7 @@ const DurationScrollInput = ({setValue}:{setValue: UseFormSetValue<CreateTaskSch
                     />
                 </div>
 
-                <div className="flex h-full flex-col justify-center">
+                <div className="absolute right-0 z-[-10] flex h-full flex-col justify-center">
                     <Label text={"sec"} />
                 </div>
             </div>

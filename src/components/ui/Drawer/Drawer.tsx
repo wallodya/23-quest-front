@@ -39,7 +39,7 @@ const Root = ({children, isOpen, ...options} : {children: ReactNode, isOpen: boo
     return (
         <DrawerContext.Provider value={drawerOptions}>
             <div
-                className={`fixed ${drawerDisplayClass} bottom-0 left-0  ${drawerPositionClasses} h-screen w-screen`}
+                className={`fixed ${drawerDisplayClass} bottom-0 left-0  ${drawerPositionClasses} w-screen`}
             >
                 <AnimatePresence>
                     {isOpen && <>{children}</>}

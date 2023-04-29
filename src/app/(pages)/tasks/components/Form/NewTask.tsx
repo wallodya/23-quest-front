@@ -11,6 +11,7 @@ import TaskFormDialog from "./TaskFormDialog";
 import TaskFormDrawer from "./TaskFormDrawer";
 import { SubmitHandler } from "react-hook-form";
 import { CreateTaskSchemaT } from "./createTask.schema";
+import { useMobileScreenSize } from "common/hooks";
 
 type TaskFormContextType = {
     submitTaskFn: SubmitHandler<CreateTaskSchemaT>;
@@ -28,17 +29,18 @@ const TaskFormContext = createContext<TaskFormContextType>({
 export const useTaskForm = () => useContext(TaskFormContext)
 
 const NewTask = (contextProps: TaskFormContextType) => {
-    const [isDialog, setIsDialog] = useState<boolean>(false)
-    const TW_MD_WIDTH = 768;
-    useEffect(() => {
-        if (typeof window !== "undefined" && window.innerWidth >= TW_MD_WIDTH) {
-            setIsDialog(true)
-        }
-    })
+    // const [isDialog, setIsDialog] = useState<boolean>(false)
+    // const TW_MD_WIDTH = 768;
+    // useEffect(() => {
+    //     if (typeof window !== "undefined" && window.innerWidth >= TW_MD_WIDTH) {
+    //         setIsDialog(true)
+    //     }
+    // })
+    const isDrawer = useMobileScreenSize()
 
     return (
         <TaskFormContext.Provider value={contextProps}>
-            {isDialog ? <TaskFormDialog /> : <TaskFormDrawer />}
+            {isDrawer ? <TaskFormDrawer /> : <TaskFormDialog />}
         </TaskFormContext.Provider>
     );
 };

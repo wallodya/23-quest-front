@@ -1,25 +1,4 @@
-import { TaskCard } from "@task/components/Card";
-import { Task } from "@task/types";
 import { TaskCardExample } from "./TaskCardExample";
-
-const exampleTask: Task = {
-    uniqueTaskId: "id",
-    isCompleted: false,
-    isFailed: false,
-    title: "Example",
-    text: "",
-    types: ["BASIC"],
-    startTime: new Date(),
-    endTime: new Date(),
-    duration: null,
-    repeatCount: null,
-    priority: "MEDIUM",
-    isInQuest: false,
-    uniqueQuestId: null,
-    isCurrentInQuest: false,
-    createdAt: String(new Date()),
-    updatedAt: String(new Date()),
-}
 
 export const CreateTaskCard = () => {
     return (
