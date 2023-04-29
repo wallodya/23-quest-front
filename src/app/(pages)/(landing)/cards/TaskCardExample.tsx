@@ -14,7 +14,7 @@ export const TaskCardExample = ({
     title ??= "Example task";
     return (
         <div
-            className={`w-fit flex flex-col rounded-xl ${isInQuest ? "bg-gray-800" : "bg-gray-900"} px-6 py-5 shadow shadow-slate-900`}
+            className={`flex flex-col rounded-xl ${isInQuest ? "bg-gray-800" : "bg-gray-900"} px-6 py-5 shadow shadow-slate-900`}
         >
             <div className="flex items-baseline justify-between">
                 <p className="font-bold">{title}</p>

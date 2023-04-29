@@ -36,7 +36,7 @@ export const PeriodicChip = () => {
 
 export const RepeatExample = () => {
     return (
-        <div className=" border-b xl:border-b-0 xl:border-r border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
+        <div className=" border-b xl:border-b-0 xl:border-r border-gray-200 bg-gray-50 p-4 sm:p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
             <RepeatChip />
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 "Repeat" type
@@ -50,7 +50,7 @@ export const RepeatExample = () => {
 }
 export const TimerExample = () => {
     return (
-        <div className=" border-b xl:border-b-0 xl:border-r border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
+        <div className=" border-b xl:border-b-0 xl:border-r border-gray-200 bg-gray-50 p-4 sm:p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
             <TimerChip />
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 "Timer" type
@@ -64,7 +64,7 @@ export const TimerExample = () => {
 }
 export const PeriodicExample = () => {
     return (
-        <div className="  border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
+        <div className="  border-gray-200 bg-gray-50 p-4 sm:p-8 dark:border-gray-700 dark:bg-transparent md:p-12">
             <PeriodicChip />
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 "Periodic" type

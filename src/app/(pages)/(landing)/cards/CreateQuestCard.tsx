@@ -90,7 +90,7 @@ export const CreateQuestCard = () => {
     return (
         <div className=" mb-8 gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 sm:p-8 md:p-12">
             <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-                <div>
+                <div className="p-4 sm:p-8 md:p-12">
                     <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                         Create quests
                     </h1>

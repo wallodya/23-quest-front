@@ -27,7 +27,7 @@ export const chips = [
 
 export const TypesCard = () => {
     return (
-        <div className="ms:p-8 mb-8 flex flex-col items-start rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-12">
+        <div className="sm:p-8 mb-8 flex flex-col items-start rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-12">
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 Select types for each task
             </h1>
