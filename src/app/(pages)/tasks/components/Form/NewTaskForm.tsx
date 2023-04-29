@@ -22,7 +22,7 @@ export const NewTaskForm = ({
 
     return (
         <FormWrapper
-            className=" flex h-[60vh] w-full justify-center px-4 py-3"
+            className=" flex h-[60vh] w-full justify-center px-4 pt-3 mb-40 md:mb-0 md:pb-3"
             onSubmit={formControls.handleSubmit(saveTask)}
         >
             <div className="flex h-full w-[min(100vw,30rem)] flex-col items-center justify-between gap-2">
@@ -32,6 +32,9 @@ export const NewTaskForm = ({
                         <CurrentStep formControls={formControls} />
                     </div>
                 </TaskFormContainer>
+                    <Submit disabled={!formControls.formState.isValid}>
+                        Save
+                    </Submit>
                 {/* 
             <div>
                 isValid: {String(formControls.formState.isValid)}
@@ -46,8 +49,6 @@ export const NewTaskForm = ({
                     ),
                 )}
             </div> */}
-
-                <Submit disabled={!formControls.formState.isValid}>Save</Submit>
             </div>
         </FormWrapper>
     );

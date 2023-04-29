@@ -23,6 +23,7 @@ const NewQuestForm = () => {
     }
     return (
         <FormWrapper
+            className="mb-20 md:mb-0"
             onSubmit={handleSubmit(onSubmit)}
         >
             <QuestFormContainer>

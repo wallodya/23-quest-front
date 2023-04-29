@@ -34,7 +34,8 @@ export const QuestCard = ({ ...quest }: Quest) => {
                 <QuestThumbnail isOpen={isQuestOpened} toggleCard={toggleOpen} />
                 {isQuestOpened && (
                     <>
-                        <QuestCardContent /> <QuestCardControls />
+                        <QuestCardContent /> 
+                        {/* <QuestCardControls /> */}
                         <NewTask
                             submitTaskFn={submitTask}
                             closeFn={closeForm}

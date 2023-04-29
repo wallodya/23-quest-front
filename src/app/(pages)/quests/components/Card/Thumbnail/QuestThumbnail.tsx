@@ -2,6 +2,8 @@ import CrossIcon from "components/icons/CrossIcon";
 import { AnimatePresence, motion, useMotionValue } from "framer-motion"
 import { ReactNode, useState } from "react";
 import { useQuest } from "../questCard.provider";
+import { useAppDispatch } from "store";
+import { openTaskForm } from "@task/features";
 
 const ThumbnailWarpper = ({ children }: { children: ReactNode }) => {
     const inlinePaddingValue = useMotionValue(30);
@@ -95,6 +97,10 @@ export const QuestThumbnail = ({ isOpen, toggleCard }: { isOpen: boolean, toggle
     const toggleOpen = () => {
         toggleCard()
     }
+    const dispatch = useAppDispatch()
+    const handleAddTask = () => {
+        dispatch(openTaskForm())
+    }
     const { title, description } = useQuest()
 
     return (
@@ -103,11 +109,22 @@ export const QuestThumbnail = ({ isOpen, toggleCard }: { isOpen: boolean, toggle
             <div className="grid w-full grid-cols-6 grid-rows-2">
                 <div className="col-1 col-span-4 row-span-2 flex flex-col justify-between gap-1">
                     <h2 className="max-w-xs font-bold">{title}</h2>
-                    <ActiveTasksCount />
+                    <div className="flex items-center  gap-2">
+                        <ActiveTasksCount />
+                        {isOpen && (
+                            <button
+                                role="button"
+                                className={
+                                    "rounded-md border border-emerald-800 px-2 py-[0.2rem] text-xs italic text-emerald-800"
+                                }
+                                onClick={handleAddTask}
+                            >
+                                + add task
+                            </button>
+                        )}
+                    </div>
                 </div>
-                <div
-                    className="col-span-2 col-start-5 row-span-2 flex flex-col items-end justify-end text-xl"
-                >
+                <div className="col-span-2 col-start-5 row-span-2 flex flex-col items-end justify-end text-xl">
                     {isOpen && <CloseButton togglefn={toggleOpen} />}
                     <TasksDonePercentage />
                 </div>

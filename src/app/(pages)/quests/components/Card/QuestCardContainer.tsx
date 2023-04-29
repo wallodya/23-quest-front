@@ -21,18 +21,23 @@ const QuestCardContainer = ({ children, isOpen, toggleOpen }: { children: ReactN
             >
                 <motion.div
                     className={
-                        "w-full  flex flex-col bg-gray-900 pointer-events-auto overflow-hidden " +
-                        (isOpen ? "h-screen" : "h-full ")
+                        "pointer-events-auto relative flex w-full flex-col overflow-hidden bg-gray-900 " +
+                        (isOpen ? "h-screen" : "h-full")
                     }
-                    style={{ borderRadius: borderRadiusValue }}
+                    style={{
+                        borderRadius: borderRadiusValue,
+                        // height: "-moz-available",
+                        // height: "fill-available",
+                    }}
                     onClick={!isOpen ? toggleOpen : () => {}}
                     initial={false}
                     layout
-
                     transition={{
                         duration: 0.15,
                     }}
-                >{children}</motion.div>
+                >
+                    {children}
+                </motion.div>
             </div>
         </li>
     );

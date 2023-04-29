@@ -9,7 +9,7 @@ const QuestCardControls = () => {
         dispatch(openTaskForm())
     }
   return (
-      <div className="flex justify-center gap-2 py-6 px-6">
+      <div className="flex justify-center gap-2 p-6">
           <div className="max-w-96">
               {/* <Button type="outlined">More actions</Button> */}
               <Button type="filled" buttonProps={{ onClick: handleAddTask }}>
