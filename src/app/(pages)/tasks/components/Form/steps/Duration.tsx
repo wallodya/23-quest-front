@@ -36,7 +36,7 @@ export const DurationStep = ({
     },[])
     return (
         <div className="">
-            <div className="h-0 justify-between overflow-hidden pointer-events-none">
+            <div className="h-fit flex justify-between overflow-hidden pointer-events-none">
                 <FormField
                     name="durationHours"
                     className="flex w-fit  overflow-hidden border text-slate-800 focus:border-sky-500 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:placeholder-gray-400 dark:focus:border-sky-400 dark:focus:ring-sky-400"
@@ -65,6 +65,7 @@ export const DurationStep = ({
                             max={59}
                             className="w-14 bg-transparent p-1 text-sm"
                             type="number"
+                            onFocus={(event) => event.target.blur()}
                         />
                     </FormControl>
                     <div className="flex w-14 items-center justify-center bg-slate-600 p-2.5 text-sm text-slate-400">
@@ -94,7 +95,7 @@ export const DurationStep = ({
             </div>
             <div
                 className={
-                    "hiddenn mt-4 text-xs font-medium text-red-600 dark:text-red-400"
+                    "hidden mt-4 text-xs font-medium text-red-600 dark:text-red-400"
                 }
             >
                 {shownError && <span>{shownError.message}</span>}

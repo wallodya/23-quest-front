@@ -1,20 +1,10 @@
-"use client"
-
+import { SignOutButton } from "@user/components/SignOutButton"
 import FileIcon from "components/icons/FileIcon"
 import HomeIcon from "components/icons/HomeIcon"
-import PersonIcon from "components/icons/PersonIcon"
 import ReaderIcon from "components/icons/ReaderIcon"
-import Button from "components/ui/Button"
-import { ReactNode, useEffect } from "react"
+import { ReactNode } from "react"
 import NavLinks, { DrawerPageLink } from "./NavLinks"
 import ProfileCard from "./ProfileCard"
-import { useAppDispatch } from "store"
-import { useSignOutMutation } from "store/api"
-import { useRouter } from "next/navigation"
-import { resetQuestState } from "@quest/features"
-import { resetTaskState } from "@task/features"
-import { removeUser } from "@user/features"
-import { SignOutButton } from "@user/components/SignOutButton"
 
 const PAGE_LINKS: DrawerPageLink[] = [
     {
@@ -32,11 +22,6 @@ const PAGE_LINKS: DrawerPageLink[] = [
         Icon: () => <FileIcon size="sm"/>,
         href: "/tasks"
     },
-    {
-        name: "Profile",
-        Icon: () => <PersonIcon size="sm"/>,
-        href: "/profile"
-    },
 ]
 
 export const MenuMobile = ({
@@ -46,29 +31,11 @@ export const MenuMobile = ({
     children: ReactNode;
     toggleFn: () => void;
 }) => {
-    const [signOut, { isLoading, isSuccess }] = useSignOutMutation()
-    const router = useRouter()
-    const dispatch = useAppDispatch()
-    // const handleSignOut = () => {
-    //     signOut()
-    //         .unwrap()
-    //         .then(() => {
-    //             dispatch(resetQuestState())
-    //             dispatch(resetTaskState())
-    //             const currentTime = String(new Date())
-    //             dispatch(removeUser({ refreshedAt: currentTime }));
-    //             router.push("/sign-in")
-    //         })
-    //         .catch(err => console.log(" Sign out error: ", err))
-    // }
     return (
         <div className="flex flex-col justify-between gap-8">
             <ProfileCard>{children}</ProfileCard>
             <NavLinks links={PAGE_LINKS} toggleFn={toggleFn} />
             <div className="px-4">
-                {/* <Button type="filled" buttonProps={{ onClick: handleSignOut }}>
-                    Sign out
-                </Button> */}
                 <SignOutButton/>
             </div>
         </div>

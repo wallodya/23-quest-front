@@ -39,7 +39,7 @@ const Root = ({children, isOpen, ...options} : {children: ReactNode, isOpen: boo
     return (
         <DrawerContext.Provider value={drawerOptions}>
             <div
-                className={`fixed ${drawerDisplayClass} top-0 left-0  ${drawerPositionClasses} h-screen w-screen`}
+                className={`fixed ${drawerDisplayClass} bottom-0 left-0  ${drawerPositionClasses} h-screen w-screen`}
             >
                 <AnimatePresence>
                     {isOpen && <>{children}</>}
@@ -73,7 +73,7 @@ const Background = ({ toggleFn }: { toggleFn: () => void }) => {
         useDrawerBackgroundAnimation(drawerPosition);
     return (
         <motion.div
-            className={`absolute top-0 left-0 z-30 h-screen w-screen ${backgroundGradientClasses}`}
+            className={`fixed top-0 left-0 z-30 h-screen w-screen ${backgroundGradientClasses}`}
             onClick={toggleFn}
             initial={initial}
             animate={animate}
