@@ -48,10 +48,10 @@ export const useDrawerPositionClasses = (position: DrawerPositions) => {
             return "flex flex-col justify-end";
         }
         case "left": {
-            return "flex h-screen";
+            return "flex h-full";
         }
         case "right": {
-            return "flex justify-end h-screen";
+            return "flex justify-end h-full";
         }
         case "top": {
             return "flex flex-col";
