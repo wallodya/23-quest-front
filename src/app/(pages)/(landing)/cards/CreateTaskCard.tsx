@@ -23,7 +23,7 @@ const exampleTask: Task = {
 
 export const CreateTaskCard = () => {
     return (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(330px,1fr))] gap-4 mb-8 rounded-lg border border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-gray-800 md:p-12">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(330px,1fr))] items-center gap-4 mb-8 rounded-lg border border-gray-200 bg-gray-50 p-4 sm:p-8 dark:border-gray-700 dark:bg-gray-800 md:p-12">
             <div>
                 <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                     Create tasks

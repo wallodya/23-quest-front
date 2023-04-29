@@ -27,20 +27,22 @@ export const chips = [
 
 export const TypesCard = () => {
     return (
-        <div className="flex flex-col items-start mb-8 rounded-lg border border-gray-200 bg-gray-50 p-8 dark:border-gray-700 dark:bg-gray-800 md:p-12">
+        <div className="ms:p-8 mb-8 flex flex-col items-start rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-12">
             <h1 className="mb-2 text-3xl font-extrabold text-slate-900 dark:text-slate-100 md:text-5xl">
                 Select types for each task
             </h1>
-            <div className='my-6 flex gap-4'>
-                {chips.map(({textColor, label, outlineColor, Icon}, index) => (
-                    <div
-                        key={index}
-                        className={`flex items-center justify-between gap-2 px-2 py-1 ${textColor} rounded-full border-2 ${outlineColor}`}
-                    >
-                        <Icon size={"sm"}/>
-                        {label}
-                    </div>
-                ))}
+            <div className="my-6 flex flex-wrap gap-4">
+                {chips.map(
+                    ({ textColor, label, outlineColor, Icon }, index) => (
+                        <div
+                            key={index}
+                            className={`flex items-center justify-between gap-2 px-2 py-1 ${textColor} rounded-full border-2 ${outlineColor}`}
+                        >
+                            <Icon size={"sm"} />
+                            {label}
+                        </div>
+                    ),
+                )}
             </div>
             <Link
                 href="/sign-up"

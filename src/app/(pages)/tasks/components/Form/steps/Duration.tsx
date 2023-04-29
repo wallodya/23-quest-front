@@ -1,11 +1,7 @@
-import TasksConfig from "@task/tasks.config";
-import { useAppSelector } from "store";
+import { FormControl, FormField } from "@radix-ui/react-form";
 import { StepProps } from "@task/types";
-import InputField from "components/ui/InputField";
-import { FormField, FormControl, FormLabel } from "@radix-ui/react-form";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
-import { ScrollLoop, ScrollLoopStep } from "components/ui/ScrollLoop";
 import DurationScrollInput from "./DurationScrollInput";
 
 export const DurationStep = ({
@@ -32,9 +28,7 @@ export const DurationStep = ({
     }, [hoursError, minutesError, secondsError])
 
     useLayoutEffect(() => {
-        console.log("input mounted")
         const focusTimeout = setTimeout(() => {
-            console.log("timeout")
             setFocus("durationHours")
             setFocus("durationMinutes")
         }, 2000)
