@@ -23,7 +23,7 @@ const Quests = () => {
     return (
         <div className="my-16 sm:mt-20">
             {/* <NewTask submitTaskFn={submitTask}/> */}
-            <ul className="flex flex-col md:grid md:grid-cols-cards gap-4">
+            <ul className="flex flex-col md:grid md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-4">
                 <li>
                     <NewQuest />
                 </li>

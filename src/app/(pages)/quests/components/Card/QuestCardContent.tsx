@@ -13,7 +13,7 @@ const QuestCardContent = () => {
         <motion.div className="relative h-full overflow-hidden px-4" layout>
             {/* <div className="flex py-6 h-full flex-col gap-4 overflow-y-auto"> */}
             <div className="h-full  overflow-y-auto py-6">
-                <div className="grid grid-cols-cards gap-4 ">
+                <div className="grid md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-4 ">
                     {tasks === "loading" ? (
                         <div>loading tasks</div>
                     ) : (

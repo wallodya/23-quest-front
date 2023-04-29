@@ -24,7 +24,7 @@ export const ActiveTasks = () => {
     const { submitTask } = useSubmitTask(false);
     // TODO add optimistic updates
     return (
-        <section className="flex flex-col md:grid md:grid-cols-cards gap-4">
+        <section className="flex flex-col md:grid md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-4">
             {/* {addedTasks.map((task, index) => (
                 <TaskCard {...task} key={index} />
             ))} */}
