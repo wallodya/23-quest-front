@@ -46,8 +46,8 @@ export const DurationStep = ({
             </div>
             <div
                 className={`${
-                    isMobile ? "h-0" : "h-fit"
-                } pointer-events-none flex justify-between gap-2 overflow-hidden`}
+                    isMobile ? "h-0 pointer-events-none" : "h-fit"
+                } flex justify-between gap-2 overflow-hidden`}
             >
                 <FormField
                     name="durationHours"
@@ -111,7 +111,7 @@ export const DurationStep = ({
             </div>
             <div
                 className={
-                    "mt-4 hidden text-xs font-medium text-red-600 dark:text-red-400"
+                    `mt-4 ${isMobile ? "hidden" : "block"} text-xs font-medium text-red-600 dark:text-red-400`
                 }
             >
                 {shownError && <span>{shownError.message}</span>}
