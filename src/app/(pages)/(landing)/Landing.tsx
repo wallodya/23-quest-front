@@ -1,23 +1,25 @@
-import TaskTypeChip from '@task/components/Card/TaskTypeChip';
-import PeriodIcon from 'components/icons/PeriodIcon';
-import RepeatIcon from 'components/icons/RepeatIcon';
-import TimerIcon from 'components/icons/TimerIcon';
-import Link from 'next/link';
-import React from 'react'
-import { Cards } from './cards';
-import Button from 'components/ui/Button';
+import TaskTypeChip from "@task/components/Card/TaskTypeChip";
+import PeriodIcon from "components/icons/PeriodIcon";
+import RepeatIcon from "components/icons/RepeatIcon";
+import TimerIcon from "components/icons/TimerIcon";
+import Link from "next/link";
+import React from "react";
+import { Cards } from "./cards";
+import Button from "components/ui/Button";
 
 const Backdrop = () => {
     return (
-        <div className="absolute top-0 left-0 z-0 h-full w-full bg-gradient-to-b from-sky-500 to-transparent dark:from-sky-800/70"/>
+        <div className="absolute top-0 left-0 z-0 h-full w-full bg-gradient-to-b from-sky-500 to-transparent dark:from-sky-800/70" />
     );
-}
+};
 
 const TopLink = () => {
     return (
         <a
             href="https://github.com/wallodya/23-quest-front"
-            className="mb-7 inline-flex items-center justify-between rounded-full bg-sky-100 py-1 px-2 sm:px-1 pr-4 text-xs sm:text-sm text-sky-700 hover:bg-blue-200 dark:bg-sky-900 dark:text-sky-300 dark:hover:bg-sky-800"
+            className="mb-7 inline-flex items-center justify-between rounded-full bg-sky-100 py-1 px-2 pr-4 text-xs text-sky-700 hover:bg-blue-200 dark:bg-sky-900 dark:text-sky-300 dark:hover:bg-sky-800 sm:px-1 sm:text-sm"
+            target="_blank"
+            ref="noopener noreferrer"
         >
             <span className="mr-3 rounded-full bg-sky-500 px-4 py-1.5 text-xs font-medium text-slate-100">
                 Visit
@@ -40,14 +42,14 @@ const TopLink = () => {
             </svg>
         </a>
     );
-}
+};
 
 export const Landing = () => {
     return (
         <div className="">
             <section className="relative bg-slate-100 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')] pt-24 dark:bg-slate-800 dark:bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern-dark.svg')]">
                 <Backdrop />
-                <div className="relative z-10 mx-auto max-w-screen-xl py-8 px-4 text-center lg:py-16 flex flex-col items-center">
+                <div className="relative z-10 mx-auto flex max-w-screen-xl flex-col items-center py-8 px-4 text-center lg:py-16">
                     <TopLink />
                     <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
                         Manage your daily tasks
@@ -56,7 +58,7 @@ export const Landing = () => {
                         Simple todo app, that lets you create tasks of different
                         types
                     </p>
-                    <div className='w-24'>
+                    <div className="w-24">
                         <Button type="filled">
                             <Link href="sign-in" className="">
                                 <span className="font-bold text-slate-800 dark:text-slate-100">
