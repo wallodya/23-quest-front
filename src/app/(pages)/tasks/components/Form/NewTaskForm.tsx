@@ -23,13 +23,13 @@ export const NewTaskForm = ({
     return (
         <FormWrapper
             // className=" flex h-[60vh] w-full justify-center px-4 pt-3 mb-40 md:mb-0 md:pb-3"
-            className=" flex h-[60vh] w-full justify-center px-4 py-3"
+            className=" flex h-[65vh] w-full justify-center px-4 py-3"
             onSubmit={formControls.handleSubmit(saveTask)}
         >
             <div className="flex h-full w-[min(100vw,30rem)] flex-col items-center justify-between gap-2">
                 <TaskFormContainer>
                     <FormProgress formControls={formControls} />
-                    <div className="mt-6 flex h-full flex-col justify-center">
+                    <div className="mt-6 flex h-full flex-col justify-center text-left">
                         <CurrentStep formControls={formControls} />
                     </div>
                 </TaskFormContainer>

@@ -38,9 +38,9 @@ export const PriorityStep = ({
             <div
                 className={`relative mt-4 grid grid-cols-[5fr,3fr,3fr] justify-items-center py-2`}
             >
-                <div className="pointer-events-none  absolute inset-0 grid h-full w-full grid-cols-[5fr,3fr,3fr] items-center">
+                <div className="pointer-events-none  absolute z-10 inset-0 grid h-full w-full grid-cols-[5fr,3fr,3fr] items-center">
                     <div
-                        className={`h-full col-start-1 ${
+                        className={`col-start-1 h-full ${
                             priority === "MEDIUM"
                                 ? "col-span-2 bg-sky-500/40"
                                 : priority === "URGENT"
@@ -61,7 +61,12 @@ export const PriorityStep = ({
                             className="hidden"
                         />
                     </FormControl>
-                    <FormLabel htmlFor="not_important" className="font-bold text-sm">Not important</FormLabel>
+                    <FormLabel
+                        htmlFor="not_important"
+                        className="text-sm font-bold text-slate-100"
+                    >
+                        Not important
+                    </FormLabel>
                 </FormField>
                 <FormField name="priotity">
                     <FormControl asChild>
@@ -74,7 +79,16 @@ export const PriorityStep = ({
                             className="hidden"
                         />
                     </FormControl>
-                    <FormLabel htmlFor="medium" className="font-bold text-sm">Medium</FormLabel>
+                    <FormLabel
+                        htmlFor="medium"
+                        className={`text-sm font-bold ${
+                            priority === "MEDIUM"
+                                ? "text-sky-300"
+                                : "text-slate-100"
+                        }`}
+                    >
+                        Medium
+                    </FormLabel>
                 </FormField>
                 <FormField name="priority">
                     <FormControl asChild>
@@ -87,7 +101,16 @@ export const PriorityStep = ({
                             className="hidden"
                         />
                     </FormControl>
-                    <FormLabel htmlFor="urgent" className="font-bold text-sm">Urgent</FormLabel>
+                    <FormLabel
+                        htmlFor="urgent"
+                        className={`text-sm font-bold ${
+                            priority === "URGENT"
+                                ? "text-red-300"
+                                : "text-slate-100"
+                        }`}
+                    >
+                        Urgent
+                    </FormLabel>
                 </FormField>
             </div>
         </div>
