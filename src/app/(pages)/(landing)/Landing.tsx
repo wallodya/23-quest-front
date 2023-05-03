@@ -14,7 +14,7 @@ const TopLink = () => {
             href="https://github.com/wallodya/23-quest-front"
             className="mb-7 inline-flex items-center justify-between rounded-full bg-sky-100 py-1 px-2 pr-4 text-xs text-sky-700 hover:bg-blue-200 dark:bg-sky-900 dark:text-sky-300 dark:hover:bg-sky-800 sm:px-1 sm:text-sm"
             target="_blank"
-            ref="noopener noreferrer"
+            rel="noopener noreferrer"
         >
             <span className="mr-3 rounded-full bg-sky-500 px-4 py-1.5 text-xs font-medium text-slate-100">
                 Visit
